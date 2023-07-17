@@ -37,7 +37,7 @@ router.post('/upload-jpeg', (req, res) => {
       const response = await rekognitionClient.detectText(params);
       // Process the response
 
-      const textDetections = response.TextDetections.filter(detection => detection.Type === 'WORD');
+      const textDetections = response.TextDetections.filter(detection => detection.Type != 'D');
 
       textDetections.forEach(detection => {
         const { Confidence, Geometry } = detection;
@@ -96,7 +96,7 @@ router.post('/upload-jpeg-bucket', (req, res) => {
       };
       const rekognitionResponse = await rekognitionClient.detectText(rekognitionParams);
       // Process the response
-      const textDetections = rekognitionResponse.TextDetections.filter(detection => detection.Type === 'WORD');
+      const textDetections = rekognitionResponse.TextDetections.filter(detection => detection.Type != 'd');
     
     res.status(200).json(textDetections);
     } catch (err) {
