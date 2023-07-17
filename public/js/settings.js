@@ -96,6 +96,7 @@ function fillInvoices(){
               <td>${invoice.invoiceid}</td>
               <td>${invoice.invoice_name}</td>
               <td>${invoice.upload_date}</td>
+              <td>${invoice.total}</td>
               <td>${previewIcon}  ${exportIcon}</td>
             </tr>`;
           
@@ -430,7 +431,7 @@ fileInput.addEventListener('change', event => {
       var user = localData.user;
       var invoiceid = "invoice_id";
       var invoice_name = "invoice_name";
-      var upload_date = new Date().toISOString().split('T')[0];
+      var upload_date = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
       var status = "db";
 
       const requestBody = {
@@ -448,7 +449,8 @@ fileInput.addEventListener('change', event => {
         invoice_name: "Sample Invoice",
         upload_date: upload_date,
         status: "Paid",
-        path: data
+        path: data,
+        total:2345
       }
 
       // Send the POST request to the server

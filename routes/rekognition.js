@@ -35,14 +35,11 @@ router.post('/upload-jpeg', (req, res) => {
         }
       };
       const response = await rekognitionClient.detectText(params);
-      // Process the response
-
       const textDetections = response.TextDetections.filter(detection => detection.Type != 'D');
-
       textDetections.forEach(detection => {
         const { Confidence, Geometry } = detection;
         const { BoundingBox, Polygon } = Geometry;
-      
+
         console.log('Confidence:', Confidence);
         console.log('Bounding Box:', BoundingBox);
         console.log('Polygon:', Polygon);
@@ -55,7 +52,6 @@ router.post('/upload-jpeg', (req, res) => {
     }
   });
 });
-
 
 // Create an S3 client
 const s3 = new AWS.S3({
@@ -75,7 +71,6 @@ router.post('/upload-jpeg-bucket', (req, res) => {
     console.log("JpegData:", jpegData);
 
     try {
-      // Upload the image to S3 bucket
       const uploadParams = {
         Bucket: 'imagebucket1234', // Replace with your bucket name
         Key: 'image.jpg', // Specify the desired key for the uploaded image
@@ -105,11 +100,6 @@ router.post('/upload-jpeg-bucket', (req, res) => {
     }
   });
 });
-
-
-
-
-
 
 // Export the router
 module.exports = router;
