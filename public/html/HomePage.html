@@ -10,6 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
 
+    <!-- Chart-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 </head>
 <body>
     <div class="sidebar">
@@ -150,8 +156,12 @@
     
             <!-- box for overdue since stat -->
             <div class="overdue_stat">
-                <div class="overdue_title">OVERDUE SINCE</div>
-    
+                <div class="container">
+                    <h3 class="graph_title">Overdue Graph</h2>
+                    <div class="barchar1">
+                        <canvas id="barchar1"  width="200" height="200" ></canvas>
+                    </div>
+                </div>
             </div>
     
             <!-- box for sales and collections -->
@@ -182,7 +192,21 @@
         <!-- box for the stat summary -->
         <div class="stat">
             <div class="stat_title">Daily Statistics</div>
+            <div class="container">
+                <div class="barchar2">
+                    <canvas id="barchar2" width="100" height="50" ></canvas>
+                </div>
+
+            </div>
+            
         </div>
+        
+
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <script src="chart1.js"></script>
+    <script src="chart2.js"></script> 
+    
 </body>
 </html>
