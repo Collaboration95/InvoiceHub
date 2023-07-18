@@ -1,6 +1,6 @@
-const ctx = document.getElementById('barchart');
+const ctx2 = document.getElementById('barchar1');
 
-  new Chart(ctx, {
+  new Chart(ctx2, {
     type: 'bar',
     data: {
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -18,5 +18,3 @@ const ctx = document.getElementById('barchart');
       }
     }
   });
-
-
