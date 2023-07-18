@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Form</title>
+    <link rel="stylesheet" type="text/css" href="PaymentForm.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <h1>Payment Form</h1>
+    
+    <table id="selected_table">
+        <tr>
+            <th>ID</th>
+            <th>CUSTOMER NAME</th>
+            <th>INVOICE DATE</th>
+            <th>AMOUNT</th>
+            <th>STATUS</th>
+        </tr>
+    </table>
+
+    <form>
+        <div class="form-field">
+            <label for="date">Date paid:</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+
+        <div class="form-field-row">
+            <div class="form-field">
+                <label for="payment_type">Payment Type:</label>
+                <select id="payment_type" name="payment_type" required>
+                    <option value="">Select</option>
+                    <option value="bank_transfer">Bank Transfer</option>
+                    <option value="cash">Cash</option>
+                    <option value="cheque">Cheque</option>
+                    <option value="paynow">PayNow</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="bank_number">Bank Number/Cheque Number/UEN:</label>
+                <input type="text" id="bank_number" name="bank_number" required>
+            </div>
+        </div>
+
+        <div class="form-field">
+            <p id="total_amount"></p>
+        </div>
+
+        <div class="form-field">
+            <label for="amount_paid">Amount Paid (e.g., 10.00):</label>
+            <input type="number" id="amount_paid" name="amount_paid" required>
+        </div>
+
+        <div class="form-field-buttons">
+            <div class="submit-button-container">
+                <button class="submit-button" id="submit-button" type="submit">Submit</button>
+            </div>
+            <div class="back-button-container">
+                <a class="back-button" href="PaymentPage.html">Back</a>
+            </div>
+        </div>
+    </form>
+
+    <script type="module" src="../JS/PaymentForm.js"></script>
+</body>
+</html>
