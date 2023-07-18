@@ -11,12 +11,12 @@ function showtable(data_arr) {
   // set up the title of each column
   table.innerHTML = `
     <tr>
-      <th>Invoice Name</th>
-      <th>upload date</th>
-      <th>status</th>
-      <th>AMOUNT</th>
-      <th>STATUS</th>
-      <th>ACTION</th>
+      <th>Invoice ID</th>
+      <th>Company Name</th>
+      <th>Upload Date</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Action</th>
     </tr>`
     ;
 
