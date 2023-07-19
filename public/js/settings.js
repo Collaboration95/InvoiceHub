@@ -492,15 +492,11 @@ function logout(){
 }
 
 function openImage(value){
-window.open('http://127.0.0.1:8080/'+value);
+// window.open('http://127.0.0.1:8080/'+value);
+window.open('public/img/'+value);
 }
 
 function openText(value){
     const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;
         window.open(newURL);
 }
-
-    // previewIcon.addEventListener("click", function (event) {
-        //   console.log("Preview icon clicked");
-        //   // Add your code to handle the preview icon click event
-        // });
