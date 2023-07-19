@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const{pool,table_name}=require ('../server');
+const{pool,table_name}=require('../server')
 //  This is the route container for everything account related 
 
 router.post('/login', async (req, res) => {
