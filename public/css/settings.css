@@ -1,0 +1,46 @@
+.content {
+    font-family: 'Lora', serif;
+    display:flex;
+    flex-direction:column;
+    background-color: white;
+    align-items: center;
+}
+
+table {
+    width:fit-content;
+    margin-top: 20px;
+    }
+
+th, td {
+    padding: 8px;
+
+    text-align: center;
+    }
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    }
+
+#dangerzone{
+    display:flex;
+    flex-direction:column;
+    }
+    
+.dangerzone-elem{
+    width:fit-content;
+    margin:10px;
+    }
+
+.requests{
+    display:flex;
+    margin:5px;
+    }
+
+.requests>*{
+    margin:5px;
+    }
+    
+.selected-button{
+    border:5px solid red;
+    }

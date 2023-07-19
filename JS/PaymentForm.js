@@ -47,34 +47,30 @@ const submitButton = document.getElementById('submit-button');
 
 const amountPaid = document.getElementById("amount_paid");
 
-// Add a click event listener to the submit button
-submitButton.addEventListener('click', function (event) {
-  //event.preventDefault(); // Prevent the form from submitting
+// Function to handle form submission
+function handleFormSubmission(event) {
+  event.preventDefault(); // Prevent the form from submitting
 
   // Convert the entered amount to a number
-  var enteredAmount = parseFloat(amountPaid.value);
+  var enteredAmount = parseFloat(amountPaid.value).toFixed(2);
 
-  if (enteredAmount === parseFloat(total_to_be_paid)) {
-    for (var i = 0; i < selectedValuesArray.length; i++) {
-      var selectedRowId = selectedValuesArray[i];
+  if (enteredAmount === parseFloat(total_to_be_paid).toFixed(2)) {
 
-      // Find the corresponding invoice data based on the selected row ID
-      // var invoice = data.find(function(row) {
-      //   return row.id === selectedRowId;
-      // });
-
-      // Update the status to "PAID"
-      
-    }
-
-    // Redirect to PaymentPage.html
-    window.location.href = 'PaymentPage.html';
+    localStorage.setItem('selectedInvoiceIds', JSON.stringify(selectedValuesArray));
+    
+    // Redirect to the payment page
+    window.location.href = 'PaymentPage.html?redirect=true';
   } else {
+    
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'The entered amount does not match the total amount to be paid. Please Check again',
+      text: 'The entered amount does not match the total amount to be paid. Please check again.',
     });
   }
-});
+}
+
+// Add a submit event listener to the form
+document.getElementById('form').addEventListener('submit', handleFormSubmission);
+
 
