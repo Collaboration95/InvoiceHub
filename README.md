@@ -75,3 +75,9 @@ SQL: W3Schools SQL Tutorial
 
 **Some Extensions to make your work easier**
 prettier - code formatter
+
+
+
+INFO : 
+
+http-server should now be started from html folder
