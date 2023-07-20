@@ -1,14 +1,20 @@
+:root{
+    font-family: 'Ubuntu', sans-serif;
+    --primary-color: #033246;
+    --secondary-color: #2D5261;
+    --tertiary-color: #D3D4CD;
+}
+
 /* style for the main body */
 body {
-    /* display: flex; */
     margin: 0;
     padding: 0;
-    font-family: 'Ubuntu', sans-serif;
 }
 
 a {
     text-decoration: none; 
     color: inherit;
+    width: 100%;
   }
   
   a:visited {
@@ -25,9 +31,8 @@ a {
 .sidebar {
     width: 15%;
     min-width: 250px;
-    /* max-width: 400px; */
 
-    background-color: #033246;
+    background-color: var(--primary-color);
     height: 100vh;
     position: fixed;
 }
@@ -58,12 +63,12 @@ a {
 /* styles for link in the side bar */
 
 .sidebar a {
-    color: #D3D4CD;
+    color: var(--tertiary-color);
     text-decoration: none;
 }
 
 .sidebar a:active {
-    color: #E4E4E4;
+    color: var(--tertiary-color);
 }
 
 /* styles for personal info section */
@@ -73,7 +78,7 @@ a {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    color: #D3D4CD;
+    color: var(--tertiary-color);
     display: flex;
     align-items: center;
 }
@@ -94,25 +99,13 @@ a {
     font-style: bold;
 }
 
-/* .btn_edit_profile {
-    maybe can replace with an icon and put at the right top
-    font-size: 10px;
-    margin-top: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    border: 1px solid #D3D4CD;
-    background-color: #033246;
-    color:#D3D4CD;
-} */
-
 .btn_edit_profile:hover {
-    background-color: #2D5261;
-    color:#D3D4CD;
+    background-color: var(--secondary-color);
+    color:var(--tertiary-color);
 }
 
 .notification{
     align-self: flex-start;
-    /* margin-left: 5px; */
     position: absolute;
     top:0;
     right: 0;
@@ -121,7 +114,7 @@ a {
 }
 
 .ic_notificaiton:hover{
-    background-color: #2D5261;
+    background-color: var(--secondary-color);
 }
 /* style for navigation on the side bar */
 
@@ -129,105 +122,35 @@ a {
     margin-top: 30px;
 }
 
-.home{
-    width: 100%;
-    padding: 10px;
-}
-
-.home:hover{
-    background-color: #2D5261;
-}
-
-.ic_home{
-    color:#D3D4CD;
-    margin-right: 10px;
-    margin-left: 10px
-}
-
-.invoice{
-    width: 100%;
-    padding: 10px;
-}
-
-.invoice:hover{
-    background-color: #2D5261;
-}
-
-.ic_invoice{
-    color:#D3D4CD;
-    margin-right: 10px;
-    margin-left: 10px
-}
-
-.soa{
-    width: 100%;
-    padding: 10px;
-}
-
-.soa:hover{
-    background-color: #2D5261;
-}
-
-.ic_soa{
-    color:#D3D4CD;
-    margin-right: 10px;
-    margin-left: 10px
-}
-
-.supplier{
-    width: 100%;
-    padding: 10px;
-}
-
-.supplier:hover{
-    background-color: #2D5261;
-}
-
-.ic_supplier{
-    color:#D3D4CD;
-    margin-right: 10px;
-    margin-left: 10px
-}
-
-.payment{
-    width: 100%;
-    padding: 10px;
-}
-
-.payment:hover{
-    background-color: #2D5261;
-}
-
-.ic_payment{
-    color:#D3D4CD;
-    margin-right: 10px;
-    margin-left: 10px
-}
-
-.setting{
-    
-    /* background-color: #2D5261; */
-    width: 100%;
-    padding: 10px;
-}
-
-.setting:hover{
-    background-color: #2D5261;
-}
-
 .ic_setting{
-    color:#D3D4CD;
+    color:var(--tertiary-color);
     margin-right: 10px;
     margin-left: 10px
+}
+
+.home,
+.invoice,
+.soa,
+.supplier,
+.payment,
+.setting{
+    padding: 10px;
+}
+
+.home:hover,
+.invoice:hover,
+.soa:hover,
+.supplier:hover,
+.payment:hover,
+.setting:hover{
+    background-color: var(--secondary-color);
 }
 
 
 /* style for the main content */
 
 .content {
-    /* width:70%; */
     margin-left: max(250px, 17%);
     padding: 20px;
-
-    /* font-family: 'Lora', serif; */
 }
+    
