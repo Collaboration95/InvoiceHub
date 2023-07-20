@@ -47,6 +47,39 @@ const submitButton = document.getElementById('submit-button');
 
 const amountPaid = document.getElementById("amount_paid");
 
+const paymentTypeSelect = document.getElementById('payment_type');
+paymentTypeSelect.addEventListener('change', function() {
+  if (paymentTypeSelect.value === 'paynow') {
+      imageUpload.removeAttribute('disabled');
+  } else {
+      imageUpload.setAttribute('disabled', 'disabled');
+  }
+});
+
+// Function to handle file selection for image upload
+function handleImageUpload(event) {
+  const fileInput = event.target;
+  const file = fileInput.files[0];
+
+  if (file) {
+    // Create a FileReader to read the file as data URL
+    const reader = new FileReader();
+    reader.onload = function() {
+      // Set the data URL as the src attribute of the image element to display the preview
+      const imagePreview = document.getElementById('imagePreview');
+      imagePreview.src = reader.result;
+      imagePreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    console.log("No image selected.");
+  }
+}
+
+// Add an event listener to the file input element
+document.getElementById('imageUpload').addEventListener('change', handleImageUpload);
+
+
 // Function to handle form submission
 function handleFormSubmission(event) {
   event.preventDefault(); // Prevent the form from submitting
@@ -57,7 +90,7 @@ function handleFormSubmission(event) {
   if (enteredAmount === parseFloat(total_to_be_paid).toFixed(2)) {
 
     localStorage.setItem('selectedInvoiceIds', JSON.stringify(selectedValuesArray));
-    
+
     // Redirect to the payment page
     window.location.href = 'PaymentPage.html?redirect=true';
   } else {
