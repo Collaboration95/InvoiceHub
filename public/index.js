@@ -5,12 +5,10 @@ document.getElementById("login-form").addEventListener("submit", function(event)
   * @param {Event} event - The submit event triggered by the login form.
   */
   event.preventDefault(); // Prevent the form from submitting normally
-
   // Get the form data
   const formData = new FormData(event.target);
   const username = formData.get("username");
   const password = formData.get("password");
-
   // Call the validateLogin function and pass the form data
   validateLogin(username, password);
 });
@@ -35,13 +33,13 @@ function validateLogin(username, password) {
     .then(data => {
       const login_verified = Object.keys(data).length;
       if (login_verified !== 0) {
-        // If login is verified and data is received in the response
-        const localData = JSON.stringify(data);
-        sessionStorage.setItem('localData', localData);
+        console.log("validateLogin() login successfull")
+        //  If login is verified , store login info , redirect to homepage 
+        sessionStorage.setItem('localData',JSON.stringify(data));
         window.location.href = 'html/HomePage.html';
       } else {
-        // If login is unsuccessful or no data is received in the response
         alert('Invalid username or password');
+        console.log("validateLogin() invalid password")
       } 
     })
     .catch(error => console.error(error));
