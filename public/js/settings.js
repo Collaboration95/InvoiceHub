@@ -97,7 +97,6 @@ else{
   console.log('Button fileInput does not exist');
 }
 
-
 function acceptFileInput(event) {
   const file = event.target.files[0];
   const formData = new FormData();
@@ -235,38 +234,35 @@ function deleteAccount(event){
   }
 }
 
-function detectText(formData) {
-  return fetch('/rekognition/upload-jpeg', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
+async function detectText(formData) {
+  try {
+    const response = await fetch('/rekognition/upload-jpeg', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await response.json();
     console.log('Text Detected:', data);
-    return data; // Return the data
-  })
-  .catch(error => {
+    return data;
+  } catch (error) {
     console.error('Error uploading file:', error);
     throw error; // Throw the error to propagate it further
-  });
+  }
 }
 
-function detectTextBuckets(formData) {
-  return fetch('/rekognition/upload-jpeg-bucket', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
+async function detectTextBuckets(formData) {
+  try {
+    const response = await fetch('/rekognition/upload-jpeg-bucket', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await response.json();
     console.log('Text Detected Buckets:');
-    return data; // Return the data
-  })
-  .catch(error => {
+    return data;
+  } catch (error) {
     console.error('Error uploading file:', error);
     throw error; // Throw the error to propagate it further
-  });
+  }
 }
-
 
 function logout(){
   sessionStorage.removeItem('localData');
@@ -426,7 +422,7 @@ function respondRequest(user, value) {
 
 function fillInvoices(){
   // Fetch the invoices data from the backend
-  fetch('/invoice/all')
+  fetch('/invoice/table')
     .then(response => response.json())
     .then(data => {
       // Get the table body element
@@ -434,9 +430,6 @@ function fillInvoices(){
 
       // Loop through the data and populate the table rows
       data.forEach(invoice => {
-        const row = document.createElement('tr');
-
-        console.log(invoice.upload_date);
         invoice.upload_date= new Date(invoice.upload_date);
         const options = { timeZone: 'Asia/Singapore' };
         invoice.upload_date = (invoice.upload_date).toLocaleDateString('en-SG', options);
