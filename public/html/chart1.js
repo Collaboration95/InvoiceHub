@@ -3,10 +3,10 @@ const ctx2 = document.getElementById('barchar1');
   new Chart(ctx2, {
     type: 'bar',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: ['<30 days', '30-60 days', '60-90 days'],
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: 'Amount Overdue',
+        data: [1397, 4580, 3004, 305],
         borderWidth: 1
       }]
     },
