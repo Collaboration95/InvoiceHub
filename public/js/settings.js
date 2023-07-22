@@ -54,6 +54,11 @@ function fillInvoices(){
       // Loop through the data and populate the table rows
       data.forEach(invoice => {
         const row = document.createElement('tr');
+      
+      // Append the exportIcon to the last cell of the row
+      const exportCell = document.createElement('td');
+      exportCell.innerHTML = exportIcon;
+      row.appendChild(exportCell);
 
         // Get the detected text cell element
 
@@ -84,13 +89,18 @@ function fillInvoices(){
             <svg xmlns="http://www.w3.org/2000/svg" onclick="openImage(this.getAttribute('value'))" value='${invoice.path}' width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
               <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
               <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-            </svg>`
+            </svg>`;
      
           var exportIcon = `
-              <svg class="ic_export"  onclick="openText(this.getAttribute('value'))" xmlns="http://www.w3.org/2000/svg" value="${invoice.invoiceid}" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+            <a href="#">
+              <svg class="ic_export" xmlns="http://www.w3.org/2000/svg" onclick="exportInvoicesToCSV()" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
                 <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-              </svg>`;
+              </svg>
+            </a>`;
+        
+
+
       
           // // render each row of data
     
@@ -110,6 +120,8 @@ function fillInvoices(){
     });
 
 }
+
+
 
 fillInvoices();
 // Assuming you have a variable called isAdminMode that indicates whether you're in admin mode or not
@@ -496,7 +508,123 @@ window.open('http://127.0.0.1:8080/img-db/'+value);
 
 }
 
-function openText(value){
-    const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;
-        window.open(newURL);
+// function openText(value){
+//     const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;
+//         window.open(newURL);
+// }
+
+// to do: radhi
+// change function openText to exportToCsv and change onclick for export button to this 
+// const fastcsv = require("fast-csv");
+// const csv = require('csv-parser');
+// const fs = require("fs");
+// app.get("/export", (req, res) => {
+//   const query = "SELECT * FROM invoices"; 
+
+//   connection.query(query, (err, rows) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).send("Error fetching data from the database.");
+//     }
+
+//     // Convert data to CSV format
+//     const data = [];
+//     rows.forEach(row => {
+//       data.push(`${row.invoiceid},${row.Qty},${row.itemDescription},${row.invoice_name},${row.upload_date},${row.status},${row.unitPrice},${row.total}`);
+//       // Adjust the columns based on your "invoices" table columns
+//     });
+
+//     const csvData = "Invoice ID,Qty,Item Description,Invoice Name,Upload Date,Status,Unit Price,Total\n" + data.join("\n");
+
+//     // Create a CSV file and send it back to the front-end
+//     fs.writeFile("invoices.csv", csvData, (err) => {
+//       if (err) {
+//         console.error(err);
+//         return res.status(500).send("Error creating CSV file.");
+//       }
+//       res.download("invoices.csv", "invoices.csv", (err) => {
+//         if (err) {
+//           console.error(err);
+//           return res.status(500).send("Error downloading CSV file.");
+//         }
+//         fs.unlink("invoices.csv", (err) => {
+//           if (err) {
+//             console.error(err);
+//           }
+//         });
+//       });
+//     });
+//   });
+// });
+// function exportInvoicesToCSV() {
+//   fetch("/export")
+//     .then(response => {
+//       if (response.ok) {
+//         return response.blob();
+//       } else {
+//         console.error("Failed to export data.");
+//         throw new Error("Export failed");
+//       }
+//     })
+//     .then(blob => {
+//       const url = URL.createObjectURL(blob);
+//       const a = document.createElement("a");
+//       a.href = url;
+//       a.download = "invoices.csv";
+//       document.body.appendChild(a);
+//       a.click();
+//       a.remove();
+//     })
+//     .catch(error => {
+//       console.error(error);
+//       // Handle the error if needed
+//     });
+// }
+
+app.get("/export", (req, res) => {
+  const query = "SELECT * FROM invoices"; 
+
+  connection.query(query, (err, rows) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Error fetching data from the database.");
+    }
+
+    // Convert data to CSV format
+    const csvData = rows
+      .map(row => `${row.invoiceid},${row.Qty},${row.itemDescription},${row.invoice_name},${row.upload_date},${row.status},${row.unitPrice},${row.total}`)
+      .join("\n");
+
+    // Set the appropriate headers for CSV download
+    res.setHeader("Content-Type", "text/csv");
+    res.setHeader("Content-Disposition", 'attachment; filename="invoices.csv"');
+
+    // Send the CSV data to the client
+    res.send(csvData);
+  });
+});
+
+function exportInvoicesToCSV() {
+  fetch("/export")
+    .then(response => {
+      if (response.ok) {
+        return response.blob();
+      } else {
+        console.error("Failed to export data.");
+        throw new Error("Export failed");
+      }
+    })
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "invoices.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+    .catch(error => {
+      console.error(error);
+      // Handle the error if needed
+    });
 }
