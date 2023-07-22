@@ -15,9 +15,12 @@ dangerZoneElement.classList.add("dangerzone-elem")
 
 if (localData.mode == "admin") {
   // Admin mode: render title requests under a bold and small heading tag
-  const heading = document.createElement('h3');
-  const boldText = document.createElement('b');
+  const heading = document.createElement('div');
+  heading.id = 'requests_heading';
+  const boldText = document.createElement('div');
+  boldText.id = 'requests_bold';
   const smallText = document.createElement('small');
+  smallText.id = 'requests_small';
   boldText.textContent = 'Requests';
   smallText.textContent = ' (Admin Mode)';
   heading.appendChild(boldText);

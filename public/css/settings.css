@@ -1,46 +1,155 @@
+/* changes for the side menu */
+.setting{
+    background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
+    padding: 10px;
+}
+
+.setting:hover{
+    background-color: var(--secondary-color);
+}
+
+.ic_setting{
+    color:var(--tertiary-color);
+    margin-right: 10px;
+}
+
 .content {
-    font-family: 'Lora', serif;
+    /* font-family: 'Lora', serif; */
     display:flex;
     flex-direction:column;
     background-color: white;
-    align-items: center;
+    /* align-items: center; */
+}
+
+.user_report_title,
+.dangerzone_title,
+.invoice_title{
+    font-size: 30px;
+    color: var(--primary-color);
+}
+
+.invoice_title{
+    margin-top: 30px;
+}
+
+.dangerzone_title{
+    margin-bottom: 10px;
 }
 
 table {
-    width:fit-content;
     margin-top: 20px;
-    }
+    table-layout: auto;
+    width: 100%;
 
-th, td {
-    padding: 8px;
+    border: 1px solid var(--extra-bright-color);
+    box-shadow: 4px 4px 10px rgba(45,82,97,0.2);
+    border-radius: 6px;
 
+    background-color: var(--secondary-color);
+}
+
+td {
+    color: var(--primary-color);
+    background-color: white;
+    padding:5px;
+
+    border-radius: 3px;
     text-align: center;
-    }
+    vertical-align: middle;
+}
 
 th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-    }
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding:5px;
+}
 
 #dangerzone{
+    margin-top: 30px;
     display:flex;
     flex-direction:column;
-    }
-    
-.dangerzone-elem{
-    width:fit-content;
-    margin:10px;
-    }
+}
 
+.dangerzone_buttons{
+    display: flex;
+    gap: 5px;
+}
+    
+.dangerzone-file-select,
+.dangerzone-del-acc,
+.dangerzone-logout{
+    font-size: 15px;
+    width:fit-content;
+    margin-top:5px;
+    margin-bottom: 5px;
+    
+    color: white;
+    background-color: var(--primary-color);
+    
+    border-radius: 4px;
+    display: flex;
+    
+    align-content: center;
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.dangerzone-file-select{
+    padding-right: 8px;
+    padding-left: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.dangerzone-file-select:hover,
+.dangerzone-del-acc:hover,
+.dangerzone-logout:hover{
+    background-color: var(--secondary-color);
+    cursor: pointer;
+}
+
+.ic_delete_acc,
+.ic_logout,
+.ic_choose_file{
+    padding-right: 5px;
+}
+
+
+#aws-call{
+    display: none;
+}
+
+#requests_heading{
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+    margin-bottom: 5px;
+}
+
+
+#requests_bold{
+    font-size: 23px;
+    font-style: bold;
+}
+
+#requests_small{
+    font-style:italic;
+    font-size: 16px;
+}
+    
 .requests{
     display:flex;
     margin:5px;
-    }
+    color: var(--primary-color);
+}
 
 .requests>*{
-    margin:5px;
-    }
+    margin-left:5px;
+}
     
 .selected-button{
     border:5px solid red;
-    }
+}

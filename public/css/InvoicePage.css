@@ -35,6 +35,7 @@
 
 .invoice_title{
     font-size: 30px;
+    color: var(--primary-color);
 }
 
 /* style for summary content */
