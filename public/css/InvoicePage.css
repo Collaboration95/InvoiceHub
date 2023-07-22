@@ -250,7 +250,7 @@ input[type="text"]{
     background-color: var(--secondary-color);
 }
 
-.invoice_table thead {
+.invoice_table tbody {
     display: table-header-group;
 
     color:white;
@@ -285,7 +285,6 @@ input[type="text"]{
 .ic_edit,
 .ic_delete{
     color: var(--primary-color);
-    /* order: 1; */
 }
 
 .ic_delete:hover{

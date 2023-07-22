@@ -122,6 +122,11 @@ a {
     margin-top: 30px;
 }
 
+.ic_home,
+.ic_invoice,
+.ic_soa,
+.ic_supplier,
+.ic_payment,
 .ic_setting{
     color:var(--tertiary-color);
     margin-right: 10px;
@@ -135,6 +140,8 @@ a {
 .payment,
 .setting{
     padding: 10px;
+    width: 100%;
+    color: white;
 }
 
 .home:hover,
