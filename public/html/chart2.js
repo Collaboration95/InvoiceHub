@@ -5,7 +5,7 @@ new Chart(ctx, {
   data: {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [{
-      label: 'Total Amount per Month',
+      label: 'Total Expense per Month',
       data: [25000, 12598, 14104, 50394, 40293, 54709, 80274, 15349, 10410, 75243, 142324, 62245],
       borderWidth: 1
     }]
