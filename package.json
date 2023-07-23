@@ -20,6 +20,7 @@
   "dependencies": {
     "@aws-sdk/client-rekognition": "^3.360.0",
     "aws-sdk": "^2.1405.0",
+    "chart.js": "^4.3.0",
     "dotenv": "^16.1.1",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
