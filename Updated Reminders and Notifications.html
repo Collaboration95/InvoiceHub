@@ -162,10 +162,14 @@
                 cell2.innerHTML = "<br>";
 
                 var cell3 = newRow.insertCell(3);
-                cell3.innerHTML = "<br>";
+                var d = new Date();
+                let day = d.getDate();
+                let month = d.getMonth();
+                let year = d.getFullYear();
+                cell3.innerHTML = `${day}-${month}-${year}`;
 
                 var cell4 = newRow.insertCell(4);
-                cell4.innerHTML = "<br>";
+                cell4.innerHTML = "OENDING";
 
                 var cell5 = newRow.insertCell(5);
                 cell5.innerHTML = '<br>';
