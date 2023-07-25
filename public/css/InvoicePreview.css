@@ -1,0 +1,176 @@
+:root{
+    --extra-bright-color: #485f68;
+}
+
+/* changes for the side menu */
+.invoice{
+    background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
+    padding: 10px;
+}
+
+.invoice:hover{
+    background-color: var(--secondary-color);
+}
+
+.ic_invoice{
+    color:var(--tertiary-color);
+    margin-right: 10px;
+}
+
+/* style for invoice page title */
+
+.invoice_preview_title{
+    font-size: 30px;
+}
+
+.btn_go_back{
+    padding-right: 10px;
+
+}
+
+/* style for gst info */
+.gst_info{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-right: 10px;
+}
+
+.gst_info > div {
+    align-self: flex-end;
+}
+
+/* style for the top contents (summary) */
+
+.content_top{
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+
+    gap: 20px
+}
+
+/* style for summary content */
+
+.bill_to,
+.deliver_to,
+.tax_invoice{
+
+    gap: 40px;
+    width: 50%;
+    overflow: hidden;
+
+    border: 1px solid var(--secondary-color);
+    box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+    border-radius: 5px;
+
+    /* min-width: 100px; */
+    max-width: 300px;
+}
+
+.bill_to_title,
+.del_to_title,
+.tax_inv_title{
+    background-color: var(--secondary-color);
+    color: white;
+
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.bill_to_title{
+    order: 1;
+}
+
+.del_to_title{
+    order: 2;
+}
+
+.tax_inv_title{
+    order: 3;
+}
+
+.bill_to_name,.bill_to_company,.bill_to_addr,.bill_to_post,
+.del_to_name, .del_to_company, .del_to_addr, .del_to_post,
+.tax_inv_no, .tax_inv_date, .tax_inv_pono, .tax_inv_order_no{
+    padding: 4px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+/* styles for the invoice table */
+
+.invoice_preview_table{
+    margin-top: 40px;
+    table-layout: auto;
+    width: 100%;
+
+    border: 1px solid var(--extra-bright-color);
+    box-shadow: 4px 4px 10px rgba(45,82,97,0.2);
+    border-radius: 6px;
+
+    background-color: var(--secondary-color);
+}
+
+.invoice_preview_table tbody {
+    display: table-header-group;
+
+    color:white;
+    align-items: center;
+}
+
+.invoice_preview_table th{
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding:5px;
+}
+
+.invoice_preview_table td{
+    color: var(--primary-color);
+    background-color: white;
+    padding:5px;
+
+    border-radius: 3px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* style for total amount due */
+
+.total_amt_due{
+    margin-top: 20px;
+    padding-right: 20px;
+    border-radius: 6px;
+    padding: 5px;
+
+    background-color: var(--secondary-color);
+    color: white;
+
+    text-align: right;
+}
+
+/* styles for signatures at the bottom */
+
+.signatures{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    font-style: bold;
+}
+
+.receiver_sig{
+    border-top: 2px solid var(--primary-color);
+    padding-top: 10px;
+    text-align: center;
+    order: 1;
+}
+
+.athenticate_sig{
+    border-top: 2px solid var(--primary-color);
+    padding-top: 10px;
+    text-align: center;
+    order: 2;
+}
