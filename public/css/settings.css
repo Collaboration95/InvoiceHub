@@ -18,7 +18,7 @@
     display:flex;
     flex-direction:column;
     background-color: white;
-    /* align-items: center; */
+    align-items: center;
 }
 
 .user_report_title,
@@ -39,19 +39,18 @@
 table {
     margin-top: 20px;
     table-layout: auto;
-    width: 100%;
-
+    width: fit-content;
     border: 1px solid var(--extra-bright-color);
     box-shadow: 4px 4px 10px rgba(45,82,97,0.2);
     border-radius: 6px;
-
     background-color: var(--secondary-color);
 }
 
 td {
+
     color: var(--primary-color);
     background-color: white;
-    padding:5px;
+    padding:15px;
 
     border-radius: 3px;
     text-align: center;

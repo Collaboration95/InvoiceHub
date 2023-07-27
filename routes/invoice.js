@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const{pool,table_name}=require ('../server');
 const crypto = require('crypto');
+const { route } = require('./account');
 
 // Function to generate a unique filename
 function generateUniqueFilename(originalFilename) {
@@ -103,7 +104,7 @@ router.get('/get-detected-text/:invoiceid', async (req, res) => {
 router.get('/table', async (req, res) => {
     try {
       const connection = await pool.getConnection();
-      const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, upload_date , total, status FROM ${table_name.invoice}`);
+      const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, path , upload_date , total, status FROM ${table_name.invoice}`);
       connection.release();
       res.json(rows);
     } catch (error) {
@@ -112,5 +113,15 @@ router.get('/table', async (req, res) => {
     }
 });
  
+router.get('/dummy', async (req, res) => {
+  try {
+      
+  res.json("Dummy output");
+  } catch (error) {
+    console.error('Error fetching invoices:', error);
+    res.status(500).json({ error: 'An error occurred while fetching invoices' });
+  }
+});
+
 module.exports = router;
 
