@@ -1,31 +1,24 @@
-/* CODE FOR RENDERING THE TABLE */
-
-// data from InvoiceData.js
-// import { data } from './InvoiceData.js';
-
 var table = document.getElementById("invoice_table");
 
 // Function to fetch data from the server
-function getData() {
-  return fetch('/invoice/table')
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(invoice => {
-        // Determine statusColor based on status
-        if (invoice.status.toUpperCase() === 'DRAFT') {
-          invoice.statusColor = '#acacac';
-        } else if (invoice.status.toUpperCase() === 'OVERDUE') {
-          invoice.statusColor = 'rgb(252, 183, 137)';
-        } else if (invoice.status.toUpperCase() === 'PAID') {
-          invoice.statusColor = 'rgb(136, 197, 136)';
-        }
-      });
-
-      return data;
-    })
-    .catch(error => {
-      console.error('Error fetching invoices data:', error);
+async function getData() {
+  try {
+    const response = await fetch('/invoice/table');
+    const data = await response.json();
+    data.forEach(invoice => {
+      // Determine statusColor based on status
+      if (invoice.status.toUpperCase() === 'DRAFT') {
+        invoice.statusColor = '#acacac';
+      } else if (invoice.status.toUpperCase() === 'OVERDUE') {
+        invoice.statusColor = 'rgb(252, 183, 137)';
+      } else if (invoice.status.toUpperCase() === 'PAID') {
+        invoice.statusColor = 'rgb(136, 197, 136)';
+      }
     });
+    return data;
+  } catch (error) {
+    console.error('Error fetching invoices data:', error);
+  }
 }
 
 // Function to render the table with data
@@ -34,23 +27,22 @@ function renderTable(data) {
   table.innerHTML = `
     <tr>
       <th>ID</th>
-      <th>CUSTOMER NAME</th>
+      <th>INVOICE NAME</th>
       <th>INVOICE DATE</th>
       <th>AMOUNT</th>
       <th>STATUS</th>
       <th>ACTION</th>
     </tr>
   `;
-
   // Render each row of data
   data.forEach(invoice => {
-    invoice.upload_date = new Date(invoice.upload_date);
+         invoice.upload_date = new Date(invoice.upload_date);
         const options = { timeZone: 'Asia/Singapore' };
         invoice.upload_date = (invoice.upload_date).toLocaleDateString('en-SG', options);
 
         var previewIcon =  `
         <a href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+          <svg xmlns="http://www.w3.org/2000/svg"  onclick="openImage(this.getAttribute('value'))" value='${invoice.path}' width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
             <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
             <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
           </svg>
@@ -68,13 +60,12 @@ function renderTable(data) {
 
         var exportIcon = `
           <a href="#">
-            <svg class="ic_export" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+            <svg class="ic_export" xmlns="http://www.w3.org/2000/svg" onclick="openText(this.getAttribute('value'))" value='${invoice.invoiceid}' width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
               <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
             </svg>
           </a>`;
 
-        
         // var for saving the status' color column
         var statusColor = "";
         var status = invoice.status.toUpperCase();
@@ -265,8 +256,17 @@ function sort_asc() {
         return parseInt(b.total) - parseInt(a.total);
       });
     }
-
     // Render the sorted data
     renderTable(data);
   });
 }
+
+function openImage(value){
+  window.open('http://127.0.0.1:8080/'+value)
+  }
+  
+  function openText(value){
+      const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;
+          window.open(newURL);
+  }
+  

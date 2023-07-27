@@ -1,100 +1,464 @@
-* commit 3aaf1662878e0db37da3c365e22aea477e293476
-| Author: Guruprasath <guruprasath3200@gmail.com>
-| Date:   Thu Jul 6 12:58:07 2023 +0800
+* commit bc7d9f18baf412161fbc91c0a9f9af0d51ded092
+| Author: rummy0302 <bharathi.ramita@gmail.com>
+| Date:   Wed Jul 26 11:11:20 2023 +0800
 | 
-|     Added logout feature
-| 
-* commit 97bc37c24bf6be53c7dde13d3f79ce861a111fe7
-| Author: Guruprasath <guruprasath3200@gmail.com>
-| Date:   Thu Jul 6 01:40:31 2023 +0800
-| 
-|     added settings
+|     Updated Graphs
 |   
-*   commit de69de2f8565347ee20687a4d3ca91d063b3aa19
-|\  Merge: 46f6eab 1c7f90f
+| * commit f1be732b342ced105c9b684dc16da7a147119bf6
+| | Author: rpriyaj <radhipriya81@gmail.com>
+| | Date:   Tue Jul 25 23:51:06 2023 +0800
+| | 
+| |     deleted node_modules
+| | 
+| * commit eacd723ae26bd9683e01c8bdcf92128e9141a077
+|/  Author: rpriyaj <radhipriya81@gmail.com>
+|   Date:   Tue Jul 25 23:33:58 2023 +0800
+|   
+|       Updated with AWS Textract API
+|   
+| * commit a986d652fc097012a4aafaa47e4c4433d573a537
+|/  Author: ChewonHan <about0322@naver.com>
+|   Date:   Tue Jul 25 17:14:19 2023 +0800
+|   
+|       frontend of the invoice preview
+|   
+| * commit e4dfcde92538116524ec8a4a7e105a793b8fa86f
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Tue Jul 25 17:03:43 2023 +0800
+| | 
+| |     Update Updated Reminders and Notifications.html
+| |     
+| |     Fixed spelling error in status when creating new reminder
+| | 
+| * commit 1e2c02eab39be19578c3b71482e1c9c606e0619d
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Tue Jul 25 17:02:11 2023 +0800
+| | 
+| |     Update Updated Reminders and Notifications.html
+| |     
+| |     When creating new reminder, default status is set to PENDINg and default date is set to format dd-mm-yyyy (e.g. 25-07-2023).
+| | 
+| * commit 16d52142f0c0d0e5c0bff388c718e3c6366a391d
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 24 16:27:03 2023 +0800
+| | 
+| |     Update and rename InvoicePageV2.html to Updated Reminders and Notifications.html
+| | 
+| * commit ee5c3ccc7af64f6e68181caf2b2cb304dab3f27c
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 24 16:23:47 2023 +0800
+| | 
+| |     Update InvoicePageV2.html
+| |     
+| |     Removed comments
+| | 
+| * commit d1dbf16af9849da1d413cd73d5f22ea3455cdae1
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 24 16:22:42 2023 +0800
+| | 
+| |     Add files via upload
+| |     
+| |     Updated table and push notification format
+| | 
+| * commit 831fc9b217774c9da1c5e4b8dfdab6d9171cbb91
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Sun Jul 16 19:44:06 2023 +0800
+| | 
+| |     Update README.md
+| |     
+| |     Added description on showing push notifications and how users should respond
+| | 
+| * commit 6c3147e96ba5c37b9326b96d502673415d84afdb
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Sun Jul 16 19:41:24 2023 +0800
+| | 
+| |     Update Notifications and Reminders.html
+| |     
+| |     Added user acknowledgement actions: users need to click on the push notifications to acknowledge; when all notifications are acknowledged, users will be alerted that they have acknowledged all notifications.
+| | 
+| * commit 95a76a6a389d1c01574f5c2f9ad8f3632484ac00
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Fri Jul 7 10:56:11 2023 +0800
+| | 
+| |     Update Notifications and Reminders.html
+| |     
+| |     Fixed bugs
+| | 
+| * commit 692d3ff9c23500b5bcc8f4687a3bd787887d9bf3
 | | Author: Guruprasath <guruprasath3200@gmail.com>
-| | Date:   Wed Jul 5 23:26:08 2023 +0800
+| | Date:   Tue Jul 4 17:15:41 2023 +0800
 | | 
-| |     Merge branch 'search_query_sub'
+| |     maintenance work
+| |     
+| |     Renamed files , ported script code in html to a js file
 | | 
-| * commit 1c7f90fec5e7c98c0f193e76c0c3b339ce4af607
-| | Author: Guruprasath <guruprasath3200@gmail.com>
-| | Date:   Wed Jul 5 23:21:53 2023 +0800
+| * commit 7ae56cce93151f2c880a40e914ab487e1a5038a3
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 3 20:08:46 2023 +0800
 | | 
-| |     Deleted redundant files
+| |     Update Notifications and Reminders.html
 | | 
-| * commit 28806060f976352b52faea3f529e04b6135e808d
-| | Author: Guruprasath <guruprasath3200@gmail.com>
-| | Date:   Wed Jul 5 22:54:45 2023 +0800
+| * commit 66e9719cd209855fd18b7ce906a85a076b44de36
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 3 20:08:09 2023 +0800
 | | 
-| |      Fixed file structure
+| |     Update Notifications and Reminders.html
 | | 
-| * commit 7d3fd7762a18d7604caa9c156d5bc33af403d0fc
-| | Author: ChewonHan <about0322@naver.com>
-| | Date:   Wed Jul 5 19:50:33 2023 +0800
+| * commit f411346d422d548638ec242025320af560af5b33
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 3 19:56:50 2023 +0800
 | | 
-| |     Minor changes after meeting
+| |     Update README.md
 | | 
-| * commit a7b76e258fd436b13d8fb340b5064ccc0ac827a3
-| | Author: ChewonHan <about0322@naver.com>
-| | Date:   Mon Jul 3 19:58:33 2023 +0800
+| * commit 7774bce0b02f7d3f9fcf75879f8ebbf12a5079e0
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 3 19:38:01 2023 +0800
 | | 
-| |     re-located the folder
+| |     Update README.md
 | | 
-| * commit 5e98f818ed1e449a88d320876616bebbf7286ca4
-| | Author: ChewonHan <about0322@naver.com>
-| | Date:   Mon Jul 3 17:02:42 2023 +0800
+| * commit 19f9528985205915485e74dd9911671d3bf2b2e5
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 3 19:36:34 2023 +0800
 | | 
-| |     Fixed error for deleting and added edit button for each invoice
+| |     Update README.md
 | | 
-| * commit 10be24e2f95408b4286642eaea0042358d677851
-| | Author: ChewonHan <about0322@naver.com>
-| | Date:   Mon Jul 3 15:18:04 2023 +0800
+| * commit a01298af53190ae7ee5421fb1469f84461036339
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 3 19:35:59 2023 +0800
 | | 
-| |     Fixed sorting algorithm and the deleting button
+| |     Update README.md
 | | 
-| * commit 929bce9894d8693e9ae837ac26479996761ef81d
-| | Author: ChewonHan <about0322@naver.com>
-| | Date:   Sun Jul 2 14:51:28 2023 +0800
+| * commit 550789843fd35ddb1200e7dd083ed9fef4a72d17
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Mon Jul 3 19:27:22 2023 +0800
 | | 
-| |     saved .svg files separately
+| |     Update README.md
 | | 
-| * commit 9537af739251f6852018d237406ec7836cf66c9f
-| | Author: ChewonHan <about0322@naver.com>
-| | Date:   Sun Jul 2 14:51:12 2023 +0800
+| * commit 7dc54814fa924e03c72469f96ac86256356cfaf7
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Thu Jun 29 09:13:29 2023 +0800
 | | 
-| |     searching function, delete (a bit of error), and more button
+| |     Update Notifications and Reminders.html
 | | 
-| * commit 5cfe10cb80434e81d5737bffbd02bddf755265de
-| | Author: ChewonHan <about0322@naver.com>
-| | Date:   Sat Jul 1 15:06:09 2023 +0800
+| * commit 772969cdef46b0b9ede951e34f80e3b9153ddcc6
+| | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | Date:   Thu Jun 29 09:10:46 2023 +0800
 | | 
-| |     InvoicePage created
-| | 
-* | commit 46f6eab47ee2354cbcbbd7f98e347371a3c1d6d4
-| | Author: Guruprasath <guruprasath3200@gmail.com>
-| | Date:   Wed Jul 5 23:19:46 2023 +0800
-| | 
-| |     Added gitignore
-| | 
-* | commit 03f216a3d7a9046137f03686cf97f1d7572fe684
-| | Author: Guruprasath <guruprasath3200@gmail.com>
-| | Date:   Tue Jul 4 23:38:59 2023 +0800
-| | 
-| |     Added redirect to main page
-| | 
-* | commit 6b24d792e0fd6de3ddfad9641ed3e9c9b0f16066
-| | Author: Guruprasath <guruprasath3200@gmail.com>
-| | Date:   Tue Jul 4 23:19:56 2023 +0800
-| | 
-| |     added css to sign up page , rough draft
+| |     Add files via upload
 | |   
-* |   commit a6730214e8bc3c4b7d7c7327e0a6928bb4bba56a
-|\ \  Merge: 6fe34fd 08836e4
-| | | Author: Guruprasath <guruprasath3200@gmail.com>
-| | | Date:   Tue Jul 4 17:33:05 2023 +0800
+| | * commit fc9f103aa7201c290c23087ef67ee4eb7fe0f2a0
+| |/  Author: Ravenix12 <shivani_mariappan@mymail.sutd.edu.sg>
+|/|   Date:   Sun Jul 23 23:04:28 2023 +0800
+| |   
+| |       Supplier Registration
+| | 
+* | commit 6a21757816908f53650f45963bfb2ee49df354fc
+| | Author: rummy0302 <bharathi.ramita@gmail.com>
+| | Date:   Sun Jul 23 13:24:26 2023 +0800
+| | 
+| |     Updated chart labels
+| |   
+* |   commit 551d8e5ec4a657541d767b9c1978cfb84f4f0b12
+|\ \  Merge: 9a44ef0 2f4111a
+| | | Author: rummy0302 <bharathi.ramita@gmail.com>
+| | | Date:   Sun Jul 23 13:21:01 2023 +0800
 | | | 
-| | |     Merge branch 'user_auth_sub'
+| | |     Merge 'home_page_sub' branch into 'main'
+| | | 
+| * | commit 2f4111a3a9317d0ede897ab67ce945c401b7aa0b
+| | | Author: rummy0302 <bharathi.ramita@gmail.com>
+| | | Date:   Sat Jul 22 22:22:28 2023 +0800
+| | | 
+| | |     Added barchart.php
+| | | 
+| * | commit d71dd357e56e03e77fc9e04b3ae86dfd47988bae
+| | | Author: rummy0302 <bharathi.ramita@gmail.com>
+| | | Date:   Fri Jul 21 09:47:10 2023 +0800
+| | | 
+| | |     Updated the chart values
+| | | 
+| * | commit 7e01aaa38a1abc31ee4ff0430a1091ea0a7046d1
+| | | Author: rummy0302 <bharathi.ramita@gmail.com>
+| | | Date:   Tue Jul 18 17:33:41 2023 +0800
+| | | 
+| | |     Modified Layout of Homepage
+| | |   
+| * |   commit df81a594e33dc9652a7768ca7ab8a50b92f1fb3f
+| |\ \  Merge: 314f692 a343a5d
+| | | | Author: rummy0302 <bharathi.ramita@gmail.com>
+| | | | Date:   Tue Jul 18 17:25:43 2023 +0800
+| | | | 
+| | | |     Added barcharts
+| | | | 
+| * | | commit 314f692c1c65f575846cb798c5d10ffc815532bd
+| | | | Author: rummy0302 <bharathi.ramita@gmail.com>
+| | | | Date:   Tue Jul 18 17:17:59 2023 +0800
+| | | | 
+| | | |     Added chart2.js
+| | | | 
+| * | | commit 201d1fa5de5bd884a4c79cf21ed81149407131f4
+| | | | Author: rummy0302 <bharathi.ramita@gmail.com>
+| | | | Date:   Tue Jul 18 17:16:46 2023 +0800
+| | | | 
+| | | |     Modified chart1.js
+| | | | 
+| * | | commit ce7b5076825753b1f4cf22caa4205ec324b640ce
+| | | | Author: rummy0302 <bharathi.ramita@gmail.com>
+| | | | Date:   Tue Jul 18 14:27:55 2023 +0800
+| | | | 
+| | | |     Added chart1.js
+| | | |   
+* | | |   commit 9a44ef033dcdf58b8475ad6231744764e47812b0
+|\ \ \ \  Merge: 41eeed5 b94015a
+| | | | | Author: Han Chewon <45676904+ChewonHan@users.noreply.github.com>
+| | | | | Date:   Sat Jul 22 21:01:59 2023 +0800
+| | | | | 
+| | | | |     Merge pull request #3 from Collaboration95/search_sort_sub
+| | | | |     
+| | | | |     working searching and sorting function with mySQL with fixed frontend
+| | | | | 
+| * | | | commit b94015ad85958da92c339b58cd97d601a41a277b
+| | | | | Author: ChewonHan <about0322@naver.com>
+| | | | | Date:   Sat Jul 22 17:32:03 2023 +0800
+| | | | | 
+| | | | |     removed invoice table on settingPage
+| | | | | 
+| * | | | commit b0be9e8ad2fd08a6f696a2172c892af60d32aac6
+| | | | | Author: ChewonHan <about0322@naver.com>
+| | | | | Date:   Sat Jul 22 17:30:06 2023 +0800
+| | | | | 
+| | | | |     working searching and sorting functions
+| | | | | 
+| * | | | commit 3bb24a8f65a5c9f8245a307b67be648f51b1d44f
+| | | | | Author: ChewonHan <about0322@naver.com>
+| | | | | Date:   Sat Jul 22 14:18:57 2023 +0800
+| | | | | 
+| | | | |     updates omitted changes
+| | | | | 
+| * | | | commit 6dc41eee94fd9482709c29b3be5615e74dea8fb4
+| | | | | Author: ChewonHan <about0322@naver.com>
+| | | | | Date:   Sat Jul 22 14:03:46 2023 +0800
+| | | | | 
+| | | | |     Settings page styles and fixed other pages' style errors
+| | | | | 
+* | | | | commit 41eeed519917da2b3234474aac414e2b80e39b2b
+|/ / / /  Author: Mahima Sharma <1006106@mymail.sutd.edu.sg>
+| | | |   Date:   Sat Jul 22 20:00:25 2023 +0800
+| | | |   
+| | | |       rekognition test code added into test folder
+| | | | 
+* | | | commit c00409173e0d14dc55dd65244ff21cf69f75e692
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Fri Jul 21 12:55:05 2023 +0800
+| | | | 
+| | | |     removed node modules from vsc
+| | | | 
+* | | | commit 853b8b167d6cdd9333c81b4911e68e2b0de7f038
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Fri Jul 21 12:51:23 2023 +0800
+| | | | 
+| | | |     Added Node modules to gitignore
+| | | |   
+* | | |   commit 62d47c042557b7e8586d56f6e75e7e37c0446bae
+|\ \ \ \  Merge: f1f14b4 5f295cd
+| | | | | Author: Mahima Sharma <1006106@mymail.sutd.edu.sg>
+| | | | | Date:   Fri Jul 21 11:46:27 2023 +0800
+| | | | | 
+| | | | |     Merge branch 'main' of https://github.com/Collaboration95/InvoiceHub
+| | | | | 
+| * | | | commit 5f295cdf9ff6572425a783bab329eedcd1df9bfd
+| | | | | Author: ChewonHan <about0322@naver.com>
+| | | | | Date:   Fri Jul 21 01:03:00 2023 +0800
+| | | | | 
+| | | | |     simplified .css format
+| | | | | 
+* | | | | commit f1f14b444b3d769fbd81a0240031af4e16bbca2e
+| | | | | Author: Mahima Sharma <1006106@mymail.sutd.edu.sg>
+| | | | | Date:   Fri Jul 21 00:33:58 2023 +0800
+| | | | | 
+| | | | |     Adding two new test files into the test folder
+| | | | | 
+* | | | | commit 956bb6efe7e0225c5345f7d322f9d7fb8b66de19
+|/ / / /  Author: Guruprasath <guruprasath3200@gmail.com>
+| | | |   Date:   Thu Jul 20 12:01:09 2023 +0800
+| | | |   
+| | | |       fixed documentation , added code to catch null html buttons
+| | | |   
+| | | | * commit 9088536f615c97d18b36da24727eaa431835d0f6
+| |_|_|/  Author: rpriyaj <radhipriya81@gmail.com>
+|/| | |   Date:   Sat Jul 22 22:58:47 2023 +0800
+| | | |   
+| | | |       Added export to csv - not functioning
+| | | | 
+* | | | commit 4f1ee29ad19755a3b37f38d66fa4edbce6bedc7f
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Wed Jul 19 19:20:51 2023 +0800
+| | | | 
+| | | |     added updated db
+| | | | 
+* | | | commit 0a6dc38d8a9c37fa366a7929587adccf5890dd4e
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Wed Jul 19 16:40:54 2023 +0800
+| | | | 
+| | | |     More 404 bug fixes
+| | | | 
+* | | | commit 6f2286d4bd5523a34e5f5656ee05edd714db718e
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Wed Jul 19 14:57:21 2023 +0800
+| | | | 
+| | | |     bug fixes on 404 page
+| | | | 
+* | | | commit 7a0943143235a478408cedbe78e8639a360231eb
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Wed Jul 19 14:16:02 2023 +0800
+| | | | 
+| | | |     fixed resizing in settings page
+| | | | 
+* | | | commit 3f231ef85d27af39ce8fa543dd51b214edcc88ff
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Wed Jul 19 13:55:35 2023 +0800
+| | | | 
+| | | |     Fixed file structure
+| | | | 
+* | | | commit d365ac3d71f3f832e99892db09a2babb4c3f91a3
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Wed Jul 19 13:25:55 2023 +0800
+| | | | 
+| | | |     Added 404 page
+| | | | 
+* | | | commit 58e4102be7f54a85e05d9de765b4bc35b2e8ba07
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Wed Jul 19 12:12:28 2023 +0800
+| | | | 
+| | | |     cleaned up old js code
+| | | | 
+* | | | commit 3548549cc60a4eb826d5a24e5a0dddf5c341d052
+| |/ /  Author: Guruprasath <guruprasath3200@gmail.com>
+|/| |   Date:   Wed Jul 19 12:07:15 2023 +0800
+| | |   
+| | |       fixed date formatting
+| | | 
+* | | commit a343a5d7aebe52156470bee2f7c6055431bd3155
+| | | Author: rpriyaj <radhipriya81@gmail.com>
+| | | Date:   Tue Jul 18 15:53:31 2023 +0800
+| | | 
+| | |     Updated sidebar for all pages & invoice table
+| | | 
+* | | commit 05cdfeef322f4df0dd6bded879122340a19ef169
+|/ /  Author: rpriyaj <radhipriya81@gmail.com>
+| |   Date:   Tue Jul 18 14:48:50 2023 +0800
+| |   
+| |       Updated Sidebar
+| | 
+* | commit 27ae391e4e8b35bd2695032a1398b2d7064f4e0d
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Tue Jul 18 00:30:38 2023 +0800
+| | 
+| |     Added sql
+| | 
+* | commit abef7e1368c67b23a17a2d3a716ccc646917333c
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Tue Jul 18 00:16:58 2023 +0800
+| | 
+| |      Added mock db field
+| | 
+* | commit c1ef3a8a2cc1e5eb51f39eb9b8f50fd3277871fd
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Mon Jul 17 14:33:44 2023 +0800
+| | 
+| |      Fixed invalid path error
+| | 
+* | commit 55a908fedc15b5a02b5a1ead604dc015aa8e17e6
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Fri Jul 14 23:51:55 2023 +0800
+| | 
+| |     Added updated sql dump
+| | 
+* | commit 275a6a64aadf4a8a65a3ea6000e17166ca944cb4
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Fri Jul 14 11:38:17 2023 +0800
+| | 
+| |     save commits during merge
+| | 
+* | commit 0c7cb7adbdb93d35fff1bf77f36017d38c56b018
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Thu Jul 13 21:35:43 2023 +0800
+| | 
+| |     Added view image and view detected Text to buttons
+| | 
+* | commit bb4a7b87d16fbe2f0c7b1821ecaf14750ada1858
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Thu Jul 13 18:28:44 2023 +0800
+| | 
+| |     Added image view and textData
+| | 
+* | commit ef58ce3ec8c89b13ad1f9f68a8086e767940ff97
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Wed Jul 12 20:00:49 2023 +0800
+| | 
+| |     Added images database and ability to store image path
+| | 
+* | commit d90934c23edd417ad5f2f653b2fa930fdf2c3b2e
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Wed Jul 12 17:36:26 2023 +0800
+| | 
+| |     added method to update username
+| | 
+* | commit 3aaf1662878e0db37da3c365e22aea477e293476
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Thu Jul 6 12:58:07 2023 +0800
+| | 
+| |     Added logout feature
+| | 
+* | commit 97bc37c24bf6be53c7dde13d3f79ce861a111fe7
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Thu Jul 6 01:40:31 2023 +0800
+| | 
+| |     added settings
+| |   
+* |   commit de69de2f8565347ee20687a4d3ca91d063b3aa19
+|\ \  Merge: 46f6eab 1c7f90f
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed Jul 5 23:26:08 2023 +0800
+| | | 
+| | |     Merge branch 'search_query_sub'
+| | | 
+| * | commit 1c7f90fec5e7c98c0f193e76c0c3b339ce4af607
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed Jul 5 23:21:53 2023 +0800
+| | | 
+| | |     Deleted redundant files
+| | | 
+| * | commit 28806060f976352b52faea3f529e04b6135e808d
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed Jul 5 22:54:45 2023 +0800
+| | | 
+| | |      Fixed file structure
+| | | 
+* | | commit 46f6eab47ee2354cbcbbd7f98e347371a3c1d6d4
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed Jul 5 23:19:46 2023 +0800
+| | | 
+| | |     Added gitignore
+| | | 
+* | | commit 03f216a3d7a9046137f03686cf97f1d7572fe684
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Tue Jul 4 23:38:59 2023 +0800
+| | | 
+| | |     Added redirect to main page
+| | | 
+* | | commit 6b24d792e0fd6de3ddfad9641ed3e9c9b0f16066
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Tue Jul 4 23:19:56 2023 +0800
+| | | 
+| | |     added css to sign up page , rough draft
+| | |   
+* | |   commit a6730214e8bc3c4b7d7c7327e0a6928bb4bba56a
+|\ \ \  Merge: 6fe34fd 08836e4
+| |_|/  Author: Guruprasath <guruprasath3200@gmail.com>
+|/| |   Date:   Tue Jul 4 17:33:05 2023 +0800
+| | |   
+| | |       Merge branch 'user_auth_sub'
 | | | 
 | * | commit 08836e47d0bbf7317ffa120da4da519b5329cfe1
 | | | Author: Guruprasath <guruprasath3200@gmail.com>
@@ -216,6 +580,96 @@
 | | |     
 | | |      First time writing commit message in a while , so bear with me . Added File structure , minimal server side script , minimal sql backend functionality . Made a user login page , new user registration page . Bare Bones css stuff
 | | |   
+| | | * commit 7bb22d798dd0fae226a02ec613555cc9e68f4587
+| | | | Author: ChewonHan <about0322@naver.com>
+| | | | Date:   Fri Jul 21 00:33:22 2023 +0800
+| | | | 
+| | | |     Changed sorting algorithm icons
+| | | | 
+| | | * commit 32d5023774e85c2d75e0d72272e678c2471df5e1
+| | | | Author: ChewonHan <about0322@naver.com>
+| | | | Date:   Thu Jul 13 21:53:55 2023 +0800
+| | | | 
+| | | |     modified css stylesheets
+| | | | 
+| | | * commit b2f60a0a17c234a874419245cb609f484a7458ff
+| | | | Author: ChewonHan <about0322@naver.com>
+| | | | Date:   Mon Jul 10 20:17:43 2023 +0800
+| | | | 
+| | | |     more optioned for sorting + add more test data +fix  overflow error
+| | | | 
+| | | * commit 65265ad499d6fce19133b7253ad5b74d871a94ad
+| | | | Author: ChewonHan <about0322@naver.com>
+| | | | Date:   Mon Jul 10 10:46:55 2023 +0800
+| | | | 
+| | | |     added sorting based on date
+| | | | 
+| | | * commit b8ca6a6ac247994e9674d2c964e84baf3c6b1f7c
+| | |/  Author: ChewonHan <about0322@naver.com>
+| | |   Date:   Thu Jul 6 15:38:50 2023 +0800
+| | |   
+| | |       fixed dashboard links
+| | | 
+| | * commit 7d3fd7762a18d7604caa9c156d5bc33af403d0fc
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Wed Jul 5 19:50:33 2023 +0800
+| | | 
+| | |     Minor changes after meeting
+| | | 
+| | * commit a7b76e258fd436b13d8fb340b5064ccc0ac827a3
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Mon Jul 3 19:58:33 2023 +0800
+| | | 
+| | |     re-located the folder
+| | | 
+| | * commit 5e98f818ed1e449a88d320876616bebbf7286ca4
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Mon Jul 3 17:02:42 2023 +0800
+| | | 
+| | |     Fixed error for deleting and added edit button for each invoice
+| | | 
+| | * commit 10be24e2f95408b4286642eaea0042358d677851
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Mon Jul 3 15:18:04 2023 +0800
+| | | 
+| | |     Fixed sorting algorithm and the deleting button
+| | | 
+| | * commit 929bce9894d8693e9ae837ac26479996761ef81d
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Sun Jul 2 14:51:28 2023 +0800
+| | | 
+| | |     saved .svg files separately
+| | | 
+| | * commit 9537af739251f6852018d237406ec7836cf66c9f
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Sun Jul 2 14:51:12 2023 +0800
+| | | 
+| | |     searching function, delete (a bit of error), and more button
+| | | 
+| | * commit 5cfe10cb80434e81d5737bffbd02bddf755265de
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Sat Jul 1 15:06:09 2023 +0800
+| | | 
+| | |     InvoicePage created
+| | |   
+| | | * commit 4979f2245aa20674e52da1a57faebaacd3620db7
+| | | | Author: jalamie <jamie.yunni@gmail.com>
+| | | | Date:   Thu Jul 20 14:10:16 2023 +0800
+| | | | 
+| | | |     created function to upload image
+| | | | 
+| | | * commit 799ef9659e1792f36b096a90f9978235781228ad
+| | | | Author: jalamie <jamie.yunni@gmail.com>
+| | | | Date:   Thu Jul 20 05:35:53 2023 +0800
+| | | | 
+| | | |     fixed calculation bugs in PaymentPage, solved back paddling to PaymentForm
+| | | | 
+| | | * commit 8fb20a7bc99f2641243911b338ebf20db3009823
+| |_|/  Author: jalamie <jamie.yunni@gmail.com>
+|/| |   Date:   Tue Jul 18 21:46:06 2023 +0800
+| | |   
+| | |       created paymentpage and paymentform
+| | |   
 | | | * commit 395c799fce5cd787584d35c4b2246b392b242a2d
 | | | | Author: Guruprasath <guruprasath3200@gmail.com>
 | | | | Date:   Wed Jul 5 22:34:04 2023 +0800
@@ -251,68 +705,6 @@
 |/|   Date:   Thu Jun 22 16:00:40 2023 +0800
 | |   
 | |       initial basic template setup
-| |   
-| | * commit 692d3ff9c23500b5bcc8f4687a3bd787887d9bf3
-| | | Author: Guruprasath <guruprasath3200@gmail.com>
-| | | Date:   Tue Jul 4 17:15:41 2023 +0800
-| | | 
-| | |     maintenance work
-| | |     
-| | |     Renamed files , ported script code in html to a js file
-| | | 
-| | * commit 7ae56cce93151f2c880a40e914ab487e1a5038a3
-| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
-| | | Date:   Mon Jul 3 20:08:46 2023 +0800
-| | | 
-| | |     Update Notifications and Reminders.html
-| | | 
-| | * commit 66e9719cd209855fd18b7ce906a85a076b44de36
-| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
-| | | Date:   Mon Jul 3 20:08:09 2023 +0800
-| | | 
-| | |     Update Notifications and Reminders.html
-| | | 
-| | * commit f411346d422d548638ec242025320af560af5b33
-| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
-| | | Date:   Mon Jul 3 19:56:50 2023 +0800
-| | | 
-| | |     Update README.md
-| | | 
-| | * commit 7774bce0b02f7d3f9fcf75879f8ebbf12a5079e0
-| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
-| | | Date:   Mon Jul 3 19:38:01 2023 +0800
-| | | 
-| | |     Update README.md
-| | | 
-| | * commit 19f9528985205915485e74dd9911671d3bf2b2e5
-| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
-| | | Date:   Mon Jul 3 19:36:34 2023 +0800
-| | | 
-| | |     Update README.md
-| | | 
-| | * commit a01298af53190ae7ee5421fb1469f84461036339
-| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
-| | | Date:   Mon Jul 3 19:35:59 2023 +0800
-| | | 
-| | |     Update README.md
-| | | 
-| | * commit 550789843fd35ddb1200e7dd083ed9fef4a72d17
-| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
-| | | Date:   Mon Jul 3 19:27:22 2023 +0800
-| | | 
-| | |     Update README.md
-| | | 
-| | * commit 7dc54814fa924e03c72469f96ac86256356cfaf7
-| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
-| | | Date:   Thu Jun 29 09:13:29 2023 +0800
-| | | 
-| | |     Update Notifications and Reminders.html
-| | | 
-| | * commit 772969cdef46b0b9ede951e34f80e3b9153ddcc6
-| |/  Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
-|/|   Date:   Thu Jun 29 09:10:46 2023 +0800
-| |   
-| |       Add files via upload
 | |   
 | | * commit 954de10f316194f93da8c198a73a0974488ab76c
 | |/| Merge: 6fe34fd 615901c

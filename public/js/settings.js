@@ -102,6 +102,7 @@ else{
 
 function acceptFileInput(event) {
   const file = event.target.files[0];
+  const fileName = file.name;
   const formData = new FormData();
   formData.append('jpeg', file);
   const fileSizeInMB = file.size / (1024 * 1024);
@@ -114,8 +115,8 @@ function acceptFileInput(event) {
   })
     .then(response => response.json())
     .then(data=>{
-      var invoiceid =12345;
-      var invoice_name = "invoice_name";
+      var invoiceid =Math.floor(Math.random() * (2500 - 200 + 1)) + 100;
+      var invoice_name = fileName;
       var uploadDate = new Date().toISOString().split('T')[0];
       var status ="Paid";
       var fakeTotal = Math.floor(Math.random() * (2000 - 200 + 1)) + 200;
