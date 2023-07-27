@@ -6,6 +6,30 @@ const bodyParser = require('body-parser');
 const app = express();
 const table_name ={ login:"users" ,delete_flag:"account_flag",images:"Images",handle_privilege:"account_elev",invoice:"invoices"};
 
+const fetchExpenseData = require('./routes/expense'); 
+const fetchOverdueData = require('./routes/overdue'); 
+
+// API endpoint for expenses
+app.get('/expense', async (req, res) => {
+  try {
+    const data = await fetchExpenseData();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// API endpoint for overdue
+app.get('/overdue', async (req, res) => {
+  try {
+    const data = await fetchOverdueData();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -19,6 +43,10 @@ const pool = mysql.createPool({
 pool.on('error', (err) => {
   console.error('Error in MySQL connection pool:', err);
 });
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
