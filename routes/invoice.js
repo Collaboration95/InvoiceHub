@@ -112,11 +112,29 @@ router.get('/table', async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching invoices' });
     }
 });
+
+router.delete('/invoiceid', async (req, res) => {
+  const {invoiceid} = req.body;
+
+  try {
+    const connection = await pool.getConnection();
+    const query = 'DELETE FROM invoicehub.invoices WHERE invoiceid = ?'
+    const [result] = await connection.query(query, [invoiceid]);
+
+    if (result.affectRows > 0) {
+      res.status (200).json({mesage: "deleted"});
+    } else {
+      res.status(404).json({error: "ERROR"});
+    }
+    connection.release();
+  } catch (error) {
+    console.error('ERROR', error);
+    res.status(500).json({error: "an error"});
+
  
 router.get('/dummy', async (req, res) => {
   try {
-      
-  res.json("Dummy output");
+    res.json("Dummy output");
   } catch (error) {
     console.error('Error fetching invoices:', error);
     res.status(500).json({ error: 'An error occurred while fetching invoices' });

@@ -97,36 +97,29 @@ document.addEventListener('DOMContentLoaded', () => {
   getData().then(data => renderTable(data));
 });
 
-// TODO: fix the delete button
+
 // // Add event listener for delete icon using event delegation
-// table.addEventListener("click", function (event) {
-//   if (event.target.classList.contains("ic_delete")) {
-//     // Retrieve the invoice id from the data attribute
-//     var invoiceId = event.target.getAttribute("id");
+table.addEventListener("click", function (event) {
+  if (event.target.classList.contains("ic_delete")) {
+    // Retrieve the invoice id from the data attribute
+    var invoiceId = event.target.getAttribute("id");
 
-//     // Show a confirmation popup
-//     var confirmed = confirm("Are you sure you want to delete this row?");
+    // Show a confirmation popup
+    var confirmed = confirm("Are you sure you want to delete this invoice?");
 
-//     if (confirmed) {
-//       // Send a DELETE request to the server
-//       fetch(`/invoice/invoiceid/${invoiceId}`, {
-//         method: 'DELETE'
-//       })
-//       .then(response => {
-//         if (response.ok) {
-//           // If the deletion is successful, re-render the table with updated data
-//           showtable();
-//         } else {
-//           // If there was an error with the request, log the error
-//           console.error('Error deleting:', response.statusText);
-//         }
-//       })
-//       .catch(error => {
-//         console.error('Error deleting invoice:', error);
-//       });
-//     }
-//   }
-// });
+    if (confirmed) {
+      fetch('/invoice/invoiceid',{
+        method: "DELETE",
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body:JSON.stringify({invoiceid: (invoiceId)}),
+      });
+    }
+    getData().then(data => renderTable(data));
+  }
+});
+
 
 
 
