@@ -20,26 +20,10 @@ pool.on('error', (err) => {
   console.error('Error in MySQL connection pool:', err);
 });
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.static('public'));
-// app.use((req, res, next) => {
-//   res.status(404);
-//   console.log('404 Error - File Not Found:', req.url);
-//   next();
-// });
-
-// app.use((req, res) => {
-//   res.status(404).sendFile(path.join(__dirname, 'public', 'html', '404.html'));
-// });\
-// app.use(express.static(path.join(__dirname, 'public')));
-
-// app.use((req, res) => {
-//   res.status(404).sendFile(path.join(__dirname, 'public', 'html', '404.html'));
-// });
-
 
 module.exports = {pool,table_name};  // All the datastructures that need to be exported
 
@@ -51,12 +35,19 @@ app.use('/rekognition/',awsRouter);
 
 const invoiceRouter = require('./routes/invoice');
 app.use('/invoice/',invoiceRouter)
-app.get('*', function(req, res){
+
+const paymentRouter = require('./routes/payment'); // Replace the path with the actual path to your payment.js file
+app.use('/payment', paymentRouter);
+
+const paidRouter = require('./routes/paid');
+app.use('/paid', paidRouter);
+
+app.get('*', function(req, res){ // Catch 404 errors 
   res.status(404).sendFile(path.join(__dirname,'public','html','404.html'));
 });
-const port = 8000;
+
+const port =process.env.PORT;
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-

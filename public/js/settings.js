@@ -1,117 +1,13 @@
-document.getElementById("deleteaccount").addEventListener('click',function(event){    
-    if(localData.mode=="guest"){
-        fetch('/account/check-account', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(localData)
-          })
-          .then((response) => {
-            if (response.ok) {
-              return response.json();
-            }
-            throw new Error('Network response was not ok.');
-          })
-          .then((result) => {
-            if (result.exists) {
-              // Account exists in SQL table
-              console.log('Account exists');
-              window.location.replace("https://localhost:3000");
-            } else {
-              // Account doesn't exist in SQL table
-              console.log('Account does not exist');
-            }
-          })
-          .catch((error) => {
-            console.error('Error occurred during account check:', error);
-          });   
-    }
-    else{
-        alert("Website does not suppose admin account deletion currently ");
-    }
-});
+const deleteAccountButton = document.getElementById('delete-account');
+if (deleteAccountButton) {
+  deleteAccountButton.addEventListener('click', deleteAccount);
+} else {
+  console.log("Button 'deleteaccount' doesn't exist on the page.");
+}
 
 fillTable();
 
-function fillTable() {
-    document.getElementById('id').textContent = localData.id;
-    document.getElementById('user').textContent = localData.user;
-    document.getElementById('password').textContent = localData.password;
-    document.getElementById('mode').textContent = localData.mode;
-    document.getElementById('email').textContent = localData.Email;
-}
-
-function fillInvoices(){
-
-  // Fetch the invoices data from the backend
-  fetch('/invoice/all')
-    .then(response => response.json())
-    .then(data => {
-      // Get the table body element
-      const tableBody = document.querySelector('#invoices-table tbody');
-
-      // Loop through the data and populate the table rows
-      data.forEach(invoice => {
-        const row = document.createElement('tr');
-
-        // Get the detected text cell element
-
-        // detectedTextCell.addEventListener('click',(event)=>{
-        //   console.log('invoice id is ',event.target.value);
-        //   const newURL = `http://localhost:8000/invoice/get-detected-text/${event.target.value}`;
-        // window.open(newURL);
-        // })
-        // row.appendChild(detectedTextCell);
-
-        // pathCell.addEventListener('click', (event) => {
-        //  
-        // });
-
-
-        console.log(invoice.upload_date);
-        invoice.upload_date= new Date(invoice.upload_date);
-        const options = { timeZone: 'Asia/Singapore' };
-        invoice.upload_date = (invoice.upload_date).toLocaleDateString('en-SG', options);
-
-        // var deleteIcon = `
-        // <svg class="ic_delete"  xmlns="http://www.w3.org/2000/svg" value="${invoice.path}" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-        //     <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-        //   </svg>`;
-        
-    
-          var previewIcon =  `
-            <svg xmlns="http://www.w3.org/2000/svg" onclick="openImage(this.getAttribute('value'))" value='${invoice.path}' width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-              <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-            </svg>`
-     
-          var exportIcon = `
-              <svg class="ic_export"  onclick="openText(this.getAttribute('value'))" xmlns="http://www.w3.org/2000/svg" value="${invoice.invoiceid}" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-              </svg>`;
-      
-          // // render each row of data
-    
-          tableBody.innerHTML += `
-            <tr>
-              <td>${invoice.invoiceid}</td>
-              <td>${invoice.invoice_name}</td>
-              <td>${invoice.upload_date}</td>
-              <td>${invoice.total}</td>
-              <td>${previewIcon}  ${exportIcon}</td>
-            </tr>`;
-
-      });
-    })
-    .catch(error => {
-      console.error('Error fetching invoices data:', error);
-    });
-
-}
-
-fillInvoices();
+// fillInvoices();
 // Assuming you have a variable called isAdminMode that indicates whether you're in admin mode or not
 const dangerzoneDiv = document.getElementById('dangerzone');
 const dangerZoneElement = document.createElement("div")
@@ -119,9 +15,12 @@ dangerZoneElement.classList.add("dangerzone-elem")
 
 if (localData.mode == "admin") {
   // Admin mode: render title requests under a bold and small heading tag
-  const heading = document.createElement('h3');
-  const boldText = document.createElement('b');
+  const heading = document.createElement('div');
+  heading.id = 'requests_heading';
+  const boldText = document.createElement('div');
+  boldText.id = 'requests_bold';
   const smallText = document.createElement('small');
+  smallText.id = 'requests_small';
   boldText.textContent = 'Requests';
   smallText.textContent = ' (Admin Mode)';
   heading.appendChild(boldText);
@@ -191,6 +90,187 @@ if (localData.mode == "admin") {
 
   // Append the dangerZoneElement to the dangerzoneDiv
   dangerzoneDiv.appendChild(dangerZoneElement);
+}
+
+const fileInput = document.getElementById('aws-call');
+if(fileInput){
+  fileInput.addEventListener('change',acceptFileInput);
+}
+else{
+  console.log('Button fileInput does not exist');
+}
+
+function acceptFileInput(event) {
+  const file = event.target.files[0];
+  const formData = new FormData();
+  formData.append('jpeg', file);
+  const fileSizeInMB = file.size / (1024 * 1024);
+  console.log('File Size:', fileSizeInMB.toFixed(2), 'MB');
+
+  // Send the form data to the server-side script
+  fetch('/invoice/save-image', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(data=>{
+      var invoiceid =12345;
+      var invoice_name = "invoice_name";
+      var uploadDate = new Date().toISOString().split('T')[0];
+      var status ="Paid";
+      var fakeTotal = Math.floor(Math.random() * (2000 - 200 + 1)) + 200;
+
+      var fakerequestBody = {
+        user: localData.user,
+        invoiceid: invoiceid,
+        invoice_name: invoice_name,
+        upload_date: uploadDate,
+        status: status,
+        path: data,
+        total:fakeTotal
+      }
+      console.log(fakerequestBody.upload_date);
+      
+      // Send the POST request to the server
+      fetch('/invoice/insert-record', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(fakerequestBody)
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Record inserted successfully.');
+          } else {
+            console.error('Failed to insert the record.');
+          }
+        })
+        .catch(error => {
+          console.error('Error occurred while inserting the record:', error);
+        });
+    })
+    .catch(error => {
+      console.error('Error occurred while saving the image:', error);
+
+    });
+
+  if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){
+    detectTextBuckets(formData).then(detectedText=>{
+      console.log(typeof detectedText);
+
+      fetch('/invoice/save-detected-text', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ invoiceid: 12345, detectedText: JSON.stringify(detectedText) })
+      }).then(response=>response.json())
+      .then(data=>{
+        console.log(data);
+      });
+    })
+    .catch(error=>{
+      console.error("Error occured"+error);
+    })
+  }
+  else{
+    detectText(formData).then(detectedText=>{
+      console.log(detectedText);
+
+      fetch('/invoice/save-detected-text', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ invoiceid: 12345, detectedText: detectedText })
+      }).then(response=>response.json())
+      .then(data=>{
+        console.log(data);
+      }); 
+    })
+    .catch(error=>{
+      console.error("Error occured"+error);
+    })
+  }
+}
+
+function fillTable() {
+  document.getElementById('id').textContent = localData.id;
+  document.getElementById('user').textContent = localData.user;
+  document.getElementById('password').textContent = localData.password;
+  document.getElementById('mode').textContent = localData.mode;
+  document.getElementById('email').textContent = localData.Email;
+}
+
+function deleteAccount(event){    
+  if(localData.mode=="guest"){
+      fetch('/account/check-account', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(localData)
+        })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error('Network response was not ok.');
+        })
+        .then((result) => {
+          if (result.exists) {
+            // Account exists in SQL table
+            console.log('Account exists');
+            window.location.replace("https://localhost:3000");
+          } else {
+            // Account doesn't exist in SQL table
+            console.log('Account does not exist');
+          }
+        })
+        .catch((error) => {
+          console.error('Error occurred during account check:', error);
+        });   
+  }
+  else{
+      alert("Website does not suppose admin account deletion currently ");
+  }
+}
+
+async function detectText(formData) {
+  try {
+    const response = await fetch('/rekognition/upload-jpeg', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await response.json();
+    console.log('Text Detected:', data);
+    return data;
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    throw error; // Throw the error to propagate it further
+  }
+}
+
+async function detectTextBuckets(formData) {
+  try {
+    const response = await fetch('/rekognition/upload-jpeg-bucket', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await response.json();
+    console.log('Text Detected Buckets:');
+    return data;
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    throw error; // Throw the error to propagate it further
+  }
+}
+
+function logout(){
+  sessionStorage.removeItem('localData');
+  localData = "";
+  window.location.href = "../../index.html";
 }
 
 function requestAdminAccess() {
@@ -343,157 +423,57 @@ function respondRequest(user, value) {
     });
 }
 
-const fileInput = document.getElementById('aws-call');
-fileInput.addEventListener('change', event => {
-  const file = event.target.files[0];
-  const formData = new FormData();
-  formData.append('jpeg', file);
-  const fileSizeInMB = file.size / (1024 * 1024);
-  console.log('File Size:', fileSizeInMB.toFixed(2), 'MB');
+// function fillInvoices(){
+//   // Fetch the invoices data from the backend
+//   fetch('/invoice/table')
+//     .then(response => response.json())
+//     .then(data => {
+//       // Get the table body element
+//       const tableBody = document.querySelector('#invoices-table tbody');
 
-  // Send the form data to the server-side script
-  fetch('/invoice/save-image', {
-    method: 'POST',
-    body: formData
-  })
-    .then(response => response.json())
-    .then(data=>{
+//       // Loop through the data and populate the table rows
+//       data.forEach(invoice => {
+//         invoice.upload_date= new Date(invoice.upload_date);
+//         const options = { timeZone: 'Asia/Singapore' };
+//         invoice.upload_date = (invoice.upload_date).toLocaleDateString('en-SG', options);
+
+//         // var deleteIcon = `
+//         // <svg class="ic_delete"  xmlns="http://www.w3.org/2000/svg" value="${invoice.path}" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+//         //     <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+//         //   </svg>`;
+        
+//           var previewIcon =  `
+//             <svg xmlns="http://www.w3.org/2000/svg" onclick="openImage(this.getAttribute('value'))" value='${invoice.path}' width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+//               <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+//               <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+//             </svg>`
+     
+//           var exportIcon = `
+//               <svg class="ic_export"  onclick="openText(this.getAttribute('value'))" xmlns="http://www.w3.org/2000/svg" value="${invoice.invoiceid}" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+//                 <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+//                 <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+//               </svg>`;
       
-      var user = localData.user;
-      var invoiceid = "invoice_id";
-      var invoice_name = "invoice_name";
-      var uploadDate = new Date().toISOString().split('T')[0];
-      var status = "db";
+//           // // render each row of data
+//           tableBody.innerHTML += `
+//             <tr>
+//               <td>${invoice.invoiceid}</td>
+//               <td>${invoice.invoice_name}</td>
+//               <td>${invoice.upload_date}</td>
+//               <td>${invoice.total}</td>
+//               <td>${previewIcon}  ${exportIcon}</td>
+//             </tr>`;
 
-      // const requestBody = {
-      //   user,
-      //   invoiceid,
-      //   invoice_name,
-      //   upload_date,
-      //   status,
-      //   data
-      // };
+//       });
+//     })
+//     .catch(error => {
+//       console.error('Error fetching invoices data:', error);
+//     });
 
-      var fakerequestBody = {
-        user: localData.user,
-        invoiceid: 12345,
-        invoice_name: "Sample Invoice",
-        upload_date: uploadDate,
-        status: "Paid",
-        path: data,
-        total:2345
-      }
-      console.log(fakerequestBody.upload_date);
-
-      // Send the POST request to the server
-      fetch('/invoice/insert-record', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(fakerequestBody)
-      })
-        .then(response => {
-          if (response.ok) {
-            console.log('Record inserted successfully.');
-          } else {
-            console.error('Failed to insert the record.');
-          }
-        })
-        .catch(error => {
-          console.error('Error occurred while inserting the record:', error);
-        });
-    })
-    .catch(error => {
-      console.error('Error occurred while saving the image:', error);
-
-    });
-
-  if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){
-    detectTextBuckets(formData).then(detectedText=>{
-      console.log(typeof detectedText);
-
-      fetch('/invoice/save-detected-text', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ invoiceid: 12345, detectedText: JSON.stringify(detectedText) })
-      }).then(response=>response.json())
-      .then(data=>{
-        console.log(data);
-      });
-    })
-    .catch(error=>{
-      console.error("Error occured"+error);
-    })
-  }
-  else{
-    detectText(formData).then(detectedText=>{
-      console.log(detectedText);
-
-      fetch('/invoice/save-detected-text', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ invoiceid: 12345, detectedText: detectedText })
-      }).then(response=>response.json())
-      .then(data=>{
-        console.log(data);
-      });
-    
-    })
-    .catch(error=>{
-      console.error("Error occured"+error);
-    })
-  }
-
-
-});
-
-function detectText(formData) {
-  return fetch('/rekognition/upload-jpeg', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Text Detected:', data);
-    return data; // Return the data
-  })
-  .catch(error => {
-    console.error('Error uploading file:', error);
-    throw error; // Throw the error to propagate it further
-  });
-}
-
-
-function detectTextBuckets(formData) {
-  return fetch('/rekognition/upload-jpeg-bucket', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Text Detected Buckets:');
-    return data; // Return the data
-  })
-  .catch(error => {
-    console.error('Error uploading file:', error);
-    throw error; // Throw the error to propagate it further
-  });
-}
-
-function logout(){
-  sessionStorage.removeItem('localData');
-  localData = "";
-  window.location.href = "../../index.html";
-}
+// }
 
 function openImage(value){
 window.open('http://127.0.0.1:8080/img-db/'+value);
-
 }
 
 function openText(value){

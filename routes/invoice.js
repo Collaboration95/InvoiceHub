@@ -13,7 +13,6 @@ function generateUniqueFilename(originalFilename) {
 }
 
 // Configure multer middleware to handle file uploads
-
 const storage = multer.diskStorage({
   destination: "/Users/speedpowermac/Documents/projects/CODE_MAIN/Term5/InvoiceHub/public/img-db", 
   filename: (req, file, cb) => {
@@ -33,7 +32,7 @@ router.post('/save-image', upload.single('jpeg'), (req, res) => {
     res.status(200).json(imagePath);
 });
 
-  router.post('/insert-record', async (req, res) => {
+router.post('/insert-record', async (req, res) => {
     const { user, invoiceid, invoice_name, upload_date, status, path, total } = req.body;
   
     // Insert the record into the table
@@ -54,9 +53,9 @@ router.post('/save-image', upload.single('jpeg'), (req, res) => {
         res.status(500).json({ error: 'An error occurred during signup' });
       }
     }
-  });
+});
 
-  router.post('/save-detected-text', async (req, res) => {
+router.post('/save-detected-text', async (req, res) => {
     const { invoiceid, detectedText } = req.body;
 
     console.log("Saving detected text for invoice with id:", invoiceid, "Detected Text:", detectedText);
@@ -74,9 +73,9 @@ router.post('/save-image', upload.single('jpeg'), (req, res) => {
       console.error("Error:", error);
       res.status(500).json({ error: 'An error occurred while saving detected text' });
     }
-  });
+});
 
-  router.get('/get-detected-text/:invoiceid', async (req, res) => {
+router.get('/get-detected-text/:invoiceid', async (req, res) => {
     const invoiceId = req.params.invoiceid;
   
     console.log("Requesting detected text for invoice with id:", invoiceId);
@@ -99,45 +98,18 @@ router.post('/save-image', upload.single('jpeg'), (req, res) => {
       console.error("Error:", error);
       res.status(500).json({ error: 'An error occurred while retrieving detected text' });
     }
-  });
+});
   
-
-  router.get('/all', async (req, res) => {
+router.get('/table', async (req, res) => {
     try {
       const connection = await pool.getConnection();
-      const [rows] = await connection.query('SELECT * FROM invoices');
+      const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, upload_date , total, status FROM ${table_name.invoice}`);
       connection.release();
       res.json(rows);
     } catch (error) {
       console.error('Error fetching invoices:', error);
       res.status(500).json({ error: 'An error occurred while fetching invoices' });
     }
-  });
-  
-  // router.get('/get-detected-text', async (req, res) => {
-
-  //   const query = `SELECT detectedText FROM invoices`;
-  //   try {
-  //     const connection = await pool.getConnection();
-  //     const [rows] = await connection.query(query);
-      
-  //     if (rows.length > 0) {
-  //       const detectedTexts = rows.map(row => row.detectedText);
-  //       console.log('Detected texts retrieved successfully:', detectedTexts);
-  //       res.status(200).send(detectedTexts.join('\n')); // Send the detected texts as plain text
-  //     } else {
-  //       console.log('No detected texts found');
-  //       res.status(404).json({ message: 'No detected texts found' });
-  //     }
-      
-  //     connection.release();
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     res.status(500).json({ error: 'An error occurred while retrieving detected texts' });
-  //   }
-  // });
-  
-
-  // Export the router
+});
+ 
 module.exports = router;
-
