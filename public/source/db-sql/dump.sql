@@ -22,6 +22,15 @@
 DROP TABLE IF EXISTS `account_elev`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
+
+CREATE TABLE supplier (
+    `id` int(3) UNSIGNED PRIMARY KEY NOT NULL,
+    `Supplier_Name` varchar(255) DEFAULT NULL,
+    `Email varchar`(255) DEFAULT NULL,
+    `Phone` int(255) DEFAULT NULL,
+    `item_list` varchar(255) DEFAULT NULL
+);
+
 CREATE TABLE `account_elev` (
   `id` int NOT NULL AUTO_INCREMENT,
   `flag` int NOT NULL,
