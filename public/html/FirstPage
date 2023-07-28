@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet"  />
+    <title>Browser</title>
+</head>
+
+<body>
+
+
+
+    <h1 style="background-color: blue"><font color="white">INVOICE HUB</font></h1>
+    <div style="position:relative; top: 500px">
+        <p align="center"><font size="+1">Effortlessly manage invoices and optimize inventory with InvoiceHub. Convert paper invoices to a digital database for easier searching and interaction with other software programs. Keep track of your expenditures, obtain insights, and make better decisions. Join InvoiceHub now and revolutionize your process.</font></p>
+        <img src="" /><!--Insert path of image-->
+    </div>
+
+    <div style="position:absolute; left:1175px; top: 22px;">
+        <button id="SignUp" onclick="signup()" style="font-size: 25px; background-color: blue"><font color="white">Get Started</font></button>
+        <script type="text/javascript">
+            function signup() {
+                //link to signup page
+                window.open("");
+            }
+        </script>
+        <!--link to login page-->
+    </div>
+
+    <div style="position:absolute; left:1100px; top: 22px;">
+        <button id="SignUp" onclick="Login()" style="font-size: 25px; background-color: blue"><font color="white">Login</font></button>
+        <script type="text/javascript">
+            function Login() {
+                window.open("");//link to login page
+            }
+        </script>
+
+    </div>
+    
+    <img src="Img/signup.jpg" alt="Italian Trulli" height="300" width="300"/>
+</body>
+
+</html>
