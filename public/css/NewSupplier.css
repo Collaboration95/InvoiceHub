@@ -1,0 +1,225 @@
+:root{
+    font-family: 'Ubuntu', sans-serif;
+    --primary-color: #033246;
+    --secondary-color: #2D5261;
+    --tertiary-color: #D3D4CD;
+}
+
+/* style for the main body */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none; 
+    color: inherit;
+    width: 100%;
+  }
+  
+  a:visited {
+    color: inherit;
+  }
+  
+  a:focus,
+  a:active {
+    outline: none; 
+  }
+
+/* styles for the side menu */
+
+.sidebar {
+    width: 15%;
+    min-width: 250px;
+
+    background-color: var(--primary-color);
+    height: 100vh;
+    position: fixed;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    margin-top: 20px;
+    margin: 0;
+    padding: 10px;
+    
+}
+
+.sidebar li {
+    width: 100%;
+    align-items: center;
+    display: flex;
+}
+
+.logo{
+    width: 30%;
+}
+
+.title {
+    padding: 10px;
+    font-size: 25px;
+}
+
+/* styles for link in the side bar */
+
+.sidebar a {
+    color: var(--tertiary-color);
+    text-decoration: none;
+}
+
+.sidebar a:active {
+    color: var(--tertiary-color);
+}
+
+/* styles for personal info section */
+
+.profile {
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    color: var(--tertiary-color);
+    display: flex;
+    align-items: center;
+}
+
+.profile_pic{
+    width: 70px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.personal_info {
+    
+    margin-left: 20px;
+}
+
+.name {
+    font-size: 25px;
+    font-style: bold;
+}
+
+.btn_edit_profile:hover {
+    background-color: var(--secondary-color);
+    color:var(--tertiary-color);
+}
+
+.notification{
+    align-self: flex-start;
+    position: absolute;
+    top:0;
+    right: 0;
+    padding: 15px;
+    margin-top: 5px;
+}
+
+.ic_notificaiton:hover{
+    background-color: var(--secondary-color);
+}
+/* style for navigation on the side bar */
+
+.navigation{
+    margin-top: 30px;
+}
+
+.ic_home,
+.ic_invoice,
+.ic_soa,
+.ic_payment,
+.ic_setting{
+    color:var(--tertiary-color);
+    margin-right: 10px;
+    margin-left: 10px
+}
+
+.home,
+.invoice,
+.soa,
+.payment,
+.setting{
+    padding: 10px;
+    width: 100%;
+    color: white;
+}
+
+.home:hover,
+.invoice:hover,
+.soa:hover,
+.payment:hover,
+.setting:hover{
+    background-color: var(--secondary-color);
+}
+.supplier{
+    background-image: linear-gradient(to left, #2D5261 99%, #D3D4CD 1%);
+    /* background-color: #2D5261; */
+    width: 100%;
+    padding: 10px;
+
+}
+.supplier:hover{
+    background-color: #2D5261;
+}
+.ic_supplier{
+    color:#D3D4CD;
+    margin-right: 10px;
+}
+/* style for the main content */
+
+.content {
+    margin-left: max(250px, 17%);
+    padding: 20px;
+}
+
+.supplier_title{
+    font-size: 35px;
+    color: #2D5261;
+    font-weight: bold;
+}
+
+.Add_Supplier_button{
+    width: 170px;
+    height: 50px;
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 7px;
+    background-color: #3b6c7bd8;
+    color:white;
+    border: none;
+    margin-top: 50px;
+    margin-left: 1300px;
+    margin-bottom: 10px;
+}
+.Manage_Supplier_button{
+    width: 170px;
+    height: 50px;
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 7px;
+    background-color: #3b6c7bd8;
+    color:white;
+    border: none;
+    margin-left: 1300px;
+}
+
+/* styles.css */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
