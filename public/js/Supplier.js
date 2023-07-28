@@ -1,5 +1,5 @@
+require('dotenv').config(); // Load environment variables from .env file
 const manage = document.getElementById('manage-btn');
-
 var imageUpload = document.getElementById('template');
 var previewImage = document.getElementById('previewImage');
 const previewButton = document.getElementById('previewButton');
@@ -9,113 +9,199 @@ const reader = new FileReader();
 var nameInput = document.getElementById('name');
 var emailInput = document.getElementById('email');
 var phoneInput = document.getElementById('phone');
-var itemsInput = document.getElementById('csvFile');
 const submit = document.getElementById('submit');
 
 var table = document.getElementById('supplier-table');
-let supplier_data = []; 
 
-var suppliers = 0;
-var code = 0;
+//db
 
-function addSupplier() {
-  suppliers += 1;
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+function SupplierCode() {
+  let code = suppliers;
+  if (code < 10) {
+    code = "00" + code;
+  } else if (code < 100) {
+    code = "0" + code;
+  } else {
+    code = code.toString();
+  }
+  return code;
 }
 
-function SupplierCode(){
-    code = suppliers;
-    if (code<10){
-        code = "00"+code;
-    }
-    if (code<100){
-        code = "0"+code;
-    }
-    else code=code.toString();
-}
+imageUpload.addEventListener('change', function () {
+  const file = imageUpload.files[0];
+  reader.onload = function (e) {
+    previewButton.style.display = 'inline-block';
+    previewButton.dataset.imageSrc = reader.result;
+  };
 
-imageUpload.addEventListener('change', function() {
-    const file = imageUpload.files[0];
-    reader.onload = function(e) {
-      
-      //previewImage.style.display = 'block';
-      previewButton.style.display = 'inline-block';
-      previewButton.dataset.imageSrc = reader.result;
-    };
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+});
 
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  });
+previewButton.addEventListener('click', function (event) {
+  event.preventDefault()
+  const imageSrc = previewButton.dataset.imageSrc;
+  previewImage.src = imageSrc;
+  previewImage.style.display = 'block';
+});
 
-  previewButton.addEventListener('click', function(event) {
-    // Handle the preview button click event
-    event.preventDefault()
-    const imageSrc = previewButton.dataset.imageSrc;
-    previewImage.src = imageSrc;
-    previewImage.style.display = 'block';
-    console.log('Preview button clicked!');
-
-    if (file) {
-        reader.readAsDataURL(file);
-      }
-  });
-
-function validateForm() {
-    const emailError = document.getElementById('emailError');
-    const phoneError = document.getElementById('phoneError');
-    
-    if (!emailInput.checkValidity()) {
-      emailError.style.display = 'block';        
-    }
-    else if (!phoneInput.checkValidity()) {
-        phoneError.style.display = 'block';
-    }
-    else {
-      // Proceed with form submission or further processing
-      addSupplier();
-      saveData();
-    }
-    
-  } 
-
-submit.addEventListener('click', function(event) {
-    validateForm();
-    console.log('submit clicked');
-    
-
+submit.addEventListener('click', function (event) {
+  validateForm();
+  event.preventDefault();
+  const entry = event.target;
+  console.log('submit clicked');
 })
 
-function saveData() {
-    data = {
-      code: SupplierCode(),
-      name: nameInput.value,
-      email: emailInput.value,
-      phone: phoneInput.value
-    }; 
-    supplier_data.push(data);
-  // const csvFile = csvFileUpload.files[0];
-  //  if (csvFile) {
-    //  data.csvFileName = csvFile.name;
-    //}
-  
-//    const imageFile = imageUpload.files[0];
-  //  if (imageFile) {
-    //  data.imageFileName = imageFile.name;
-      //data.imageSrc = previewButton.dataset.imageSrc;
-  //  } 
-    
-  localStorage.setItem('supplierData', JSON.stringify(supplier_data));
-  console.log(supplier_data);
+function validateForm() {
+  const emailError = document.getElementById('emailError');
+  const phoneError = document.getElementById('phoneError');
+
+  if (!emailInput.checkValidity()) {
+    emailError.style.display = 'block';
+  } else if (!phoneInput.checkValidity()) {
+    phoneError.style.display = 'block';
+  } else {
+    // Proceed with form submission or further processing
+    addSupplier();
+    saveData();
+    console.log("successfully submitted");
   }
-  
-function loadData(data) {
-  const supplierData = JSON.parse(localStorage.getItem('supplierData'));
+}
 
-   if (supplierData) {
-    table.innerHTML = ''; // Clear any existing data in the table
+async function saveData() {
+  const data = {
+    code: SupplierCode(),
+    name: nameInput.value,
+    email: emailInput.value,
+    //phone: phoneInput.value
+  };
 
+  if (data.phone) {
+    const phoneNumber = parseInt(data.phone, 10); // Parse the input as an integer
+    if (isNaN(phoneNumber)) {
+      console.error('Error: Phone number must be an integer.');
+      return; // Exit the function if the phone number is not an integer
+    }
+    // Update the data object with the parsed integer
+    data.phone = phoneNumber;
+  }
+
+  try {
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+    });
+
+    await connection.query(
+      `INSERT INTO supplier (code, name, email, phone) VALUES (?, ?, ?, ?);`,
+      [data.code, data.name, data.email, data.phone]
+    );
+
+    console.log('Data saved to SQL database successfully!');
+    connection.end();
+  } catch (err) {
+    console.error('Error saving data to SQL database:', err);
+  }
+
+  const csvFile = itemsInput.files[0];
+      if (csvFile) {
+        const reader = new FileReader();
+        reader.onload = async function (event) {
+          const csvContents = event.target.result;
+          data.csv_data = csvContents;
+
+          try {
+            const connection = await mysql.createConnection({
+              host: process.env.DB_HOST,
+              user: process.env.DB_USER,
+              password: process.env.DB_PASSWORD,
+              database: process.env.DB_DATABASE,
+            });
+
+            await connection.query(
+              `INSERT INTO supplier (name, email, phone, csv_data) VALUES (?, ?, ?, ?);`,
+              [data.name, data.email, data.phone, data.csv_data]
+            );
+
+            console.log('Data saved to SQL database successfully!');
+            connection.end();
+          } catch (err) {
+            console.error('Error saving data to SQL database:', err);
+          }
+        };
+
+        reader.readAsText(csvFile);
+      } else {
+        // If no CSV file is selected, proceed to save other form data
+        try {
+          const connection = await mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_DATABASE,
+          });
+
+          await connection.query(
+            `INSERT INTO supplier (name, email, phone) VALUES (?, ?, ?);`,
+            [data.name, data.email, data.phone]
+          );
+
+          console.log('Data saved to SQL database successfully!');
+          connection.end();
+        } catch (err) {
+          console.error('Error saving data to SQL database:', err);
+        }
+      }
+    
+  // Optionally, you can reload the table to display the updated data
+  loadData();
+}
+
+async function retrieveDataFromDB() {
+  try {
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+    });
+
+    // Fetch all rows from the "supplier" table
+    const [rows, fields] = await connection.query('SELECT * FROM supplier');
+
+    // Close the database connection
+    connection.end();
+
+    return rows;
+  } catch (err) {
+    console.error('Error retrieving data from the database:', err);
+    return null; // Return null or handle the error as per your application's requirement
+  }
+}
+
+// Function to load data into the table from the database
+async function loadData() {
+  const supplierData = await retrieveDataFromDB();
+
+  if (supplierData) {
+    const tableBody = document.getElementById('supplier-table').getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = ''; // Clear any existing data in the table
+
+    // Calculate the number of blank rows needed to fill up to 3 rows
+    const blankRowCount = Math.max(3 - supplierData.length, 0);
+
+    // Add data rows to the table
     for (const data of supplierData) {
-      const row = table.insertRow();
+      const row = tableBody.insertRow();
+
+      const cellSelect = row.insertCell();
+      cellSelect.innerHTML = '<button class="select-btn">Select</button>';
 
       const cellCode = row.insertCell();
       cellCode.textContent = data.code;
@@ -123,50 +209,29 @@ function loadData(data) {
       const cellName = row.insertCell();
       cellName.textContent = data.name;
 
-      const cellEmail = row.insertCell();
-      cellEmail.textContent = data.email;
+      const cellItemList = row.insertCell();
+      // Replace 'item_list' with the appropriate property of your data object that contains the item list
+      cellItemList.textContent = data.item_list;
+    }
 
-      const cellPhone = row.insertCell();
-      cellPhone.textContent = data.phone;
-  }}}
+    // Add blank rows to fill up to 3 rows
+    for (let i = 0; i < blankRowCount; i++) {
+      const row = tableBody.insertRow();
 
-  function table_display(){
-    table.style.display = 'block';
+      const cellSelect = row.insertCell();
+      cellSelect.innerHTML = '<button class="select-btn">Select</button>';
 
-    const Load_data = JSON.parse(localStorage.getItem('supplierData'));
-    if (load_data.length > 2 ){
-      loadData();       
-      }
-    // if less than 3 suppliers, then add blank rows to the table
+      const cellCode = row.insertCell();
+      cellCode.textContent = '';
 
-    else {
-        loadData();
-        
-        for (var i = 0; i < 3 - length(load_data); i++){
-            // Create a new blank row element
-          const newRow = table.insertRow();
-    }}}
-  
-  // manage.addEventListener('click', table_display);
+      const cellName = row.insertCell();
+      cellName.textContent = '';
 
-  function clearTable(table) {
-    var firstRow = table.rows[0];
-    var tBody = table.tBodies[0].cloneNode(false);
-    tBody.appendChild(firstRow);
-    table.replaceChild(tBody, table.tBodies[0]);
+      const cellItemList = row.insertCell();
+      cellItemList.textContent = '';
+    }
   }
+}
 
-  function disableAutocomplete() {
-    var form = document.getElementById('yourFormId'); // Replace 'yourFormId' with the actual ID of your form
-    form.setAttribute('autocomplete', 'off');
-  }
-  
-  
-  // Call the function to load saved data when the page loads
-  //  window.addEventListener('load', loadData);
-
-
-  // issues: 
-  // 1. when the page loads, the table is not displayed
-  // 2. when Submit is clicked, data is not displayed on console. x
-
+// Call the function to load data from the database when the page loads
+window.addEventListener('load', loadData);

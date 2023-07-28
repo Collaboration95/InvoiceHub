@@ -26,6 +26,18 @@
     cursor: pointer;
 } 
 
+.select-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
 .reg-title{
     font-size: 25px;
     font-weight: bold;
