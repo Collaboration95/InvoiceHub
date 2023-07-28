@@ -19,7 +19,7 @@
         <img src="" /><!--Insert path of image-->
     </div>
 
-    <div style="position:absolute; left:1175px; top: 22px;">
+    <div style="position:absolute; left:590px; top: 22px;">
         <button id="SignUp" onclick="signup()" style="font-size: 25px; background-color: blue"><font color="white">Get Started</font></button>
         <script type="text/javascript">
             function signup() {
@@ -30,7 +30,7 @@
         <!--link to login page-->
     </div>
 
-    <div style="position:absolute; left:1100px; top: 22px;">
+    <div style="position:absolute; left:730px; top: 22px;">
         <button id="SignUp" onclick="Login()" style="font-size: 25px; background-color: blue"><font color="white">Login</font></button>
         <script type="text/javascript">
             function Login() {
