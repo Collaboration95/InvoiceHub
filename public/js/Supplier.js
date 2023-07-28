@@ -210,8 +210,23 @@ async function loadData() {
       cellName.textContent = data.name;
 
       const cellItemList = row.insertCell();
-      // Replace 'item_list' with the appropriate property of your data object that contains the item list
-      cellItemList.textContent = data.item_list;
+      cellItemList.textContent = 'View'; // Display "View" as the link text
+      cellItemList.setAttribute('id', `item-list-${data.id}`); // Set the id attribute
+
+      // Add an event listener to the "Item List" cell
+      cellItemList.addEventListener('click', () => {
+        // Retrieve the item list data for the selected supplier from the database
+        // You need to implement the function to retrieve item list data based on the supplier ID
+        const itemListData = getItemListData(data.id);
+
+        // Open a new tab with the item list content
+        const itemListTab = window.open('', '_blank');
+        itemListTab.document.write(`<h1>Item List for ${data.name}</h1>`);
+        // Render the item list data in the new tab
+        // You can format it as needed, e.g., as an HTML table or a list
+        itemListTab.document.write(`<p>${itemListData}</p>`);
+        itemListTab.document.close();
+      });
     }
 
     // Add blank rows to fill up to 3 rows
@@ -230,6 +245,42 @@ async function loadData() {
       const cellItemList = row.insertCell();
       cellItemList.textContent = '';
     }
+  }
+}
+
+async function getItemListData(supplierId) {
+  try {
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+    });
+
+    // Fetch the CSV data from the "supplier" table based on the supplier ID
+    const [rows, fields] = await connection.query(
+      'SELECT csv_data FROM supplier WHERE id = ?',
+      [supplierId]
+    );
+
+    // Close the database connection
+    connection.end();
+
+    if (rows.length > 0) {
+      // Assuming the CSV data is in the first row of the result set
+      const csvData = rows[0].csv_data;
+
+      // Open a new tab with the item list content
+      const itemListTab = window.open('', '_blank');
+      itemListTab.document.write(`<h1>Item List for Supplier ID ${supplierId}</h1>`);
+      // Render the CSV data in the new tab
+      itemListTab.document.write(`<pre>${csvData}</pre>`); // Use <pre> tag for preformatted text
+      itemListTab.document.close();
+    } else {
+      console.log(`No item list found for Supplier ID ${supplierId}.`);
+    }
+  } catch (err) {
+    console.error('Error retrieving item list data from the database:', err);
   }
 }
 
