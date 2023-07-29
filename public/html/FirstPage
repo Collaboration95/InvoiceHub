@@ -22,9 +22,14 @@
 
     <div style="position:absolute; left:1180px; top: 22px;">
         <button id="SignUp" onclick="window.location.href = 'index.html'"  style="font-size: 25px; background-color: blue"><font color="white">Login</font></button>
-
     </div>
-    
-    <img src="Img/signup.jpg" height="300" width="300"/>
+
+    <img src="Picture2.jpg" width="300" height="300" style="position:absolute; left: 1000px" />
+    <img src="Picture1.jpg" width="300" height="300" style="position:absolute; left: 1100px; top: 190px" />
+    <img src="Picture3.jpg" width="500" height="300" style="position:absolute; left: 200px" />
+    <img src="Picture4.jpg" width="500" height="300" style="position:absolute; left: 300px; top: 200px" />
+    <img src="Picture5.jpg" width="500" height="300" style="position:absolute; left: 400px; top: 250px" />
+
+    //modify path of images if necessary
 </body>
 </html>
