@@ -22,7 +22,6 @@
 
     <div style="position:absolute; left:1180px; top: 22px;">
         <button id="SignUp" onclick="window.location.href = 'index.html'"  style="font-size: 25px; background-color: blue"><font color="white">Login</font></button>
-        <img src="/html/Img/signup.jpg" alt="Italian Trulli">
 
     </div>
     
