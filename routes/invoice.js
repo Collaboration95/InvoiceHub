@@ -58,9 +58,6 @@ router.post('/insert-record', async (req, res) => {
 
 router.post('/save-detected-text', async (req, res) => {
     const { invoiceid, detectedText } = req.body;
-
-    console.log("Saving detected text for invoice with id:", invoiceid, "Detected Text:", detectedText);
-  
     const query = `UPDATE invoices SET detectedText = ? WHERE invoiceid = ?`;
     try {
       const connection = await pool.getConnection();
@@ -79,8 +76,6 @@ router.post('/save-detected-text', async (req, res) => {
 router.get('/get-detected-text/:invoiceid', async (req, res) => {
     const invoiceId = req.params.invoiceid;
   
-    console.log("Requesting detected text for invoice with id:", invoiceId);
-  
     const query = `SELECT detectedText FROM invoices WHERE invoiceid = ?`;
     try {
       const connection = await pool.getConnection();
@@ -88,7 +83,6 @@ router.get('/get-detected-text/:invoiceid', async (req, res) => {
       
       if (rows.length > 0) {
         const detectedTexts = rows.map(row => row.detectedText);
-        console.log('Detected texts retrieved successfully:', detectedTexts);
         res.status(200).send(detectedTexts.join('\n')); // Send the detected texts as plain text
       } else {
         console.log('No detected texts found');
@@ -130,7 +124,7 @@ router.delete('/invoiceid', async (req, res) => {
   } catch (error) {
     console.error('ERROR', error);
     res.status(500).json({error: "an error"});
-
+  }});
  
 router.get('/dummy', async (req, res) => {
   try {

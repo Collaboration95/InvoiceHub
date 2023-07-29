@@ -6,7 +6,6 @@ if (deleteAccountButton) {
 }
 
 fillTable();
-
 // fillInvoices();
 // Assuming you have a variable called isAdminMode that indicates whether you're in admin mode or not
 const dangerzoneDiv = document.getElementById('dangerzone');
@@ -158,17 +157,15 @@ function acceptFileInput(event) {
 
   if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){
     detectTextBuckets(formData).then(detectedText=>{
-      console.log(typeof detectedText);
-
+    const output = extractDetails(detectedText);
       fetch('/invoice/save-detected-text', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ invoiceid: 12345, detectedText: JSON.stringify(detectedText) })
+        body: JSON.stringify({ invoiceid: 12345, detectedText: JSON.stringify(output) })
       }).then(response=>response.json())
       .then(data=>{
-        console.log(data);
       });
     })
     .catch(error=>{
@@ -177,8 +174,6 @@ function acceptFileInput(event) {
   }
   else{
     detectText(formData).then(detectedText=>{
-      console.log(detectedText);
-
       fetch('/invoice/save-detected-text', {
         method: 'POST',
         headers: {
@@ -240,7 +235,7 @@ function deleteAccount(event){
 
 async function detectText(formData) {
   try {
-    const response = await fetch('/rekognition/upload-jpeg', {
+    const response = await fetch('/rekognition/upload-jpeg-bucket', {
       method: 'POST',
       body: formData
     });
@@ -255,16 +250,15 @@ async function detectText(formData) {
 
 async function detectTextBuckets(formData) {
   try {
-    const response = await fetch('/rekognition/upload-jpeg-bucket', {
+    const response = await fetch('/rekognition/upload-jpeg-bucket-new', {
       method: 'POST',
       body: formData
     });
-    const data = await response.json();
-    console.log('Text Detected Buckets:');
+    const data = await response.json(); // Convert the response to JSON
     return data;
   } catch (error) {
     console.error('Error uploading file:', error);
-    throw error; // Throw the error to propagate it further
+    throw error;
   }
 }
 
@@ -482,3 +476,29 @@ function openText(value){
         window.open(newURL);
 }
 
+function extractDetails(ocrResult) {
+
+  const validTypes = {
+    Name: ["VENDOR_NAME", "NAME"],
+    Telephone: ["VENDOR_PHONE"],
+    Total: ["TOTAL"],
+    IssuedDate: ["INVOICE_RECEIPT_DATE"]
+  };
+  
+  const keyvalue = {Name:[],Telephone:[],Total:[],IssuedDate:[]};
+  
+  ocrResult.forEach(item=>{
+    for (const category in validTypes) {
+      if (validTypes[category].includes(item.type)) {
+        if(keyvalue[category].includes(item.value)){
+          continue; // Skip duplicate values
+        }
+        else{
+          keyvalue[category].push(item.value);
+        }
+      }
+    }
+  });
+  
+  return keyvalue;
+}
