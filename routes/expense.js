@@ -13,26 +13,35 @@ async function fetchData() {
     const connection = await mysql.createConnection(mysqlConfig);
 
     const [rows] = await connection.execute(`
-    SELECT 
-    month,
-    SUM(total) as total
-FROM invoices
-GROUP BY month
-ORDER BY CASE 
-    WHEN month = 'Jan' THEN 1
-    WHEN month = 'Feb' THEN 2
-    WHEN month = 'Mar' THEN 3
-    WHEN month = 'Apr' THEN 4
-    WHEN month = 'May' THEN 5
-    WHEN month = 'Jun' THEN 6
-    WHEN month = 'Jul' THEN 7
-    WHEN month = 'Aug' THEN 8
-    WHEN month = 'Sep' THEN 9
-    WHEN month = 'Oct' THEN 10
-    WHEN month = 'Nov' THEN 11
-    WHEN month = 'Dec' THEN 12
+
+    
+
+    SELECT *
+FROM (
+  SELECT
+    DATE_FORMAT(upload_date, '%b') AS month,
+    SUM(total) AS total
+  FROM invoices
+  GROUP BY DATE_FORMAT(upload_date, '%b')
+) AS subquery
+ORDER BY 
+  CASE month
+    WHEN 'Jan' THEN 1
+    WHEN 'Feb' THEN 2
+    WHEN 'Mar' THEN 3
+    WHEN 'Apr' THEN 4
+    WHEN 'May' THEN 5
+    WHEN 'Jun' THEN 6
+    WHEN 'Jul' THEN 7
+    WHEN 'Aug' THEN 8
+    WHEN 'Sep' THEN 9
+    WHEN 'Oct' THEN 10
+    WHEN 'Nov' THEN 11
+    WHEN 'Dec' THEN 12
     ELSE 99
-END;
+  END;
+
+  
 
     `);
 

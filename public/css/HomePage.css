@@ -1,12 +1,14 @@
-.summary, .upload, .overdue_stat {
+
+
+/* .summary, .upload, .overdue_stat {
   flex-basis: 20px;
   flex-grow: 1;
   margin-right: 10px;
-}
+} */
 
-.upload {
-  margin-right: 0;
-}
+
+
+
 
 .content {
   display: flex;
@@ -41,7 +43,47 @@
   box-shadow: 5px 5px 10px rgba(45, 82, 97, 0.5);
   text-align: center;
   color: #033246;
+  margin-top: 20px;
 }
+
+/* .upload {
+  margin-right: 0;
+  width: 400px;
+  height: 50px;
+  display: flex;
+  gap: 30px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: 5px 5px 10px rgba(45, 82, 97, 0.5);
+} */
+.upload {
+  margin-top: 50px;
+  height: 180px;
+  width: 210px;
+  padding-top: 0%;
+  color: #033246;
+  display: block;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: 5px 5px 10px rgba(45, 82, 97, 0.5);
+  text-align: left;
+}
+
+
+.box_upload {
+  display: flex;
+  align-items: center;
+}
+.box_upload {
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-shadow: 5px 5px 10px rgba(45, 82, 97, 0.5);
+  text-align: left;
+}
+
 
 .total_outstanding {
   flex: 1;
@@ -63,12 +105,7 @@
   padding-left: 20px;
 }
 
-.upload {
-  margin-top: 50px;
-  height: 70px;
-  padding-top: 0%;
-  color: #033246;
-}
+
 
 .box_upload {
   padding: 10px;
@@ -78,7 +115,7 @@
   text-align: left;
 }
 
-.upload_invoice {
+/* .upload_invoice {
   display: flex;
   padding: 5px;
   justify-content: space-between;
@@ -97,7 +134,7 @@
   padding: 5px;
   justify-content: space-between;
   gap: 10px;
-}
+} */
 
 .ic_upload {
   color: #033246;
@@ -144,9 +181,8 @@
 
 .stat {
   width: 100%;
-  min-width: 100px;
-  max-width: 1100px;
-  height: 500px;
+  width: 1000px;
+  height: 600px;
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
@@ -184,6 +220,8 @@
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
 }
 
+
+
 .overdue_stat .barchar1 {
   padding: 2rem;
   border: 1px solid #ffffff;
@@ -192,8 +230,10 @@
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
 }
 
+
 .container {
   padding: 10px;
+
 }
 
 .overdue_stat {
@@ -224,15 +264,15 @@
   margin-top: 10px;
 }
 
-.content_top {
+/* .content_top {
   display: flex;
   flex-wrap: wrap;
-}
+} */
 
-.content_top_left, .overdue_stat, .sales_collections {
+/* .content_top_left, .overdue_stat, .sales_collections {
   flex: 1;
   margin-right: 20px;
-}
+} */
 
 .sales_collections {
   margin-right: 0;
@@ -240,10 +280,12 @@
 
 /* overdue stats */
 .overdue_stat {
-  max-width: 280px;
+  height: 200 px;
+  width: 300 px;
   display: flex;
   box-shadow: 5px 5px 10px rgba(45, 82, 97, 0.5);
   text-align: center;
+  margin-left: 160px;
   color: #033246;
 }
 
@@ -279,27 +321,78 @@
   }
 }
 
-/* CSS for the container of the upload divs */
-.upload {
+
+/* .upload {
   display: flex;
   justify-content: space-between;
-}
+} */
 
-/* CSS for each individual upload div */
-.box_upload {
-  display: flex;
-  align-items: center;
-}
+
+
 
 /* CSS for the icons */
-.ic_upload svg {
+/* .ic_upload svg {
   width: 16px;
   height: 16px;
   margin-right: 8px;
-}
+} */
 
 /* Additional styles for the titles */
 .total_outstanding_title, .overdue_title, .due_title {
   font-weight: normal;
   white-space: nowrap;
+}
+
+
+
+  
+.file-invoice,
+.file-soa,
+.file-credit-note{
+  font-size: 15px;
+  width:fit-content;
+  margin-top:5px;
+  margin-bottom: 5px;
+  
+  color:  #033246;
+  background-color: white;
+  
+  border-radius: 4px;
+  display: block;
+  
+  align-content: center;
+  padding: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.file-invoice{
+  padding-right: 8px;
+  padding-left: 8px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.file-invoice:hover,
+.file-soa:hover,
+.file-credit-note:hover{
+  background-color: white;
+  cursor: pointer;
+}
+
+.ic_delete_acc,
+.ic_logout,
+.ic_choose_file{
+  padding-right: 5px;
+}
+
+
+#aws-call{
+  display: none;
+}
+
+
+.file-container {
+  display: block;
+  margin-bottom: 10px; 
 }
