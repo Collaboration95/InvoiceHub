@@ -36,6 +36,9 @@ app.use('/rekognition/',awsRouter);
 const invoiceRouter = require('./routes/invoice');
 app.use('/invoice/',invoiceRouter)
 
+const supplierRouter = require('./routes/supplier'); // Replace the path with the actual path to your payment.js file
+app.use('/supplier', supplierRouter);
+
 app.get('*', function(req, res){ // Catch 404 errors 
   res.status(404).sendFile(path.join(__dirname,'public','html','404.html'));
 });
