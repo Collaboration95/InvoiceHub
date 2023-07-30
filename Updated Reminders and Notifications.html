@@ -89,9 +89,8 @@
                 table-layout: fixed
             }
         </style>
-
-        <table style="width:100%" id="Data Table2" border="1" class="mainTable" contenteditable="true" align="left">
-            <tr contenteditable="true" bgcolor="#D6EEEE">
+        <table style="width:100%" id="Header" border="1" class="mainTable" contenteditable="false" align="left">
+            <tr contenteditable="false" bgcolor="#D6EEEE">
                 <th>Select </th>
                 <th>Reference Number </th>
                 <th>Customer Name </th>
@@ -101,45 +100,39 @@
             </tr>
         </table>
 
-        <script>
-            document.getElementById("Data Table2").innerHTML = localStorage.getItem("Data Table2");
-            document.getElementById("Data Table2").style.textAlign = "center";//center-aligns text
-        </script>
+        <table style="width:100%" id="Data Table2" border="1" class="mainTable" contenteditable="true" align="left">
+            
+        </table>
 
         <script type="text/javascript">
-            var table = document.getElementById("Data Table2");
-            var length = table.rows.length - 1;
+            
+            document.getElementById("Data Table2").innerHTML = localStorage.getItem("Data Table2");
+            document.getElementById("Data Table2").style.textAlign = "center";//center-aligns text
+            
             Notification.requestPermission().then(perm => {
-                //alert(perm);
-                var message = "";
                 if (perm === "granted") {
-                    if (length == 0) {
-                        //do nothing
-                    }
-                    else {
-                        //alert(length);
-                        for (let y = length; y > 0; y--) {
-                            var status = document.getElementById("Data Table2").rows[y].cells[4].innerHTML;
-                            if (status === "PAID") {
-                                status = "RECEIVED";
-                            }
-                            var person = document.getElementById("Data Table2").rows[y].cells[2].innerHTML;
-                            if (/^[A-Za-z\s]*$/.test(person)) {
-                                var person = document.getElementById("Data Table2").rows[y].cells[2].innerHTML;
-                                var date = document.getElementById("Data Table2").rows[y].cells[3].innerHTML;
-                                var InvNo = document.getElementById("Data Table2").rows[y].cells[1].innerHTML;
-                                var line = "Payment " + status + " " + date + " for " + person + "\n Ref No. " + InvNo;
-                                message = message + line + "\n";
-                                
-                            } else {
-                                alert("Error: name in row " + y + " is invalid");
-                            }
-                            
-                        };
-                        console.log(message);
-                        new Notification(message);
+                    
+                    var table = document.getElementById("Data Table2");
+                    var length = table.rows.length;
+                    //alert(length);//works
+                    var message = "";
+                    for (let j = length-1; j >= 0;j--) {
+                        var supplier = document.getElementById("Data Table2").rows[j].cells[2].innerHTML;
+                        if (/^[A-Za-z\s]*$/.test(supplier)) {
+                            var status = document.getElementById("Data Table2").rows[j].cells[4].innerHTML;
+                            var date = document.getElementById("Data Table2").rows[j].cells[3].innerHTML;
+                            var ref = document.getElementById("Data Table2").rows[j].cells[1].innerHTML;
+                            // new Notification("Payment DUE " + date + " for " + supplier + "\n REF NO. " + ref);
+                            var line = "Payment DUE " + date + " for " + supplier + "\n REF NO. " + ref + "\n";
+                            message = message + line;
+                        }; 
+                        
                     };
-                }
+                    new Notification(message);
+                    
+                    
+                    
+                };
 
 
             });
@@ -208,7 +201,7 @@
         <button onclick="Save()">Save</button>
         <script type="text/javascript">
             function Save() {
-               
+
                 if (confirm('Save?')) {
                     localStorage.setItem("Data Table2", document.getElementById("Data Table2").innerHTML);
                     alert("Changes Saved!");
@@ -216,7 +209,7 @@
 
             };
         </script>
-       
+
 
 
 
