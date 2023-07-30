@@ -37,6 +37,14 @@
     padding: 5px;
 }
 
+.btn_login_front:hover{
+    background-color: var(--secondary-color);
+}
+
+.btn_signup_front:hover{
+    background-color: var(--tertiary-color);
+}
+
 .btn_signup_front{
     background-color: white;
     color: var(--primary-color);
