@@ -1,0 +1,63 @@
+.front_page_top{
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    padding: 5px;
+}
+.front_page_top_left{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+}
+.front_page_title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    height: 100%;
+    font-size: 30px;
+}
+
+.btns{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.btn_login_front, 
+.btn_signup_front{
+    font-size: 17px;
+    border-radius: 15px;
+    margin-left: 3px;
+    margin-right: 3px;
+    padding: 5px;
+}
+
+.btn_signup_front{
+    background-color: white;
+    color: var(--primary-color);
+}
+
+.btn_login_front_txt{
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.imgs {display: grid;
+    margin-top: 30px;
+    place-items: center;
+}
+
+.images{
+    width: 70%;
+    justify-content: center;
+}
+  
+.front_page_des{
+    text-align: center;
+    margin: 30px;
+}
