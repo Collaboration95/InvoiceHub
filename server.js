@@ -105,6 +105,12 @@ if (require.main === module) {
   const invoiceRouter = require('./routes/invoice');
   app.use('/invoice/', invoiceRouter);
 
+  const paymentRouter = require('./routes/payment'); // Replace the path with the actual path to your payment.js file
+  app.use('/payment', paymentRouter);
+
+  const paidRouter = require('./routes/paid');
+  app.use('/paid', paidRouter);
+
   app.get('*', function (req, res) { // Catch 404 errors 
     res.status(404).sendFile(path.join(__dirname, 'public', 'html', '404.html'));
   });
