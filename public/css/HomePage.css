@@ -1,11 +1,5 @@
 
 
-/* .summary, .upload, .overdue_stat {
-  flex-basis: 20px;
-  flex-grow: 1;
-  margin-right: 10px;
-} */
-
 
 
 
@@ -46,21 +40,11 @@
   margin-top: 20px;
 }
 
-/* .upload {
-  margin-right: 0;
-  width: 400px;
-  height: 50px;
-  display: flex;
-  gap: 30px;
-  padding: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  box-shadow: 5px 5px 10px rgba(45, 82, 97, 0.5);
-} */
+
 .upload {
   margin-top: 50px;
-  height: 180px;
   width: 210px;
+  height: 180px;
   padding-top: 0%;
   color: #033246;
   display: block;
