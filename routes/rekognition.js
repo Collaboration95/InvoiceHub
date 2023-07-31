@@ -98,13 +98,19 @@ router.post('/upload-jpeg-bucket-new', (req, res) => {
           value:obj.ValueDetection.Text
         }
       });
-      const tableData = response.ExpenseDocuments[0].LineItemGroups[0].LineItems[0].LineItemExpenseFields;
-      const filteredElements = tableData.filter(elem => elem.Type.Text === "EXPENSE_ROW").map(elem => elem.ValueDetection.Text);
 
+      const filteredElements = response.ExpenseDocuments[0].LineItemGroups[0].LineItems.map(lineItem => {
+        const tableData = lineItem.LineItemExpenseFields;
+        return tableData
+          .filter(elem => elem.Type.Text === "EXPENSE_ROW")
+          .map(elem => elem.ValueDetection.Text);
+      });
+      
     const payload={
       invoice_data:formattedData,
       table_data:filteredElements
     }
+
 
       res.status(200).json(payload);
     } catch (err) {
