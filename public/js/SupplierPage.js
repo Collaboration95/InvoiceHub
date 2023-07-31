@@ -1,4 +1,4 @@
-// PaymentPage.js.
+
 
 // Declare data variable outside the init() function
 let data;
@@ -27,7 +27,7 @@ function showTable(data) {
       <th>Number</th>
       <th>Address</th>
       <th>Email</th>
-      <th>SELECT</th> <!-- New column for selection -->
+      <th>EDIT</th> <!-- New column for Edditing -->
     </tr>
   `;
 
@@ -76,15 +76,16 @@ function getSelectedCheckboxValues() {
 // Next button
 document.getElementById("nextButton").addEventListener("click", function() {
   // Get the selected invoice IDs
-  var selectedInvoiceIds = getSelectedCheckboxValues();
+  var selectedSupplier = getSelectedCheckboxValues();
+  console.log("value",selectedSupplier);
 
-  if (selectedInvoiceIds.length > 0) {
+  if (selectedSupplier.length > 0) {
     // Encode the selected invoice IDs as a query parameter
     var queryParams = new URLSearchParams();
-    queryParams.append("selectedValues", selectedInvoiceIds.join(","));
+    queryParams.append("selectedValues", selectedSupplier);
 
     // Build the URL for the next page with the query parameter
-    var nextPageURL = "PaymentForm.html?" + queryParams.toString();
+    var nextPageURL = "SupplierEditForm.html?" + queryParams.toString();
 
     // Navigate to the next page
     window.location.href = nextPageURL;
@@ -128,32 +129,15 @@ document.getElementById("inp_search_blank").addEventListener("keyup", function()
 
 
 
-// Select All button
-document.getElementById("selectAllButton").addEventListener("click", function() {
-  var checkboxes = document.querySelectorAll('input[name="selectedRow"]');
-  checkboxes.forEach(function(checkbox) {
-    checkbox.checked = true;
-  });
-  checkSelectedRows();
-  calCost(); // Calculate the cost when the checkbox state changes
-});
 
-// Deselect All button
-document.getElementById("deselectAllButton").addEventListener("click", function() {
-  var checkboxes = document.querySelectorAll('input[name="selectedRow"]');
-  checkboxes.forEach(function(checkbox) {
-    checkbox.checked = false;
-  });
-  checkSelectedRows();
-  calCost(); // Calculate the cost when the checkbox state changes
-});
 
 // Add event listener to checkboxes
 var table = document.getElementById("invoice_table");
 table.addEventListener("change", function(event) {
   if (event.target.name === "selectedRow") {
-    checkSelectedRows();
-    calCost(); // Calculate the cost when the checkbox state changes
+      checkSelectedRows();
+
+    //calCost(); // Calculate the cost when the checkbox state changes
   }
 });
 
@@ -164,16 +148,10 @@ function checkSelectedRows() {
   checkboxes.forEach(function(checkbox) {
     if (checkbox.checked) {
       selectedRows.push(checkbox.value);
+      console.log("checkbox",checkbox.value)
     }
   });
 
   //nextButton.disabled = !isAnyCheckboxChecked();
 }
 
-// Add event listener to checkboxes
-table.addEventListener("change", function(event) {
-  if (event.target.name === "selectedRow") {
-    checkSelectedRows();
-    calCost(); // Calculate the cost when the checkbox state changes
-  }
-});

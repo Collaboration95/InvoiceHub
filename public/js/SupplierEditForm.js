@@ -56,6 +56,8 @@ function showTable(data) {
   data.forEach((supplier) => {
     //console.log(invoice.Invoice_id);
     if (selectedValuesArray.includes(String(supplier.company_name))) {
+      
+      // company.textContent = supplier.company_name;
       const row = document.createElement('tr');
       row.innerHTML = ` 
       <td>${supplier.company_name}</td>
@@ -64,6 +66,11 @@ function showTable(data) {
       <td>${supplier.email}</td>
     `;
     selectedTable.appendChild(row);
+    document.getElementById("company_name").value = supplier.company_name;
+    document.getElementById("contact_number").value = supplier.contact_number;
+    document.getElementById("Address").value = supplier.address;
+    document.getElementById("Email").value = supplier.email;
+
 
     // // Calculate the total amount for selected invoices
     // var amount = parseFloat(invoice.total_cost);
@@ -76,7 +83,7 @@ function showTable(data) {
 
 // Function to handle form submission
 async function handleFormSubmission(event) {
-    //event.preventDefault(); // Prevent the form from submitting
+    event.preventDefault(); // Prevent the form from submitting
   
     if (true) {
       try {
@@ -96,6 +103,37 @@ async function handleFormSubmission(event) {
           Address : Address,
           Email: Email
         };
+        //updating the supplier information in the table 
+      selectedValuesArray.forEach(async (company_name) => {
+        try {
+          const response = await fetch(`../supplier/update-supplier`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            //yet to edit from here
+            body: JSON.stringify({ company_name: company_name, contact_number: contact_number, Address: Address, Email:Email}),
+          });
+  
+          const responseData = await response.json();
+          console.log(responseData); // Check the response data received from the server
+  
+  
+          if (response.ok) {
+            console.log(responseData.message); // Supplier updated successfully
+          } else {
+            console.error(responseData.error); // error updating status
+          }
+        } catch (error) {
+          console.error('Error updating supplier:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred while updating supplier. Please try again later.',
+          });
+        }
+      });
+
 
         // Send a POST request to the server
         const response = await fetch('../supplier/form-data', {
@@ -111,9 +149,6 @@ async function handleFormSubmission(event) {
         if (response.ok) {
           // If the request is successful, redirect to the payment page
           window.location.href = 'NewSupplier.html?redirect=true';
-          //newly added, to update the table 
-          data = await retrieveData(); 
-          showTable(data);
         } else {
           // If there is an error, display an error message
           Swal.fire({
