@@ -129,7 +129,8 @@ function acceptFileInput(event) {
         path: data,
         total:fakeTotal
       }
-      console.log(fakerequestBody.upload_date);
+
+      sessionStorage.setItem('invoiceid',JSON.stringify(fakerequestBody.invoiceid));
       
       // Send the POST request to the server
       fetch('/invoice/insert-record', {
@@ -163,7 +164,7 @@ function acceptFileInput(event) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ invoiceid: 12345, detectedText: JSON.stringify(output) })
+        body: JSON.stringify({ invoiceid:JSON.parse(sessionStorage.getItem('invoiceid')), detectedText: JSON.stringify(output) })
       }).then(response=>response.json())
       .then(data=>{
       });
