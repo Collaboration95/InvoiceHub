@@ -67,6 +67,11 @@ input[type="text"]{
     padding: 10px;
 
     box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+    color: var(--primary-color);
+}
+
+#inp_id, #inp_status{
+    text-align: center;
 }
 
 /* style for update button */
@@ -102,4 +107,9 @@ input[type="text"]{
 .btn_edit_cancel:hover{
     background-color: var(--secondary-color);
     border-radius: 5px;
+    cursor: pointer;
+}
+
+a{
+    width: fit-content;
 }
