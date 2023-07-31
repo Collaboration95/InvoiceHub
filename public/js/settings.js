@@ -158,7 +158,10 @@ function acceptFileInput(event) {
 
   if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5 || 1 ){
     detectTextBuckets(formData).then(detectedText=>{
-    const payload= {extractedDetails :detectedText.invoice_data, table_data:detectedText.table_data};
+    const output = extractDetails(detectedText.invoice_data);
+    const payload= {extractedDetails :output, table_data:detectedText.table_data};
+      console.log(payload);
+
       fetch('/invoice/save-detected-data', {
         method: 'POST',
         headers: {

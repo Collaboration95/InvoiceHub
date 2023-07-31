@@ -59,6 +59,7 @@ router.post('/insert-record', async (req, res) => {
 router.post('/save-detected-data', async (req, res) => {
   const { invoiceid, detectedText } = req.body;
   const total = JSON.parse(detectedText).extractedDetails.Total[0];
+  console.log(total);
   const query = `UPDATE invoices SET detectedText = ?, total = ? WHERE invoiceid = ?`;
   try {
     const connection = await pool.getConnection();

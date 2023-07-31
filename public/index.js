@@ -45,4 +45,4 @@ function validateLogin(username, password) {
     .catch(error => console.error(error));
 }
 
-module.exports = validateLogin;
+// module.exports = validateLogin;
