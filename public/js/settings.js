@@ -161,7 +161,8 @@ function acceptFileInput(event) {
 
     const output = extractDetails(detectedText.invoice_data);
     const payload= {extractedDetails :output, table_data:detectedText.table_data};
-      fetch('/invoice/save-detected-text', {
+
+      fetch('/invoice/save-detected-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
