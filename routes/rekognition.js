@@ -91,19 +91,77 @@ router.post('/upload-jpeg-bucket-new', (req, res) => {
 
       const aExpense = new AnalyzeExpenseCommand(s3_reference);
       const response = await textractClient.send(aExpense);
+
       const formattedData = response.ExpenseDocuments[0].SummaryFields.map(obj=>{
         return {
           type:obj.Type.Text,
           value:obj.ValueDetection.Text
         }
       });
+      const tableData = response.ExpenseDocuments[0].LineItemGroups[0].LineItems[0].LineItemExpenseFields;
+      const filteredElements = tableData.filter(elem => elem.Type.Text === "EXPENSE_ROW").map(elem => elem.ValueDetection.Text);
 
-      res.status(200).json(formattedData);
+    const payload={
+      invoice_data:formattedData,
+      table_data:filteredElements
+    }
+
+      res.status(200).json(payload);
     } catch (err) {
       console.error('Error:', err);
       res.status(500).json({ error: 'An error occurred during text analysis.' });
     }
   });
 });
+
+
+// router.post('/upload-jpeg-bucket-new', (req, res) => {
+//   // Code to try analyze the tables
+//   upload(req, res, async (err) => {
+//     if (err) {
+//       console.error('Error:', err);
+//       return res.sendStatus(500);
+//     }
+
+//     const jpegData = req.file.buffer;
+//     console.log("JpegData:", jpegData);
+
+//     try {
+//       const s3_Upload_Params = {
+//         Bucket: 'imagebucket1234', // Replace with your bucket name
+//         Key: 'image.jpg', // Specify the desired key for the uploaded image
+//         Body: jpegData
+//       };
+
+//       const s3_reference = {
+//         Document: {
+//           S3Object: {
+//             Bucket: 'imagebucket1234', // Replace with your bucket name
+//             Name: 'image.jpg' // Specify the key of the uploaded image
+//           }
+//         }
+//       };
+
+//       const uploadResult = await s3.upload(s3_Upload_Params).promise();
+//       console.log('Image uploaded to S3:', uploadResult.Location);
+
+//       const aExpense = new AnalyzeExpenseCommand(s3_reference);
+//       const response = await textractClient.send(aExpense);
+//       const formattedData = response.ExpenseDocuments[0].SummaryFields.map(obj=>{
+//         return {
+//           type:obj.Type.Text,
+//           value:obj.ValueDetection.Text
+//         }
+//       });
+
+//       res.status(200).json(formattedData);
+//     } catch (err) {
+//       console.error('Error:', err);
+//       res.status(500).json({ error: 'An error occurred during text analysis.' });
+//     }
+//   });
+// });
+
+
 
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const{pool,table_name}=require ('../server');
+const path = require('path');
 const crypto = require('crypto');
 const { route } = require('./account');
 
@@ -13,11 +14,10 @@ function generateUniqueFilename(originalFilename) {
   return filename;
 }
 
-// Configure multer middleware to handle file uploads
 const storage = multer.diskStorage({
-  destination: "/Users/speedpowermac/Documents/projects/CODE_MAIN/Term5/InvoiceHub/public/img-db", 
+  destination: path.join(__dirname,'..', 'public', 'img-db'), // Using __dirname to get the current directory
   filename: (req, file, cb) => {
-    cb(null,generateUniqueFilename(file.originalname));
+    cb(null, generateUniqueFilename(file.originalname));
   }
 });
 
@@ -56,22 +56,24 @@ router.post('/insert-record', async (req, res) => {
     }
 });
 
-router.post('/save-detected-text', async (req, res) => {
-    const { invoiceid, detectedText } = req.body;
-    const query = `UPDATE invoices SET detectedText = ? WHERE invoiceid = ?`;
-    try {
-      const connection = await pool.getConnection();
-      const results = await connection.query(query, [detectedText, invoiceid]);
-  
-      console.log('Detected text saved successfully!');
-      res.status(200).json({ message: 'Detected text saved successfully' });
-  
-      connection.release();
-    } catch (error) {
-      console.error("Error:", error);
-      res.status(500).json({ error: 'An error occurred while saving detected text' });
-    }
+router.post('/save-detected-data', async (req, res) => {
+  const { invoiceid, detectedText } = req.body;
+  const total = JSON.parse(detectedText).extractedDetails.Total[0];
+  const query = `UPDATE invoices SET detectedText = ?, total = ? WHERE invoiceid = ?`;
+  try {
+    const connection = await pool.getConnection();
+    const results = await connection.query(query, [detectedText, total, invoiceid]);
+
+    console.log('Detected text and total updated successfully!');
+    res.status(200).json({ message: 'Detected text and total updated successfully' });
+
+    connection.release();
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'An error occurred while saving detected text and total' });
+  }
 });
+
 
 router.get('/get-detected-text/:invoiceid', async (req, res) => {
     const invoiceId = req.params.invoiceid;
