@@ -20,11 +20,26 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Route to upload an image
-router.post('/upload', upload.single('image'), (req, res) => {
+// Route to upload an image and associate it with the specified invoiceId
+router.post('/uploadImage', upload.single('image'), async (req, res) => {
   try {
-    // Return the filename of the uploaded image
-    res.status(201).json({ message: 'Image uploaded successfully', filename: req.file.filename });
+
+    // Retrieve the image data as a buffer from the request
+    const imageBuffer = req.body;
+
+    // Insert the record into the table
+    const query = `
+      SELECT LAST_INSERT_ID() AS last_id;
+      UPDATE InvoiceHub.Paid
+      SET payment_Image = "helps"
+      WHERE payment_Number = last_id;
+    `;
+    const values = [imageBuffer];
+
+    const connection = await pool.getConnection();
+    await connection.query(query, values);
+
+    res.status(200).json({ message: 'Image uploaded successfully and associated with the specified invoiceId.' });
   } catch (error) {
     console.error('Error uploading image:', error);
     res.status(500).json({ error: 'An error occurred while uploading the image' });
@@ -35,7 +50,7 @@ router.post('/upload', upload.single('image'), (req, res) => {
 router.post('/form-data', async (req, res) => {
     // Retrieve data from the request body
     const { invoiceId, Company, amount_paid, payment_type, payment_date} = req.body;
-    const payment_Image = req.file.path;
+    // const payment_Image = req.file.path;
 
     // Insert the record into the table
     const query = `
