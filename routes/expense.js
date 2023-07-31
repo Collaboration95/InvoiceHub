@@ -5,7 +5,7 @@ const mysqlConfig = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    socketPath: '/tmp/mysql.sock'
+    
 };
 
 async function fetchData() {
