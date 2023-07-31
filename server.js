@@ -68,6 +68,7 @@ const table_name = {
   images: "Images",
   handle_privilege: "account_elev",
   invoice: "invoices",
+  soa:"soa",
 };
 
 const pool = mysql.createPool({
@@ -104,6 +105,9 @@ if (require.main === module) {
 
   const invoiceRouter = require('./routes/invoice');
   app.use('/invoice/', invoiceRouter);
+
+  const soaRouter = require('./routes/soa');
+  app.use('/soa/', soaRouter);
 
   app.get('*', function (req, res) { // Catch 404 errors 
     res.status(404).sendFile(path.join(__dirname, 'public', 'html', '404.html'));
