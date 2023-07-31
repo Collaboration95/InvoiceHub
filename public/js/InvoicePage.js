@@ -27,7 +27,7 @@ function renderTable(data) {
   table.innerHTML = `
     <tr>
       <th>ID</th>
-      <th>INVOICE NAME</th>
+      <th>COMPANY NAME</th>
       <th>INVOICE DATE</th>
       <th>AMOUNT</th>
       <th>STATUS</th>
