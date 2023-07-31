@@ -85,6 +85,29 @@ pool.on('error', (err) => {
   console.error('Error in MySQL connection pool:', err);
 });
 
+const fetchExpenseData = require('./routes/expense'); 
+const fetchOverdueData = require('./routes/overdue'); 
+
+// API endpoint for expenses
+app.get('/expense', async (req, res) => {
+  try {
+    const data = await fetchExpenseData();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// API endpoint for overdue
+app.get('/overdue', async (req, res) => {
+  try {
+    const data = await fetchOverdueData();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Increase payload size limit
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));

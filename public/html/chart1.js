@@ -1,20 +1,54 @@
-const ctx2 = document.getElementById('barchar1');
+// function fetchData() {
+//   fetch('/overdue')
+//     .then(response => response.json())
+//     .then(data => createChart(data))
+//     .catch(error => console.error('Error fetching data:', error));
+// }
 
-  new Chart(ctx2, {
+// function createChart(data) {
+//   const ctx = document.getElementById('myChart1').getContext('2d');
+//   new Chart(ctx, {
+//     type: 'bar', // Set the chart type to 'bar'
+//     data: {
+//       labels: ['<30 days', '30-60 days', '60-90 days'], // Use the provided labels
+//       datasets: data.datasets,
+//     },
+//     options: {
+//       scales: {
+//         y: {
+//           beginAtZero: true,
+//         },
+//       },
+//     },
+//   });
+// }
+
+// document.addEventListener('DOMContentLoaded', fetchData);
+
+
+function fetchOverdueData() {
+  fetch('/overdue')
+    .then(response => response.json())
+    .then(data => createOverdueChart(data))
+    .catch(error => console.error('Error fetching overdue data:', error));
+}
+
+function createOverdueChart(data) {
+  const ctx = document.getElementById('myChart1').getContext('2d');
+  new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['<30 days', '30-60 days', '60-90 days'],
-      datasets: [{
-        label: 'Amount Overdue',
-        data: [1397, 4580, 3004, 305],
-        borderWidth: 1
-      }]
+      labels: data.labels,
+      datasets: data.datasets,
     },
     options: {
       scales: {
         y: {
-          beginAtZero: true
-        }
-      }
-    }
+          beginAtZero: true,
+        },
+      },
+    },
   });
+}
+
+document.addEventListener('DOMContentLoaded', fetchOverdueData);
