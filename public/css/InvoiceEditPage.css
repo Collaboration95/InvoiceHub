@@ -113,3 +113,7 @@ input[type="text"]{
 a{
     width: fit-content;
 }
+
+#error_msg{
+    color: rgb(252, 183, 137);
+}
