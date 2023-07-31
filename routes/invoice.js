@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const{pool,table_name}=require ('../server');
+const path = require('path');
 const crypto = require('crypto');
 const { route } = require('./account');
 
@@ -13,11 +14,10 @@ function generateUniqueFilename(originalFilename) {
   return filename;
 }
 
-// Configure multer middleware to handle file uploads
 const storage = multer.diskStorage({
-  destination: "/Users/speedpowermac/Documents/projects/CODE_MAIN/Term5/InvoiceHub/public/img-db", 
+  destination: path.join(__dirname,'..', 'public', 'img-db'), // Using __dirname to get the current directory
   filename: (req, file, cb) => {
-    cb(null,generateUniqueFilename(file.originalname));
+    cb(null, generateUniqueFilename(file.originalname));
   }
 });
 
