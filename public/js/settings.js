@@ -158,13 +158,15 @@ function acceptFileInput(event) {
 
   if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){
     detectTextBuckets(formData).then(detectedText=>{
-    const output = extractDetails(detectedText);
+
+    const output = extractDetails(detectedText.invoice_data);
+    const payload= {extractedDetails :output, table_data:detectedText.table_data};
       fetch('/invoice/save-detected-text', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ invoiceid:JSON.parse(sessionStorage.getItem('invoiceid')), detectedText: JSON.stringify(output) })
+        body: JSON.stringify({ invoiceid:JSON.parse(sessionStorage.getItem('invoiceid')), detectedText: JSON.stringify(payload) })
       }).then(response=>response.json())
       .then(data=>{
       });
@@ -503,3 +505,5 @@ function extractDetails(ocrResult) {
   
   return keyvalue;
 }
+
+
