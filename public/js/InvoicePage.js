@@ -27,8 +27,8 @@ function renderTable(data) {
   table.innerHTML = `
     <tr>
       <th>ID</th>
-      <th>INVOICE NAME</th>
-      <th>INVOICE DATE</th>
+      <th>COMPANY NAME</th>
+      <th>ISSUED DATE</th>
       <th>AMOUNT</th>
       <th>STATUS</th>
       <th>ACTION</th>
@@ -125,7 +125,7 @@ table.addEventListener("click", function (event) {
 
 /* CODE FOR CALCULATING THE COST FOR SUMMARY */
 
-// get the elements for the cost
+// TODO: get the elements for the cost
 var total_outstanding_cost = document.getElementById("total_outstanding_cost");
 var overdue_cost = document.getElementById("overdue_cost");
 var due_cost = document.getElementById("due_cost");

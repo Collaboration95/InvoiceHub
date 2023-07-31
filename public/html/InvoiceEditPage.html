@@ -3,7 +3,7 @@
 <head>
     <title>Invoice Hub</title>
     <link rel="stylesheet" type ="text/css" href="../css/Template.css">
-    <link rel="stylesheet" type ="text/css" href="../css/InvoicePage.css">
+    <link rel="stylesheet" type ="text/css" href="../css/InvoiceEditPage.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
@@ -104,94 +104,48 @@
     
     <div class="content">
         <!-- invoice page title -->
-        <div class="invoice_title">INVOICES</div>
+        <div class="invoice_edit_title">EDIT INVOICE</div>
 
-        <div class="content_top">
-            <!-- box for the top summary -->
-            <div class="summary">
-                <div class ="total_outstanding">
-                    <span class="total_outstanding_title">TOTAL OUTSTANDING</span>
-                    <span class="total_outstanding_cost" id="total_outstanding_cost"><br>S$ 39,225</span>
-                </div>
-                <div class ="overdue">
-                    <span class="overdue_title">OVERDUE</span>
-                    <span class="overdue_cost" id="overdue_cost"><br>S$ 9,225</span>
-                </div>
-                <div class ="due">
-                    <span class="due_title">DUE</span>
-                    <span class="due_cost" id="due_cost"><br>S$ 25</span>
-                </div>
+        <div class="blanks_edit_page">
+            <div class="id_container">
+                <div class="inp_id_title">ID</div>
+                <input id="inp_id" type="text" placeholder="   ID"></input>
             </div>
-            <!-- box for the uploading documents -->
-            <div class="upload">
-                <div class ="upload_invoice">
-                    <span class="total_outstanding_title">Inovice</span>
-                    <a class="ic_upload" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class ="upload_soa">
-                    <span class="overdue_title">State of Accounts</span>
-                    <a class="ic_upload" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class ="upload_credit_note">
-                    <span class="due_title">Credit Note</span>
-                    <a class="ic_upload" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                        </svg>
-                    </a>
-                </div>
+            <div class="comp_name_container">
+                <div class="inp_comp_name_title">COMPANY NAME</div>
+                <input id="inp_comp_name" type="text" placeholder="   Company Name"></input>
+            </div>
+            <div class="phone_no_container">
+                <div class="inp_phone_no_title">CONTACT NUMBER</div>    
+                <input id="inp_phone_no" type="text" placeholder="   Contact Number"></input>
+            </div>
+            <div class="issue_date_container">
+                <div class="inp_issue_date_title">ISSUE DATE</div>
+                <input id="inp_issue_date" type="text" placeholder="   Issue Date"></input>
+            </div>
+            <div class="total_amount_container">
+                <div class="inp_total_amount_title">TOTAL AMOUNT</div>
+                <input id="inp_total_amount" type="text" placeholder="   Total Amount"></input>
+            </div>
+            <div class="status_container">
+                <div class="inp_status_title">STATUS</div>
+                <input id="inp_total_status" type="text" placeholder="   Status"></input>
+            </div>
+        </div>
+        <div id="btn_edit_update_container">
+            <div class="btn_edit_update">
+                UPDATE
+            </div>
+        </div>
+        <div id="btn_edit_cancel_container">
+            <div class="btn_edit_cancel">
+                CANCEL
             </div>
         </div>
         
-        <div class="invoice_navigation">
-            <div class="inv_nav_list">INVOICE LIST</div>
-            <div class="search_filter">
-                <div class="box_search">
-                    <select class="search_type_dropdown" id="search_type_dropdown">
-                        <option value="id">ID</option>
-                        <option value="name">Invoice Name</option>
-                        <option value="date">INVOICE DATE</option>
-                        <option value="amount">AMOUNT</option>
-                        <option value="status">STATUS</option>
-                    </select>
-                    <input id="inp_search_blank" type="text" placeholder="Search for invoices"></input>
-                    <svg class="ic_search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </div>
-                <div class="box_sort">
-                    <div class="sort_hint" id="sort_hint">Sort</div>
-                    <select class="sort_dropdown" id="sort_dropdown">
-                        <option value="id_choice">ID</option>
-                        <option value="id_date">Invoice Date</option>
-                        <option value="id_name">Supplier Name</option>
-                        <option value="id_amount">Amount</option>
-                    </select>
-                    <svg class="ic_sort_des" id="ic_sort_des" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
-                        <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293V2.5zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
-                      </svg>
-                    <svg class="ic_sort_asc" id="ic_sort_asc" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-up-alt" viewBox="0 0 16 16">
-                        <path d="M3.5 13.5a.5.5 0 0 1-1 0V4.707L1.354 5.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L3.5 4.707V13.5zm4-9.5a.5.5 0 0 1 0-1h1a.5.5 0 0 1 0 1h-1zm0 3a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1h-3zm0 3a.5.5 0 0 1 0-1h5a.5.5 0 0 1 0 1h-5zM7 12.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5z"/>
-                      </svg>
-                </div>
-            </div>
-        </div>
-
-        <div class="invoice_table_container">
+        <!-- <div class="invoice_table_container">
             <table id="invoice_table" class="invoice_table"></table>
-        </div>
-        <!-- <script src="../js/InvoiceData.js" type="module"></script> -->
+        </div> -->
     </div>
 </body>
 </html>
