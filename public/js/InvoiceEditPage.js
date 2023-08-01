@@ -46,6 +46,11 @@ function convertToMySQLDateFormat(dateString) {
     const day = parseInt(dateComponents[0], 10);
     const month = parseInt(dateComponents[1], 10);
     const year = parseInt(dateComponents[2], 10);
+
+    if (day > 31 || month > 12) {
+      document.getElementById("error_msg").textContent = "Invalid day or month in the date string";
+      return null;
+    }
   
     // Create a new Date object with Singapore's time zone (Asia/Singapore)
     const dateObject = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
@@ -69,9 +74,17 @@ document.getElementById("btn_edit_update_container").addEventListener("click", f
 
     // Validate date format (dd/mm/yyyy)
     const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+    // Split the date string by '/'
+    const dateComponents = inp_issue_date.split('/');
+    // Extract day, month, and year components
+    const day = parseInt(dateComponents[0], 10);
+    const month = parseInt(dateComponents[1], 10);
     if (!dateRegex.test(inp_issue_date)) {
         document.getElementById("error_msg").textContent = "Invalid date format (dd/mm/yyyy)";
         return;
+    } else if (day > 31 || month > 12) {
+        document.getElementById("error_msg").textContent = "Invalid day or month in the date string";
+        return ;
     }
     else{
         document.getElementById("error_msg").textContent = ""
@@ -82,8 +95,7 @@ document.getElementById("btn_edit_update_container").addEventListener("click", f
     if (!amountRegex.test(inp_total_amount)) {
         document.getElementById("error_msg").textContent = "Invalid amount format (e.g., 123.45)";
         return;
-    }
-    else{
+    } else{
         document.getElementById("error_msg").textContent = ""
     }
 
