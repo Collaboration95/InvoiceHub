@@ -9,8 +9,8 @@ const table_name = {
   delete_flag: "account_flag",
   images: "Images",
   handle_privilege: "account_elev",
-  invoice: "invoices",
-  soa:"soa",
+  invoice: "forms",
+  soa:"forms",
 };
 
 const pool = mysql.createPool({
@@ -77,8 +77,8 @@ if (require.main === module) {
   const paidRouter = require('./routes/paid');
   app.use('/paid', paidRouter);
 
-  const soaRouter = require('./routes/soa');
-  app.use('/soa/', soaRouter);
+  // const soaRouter = require('./routes/soa');
+  // app.use('/soa/', soaRouter);
 
   app.get('*', function (req, res) { // Catch 404 errors 
     res.status(404).sendFile(path.join(__dirname, 'public', 'html', '404.html'));

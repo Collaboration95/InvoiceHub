@@ -3,7 +3,7 @@ var table = document.getElementById("invoice_table");
 // Function to fetch data from the server
 async function getData() {
   try {
-    const response = await fetch('/invoice/table');
+    const response = await fetch('/invoice/get-all-invoices');
     const data = await response.json();
     data.forEach(invoice => {
       // Determine statusColor based on status

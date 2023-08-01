@@ -127,7 +127,8 @@ function acceptFileInput(event) {
         upload_date: uploadDate,
         status: status,
         path: data,
-        total:fakeTotal
+        total:fakeTotal,
+        type:"invoice"
       }
 
       sessionStorage.setItem('invoiceid',JSON.stringify(fakerequestBody.invoiceid));
