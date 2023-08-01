@@ -1,7 +1,4 @@
-
-
-
-
+/* 
 
 
 .content {
@@ -99,26 +96,7 @@
   text-align: left;
 }
 
-/* .upload_invoice {
-  display: flex;
-  padding: 5px;
-  justify-content: space-between;
-  gap: 10px;
-}
 
-.upload_soa {
-  display: flex;
-  padding: 5px;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.upload_credit_note {
-  display: flex;
-  padding: 5px;
-  justify-content: space-between;
-  gap: 10px;
-} */
 
 .ic_upload {
   color: #033246;
@@ -248,21 +226,11 @@
   margin-top: 10px;
 }
 
-/* .content_top {
-  display: flex;
-  flex-wrap: wrap;
-} */
-
-/* .content_top_left, .overdue_stat, .sales_collections {
-  flex: 1;
-  margin-right: 20px;
-} */
 
 .sales_collections {
   margin-right: 0;
 }
 
-/* overdue stats */
 .overdue_stat {
   height: 200 px;
   width: 300 px;
@@ -306,22 +274,7 @@
 }
 
 
-/* .upload {
-  display: flex;
-  justify-content: space-between;
-} */
 
-
-
-
-/* CSS for the icons */
-/* .ic_upload svg {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-} */
-
-/* Additional styles for the titles */
 .total_outstanding_title, .overdue_title, .due_title {
   font-weight: normal;
   white-space: nowrap;
@@ -379,4 +332,194 @@
 .file-container {
   display: block;
   margin-bottom: 10px; 
+}
+
+
+ */
+
+
+ :root{
+  --extra-bright-color: #485f68;
+}
+
+/* changes for the side menu */
+.home{
+  background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
+  padding: 10px;
+}
+
+.home:hover{
+  background-color: var(--secondary-color);
+}
+
+.ic_home{
+  color:var(--tertiary-color);
+  margin-right: 10px;
+}
+
+
+/* style for the top contents (summary) */
+
+.content_top{
+  margin-top: 20px;
+  display: flex;
+  width: fit-content;
+
+  height: 100%;
+  max-width: 80%;
+  
+  gap: 20px
+}
+
+
+/* style for invoice page title */
+
+.invoice_title{
+  font-size: 30px;
+}
+
+/* style for summary content */
+
+.summary{
+
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  height: fit-content;
+  
+
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  border: 1px solid var(--secondary-color);
+  box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+  border-radius: 10px;
+
+  text-align: center;
+  color:var(--primary-color);
+}
+
+.total_outstanding{
+  min-width: 90px;
+  max-width: 150px;
+  width: 30%;
+
+  align-self: center;
+  border-right: 1px solid var(--secondary-color);
+  padding-right: 30px;
+}
+
+.overdue{
+  min-width: 65px;
+  max-width: 150px;
+  width: 30%;
+
+  align-self: center;
+}
+
+.due{
+  min-width: 50px;
+  max-width: 150px;
+  width: 30%;
+
+  align-self: center;
+  border-left: 1px solid var(--secondary-color);
+  padding-left: 20px;
+}
+
+
+
+/* styles for uploading invoices */
+
+.upload{
+  gap: 30px;
+  width: 40%;
+  height: fit-content;
+
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  border: 1px solid var(--secondary-color);
+  box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+  border-radius: 10px;
+
+  text-align: left;
+  color:var(--primary-color);
+}
+
+.upload_invoice,
+.upload_soa,
+.upload_credit_note{
+  display:flex;
+  padding:5px;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ic_upload{
+  width: auto;
+  color:var(--primary-color);
+}
+
+
+
+.overdue_stat{
+  gap: 30px;
+  width: 40%;
+
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  border: 1px solid var(--secondary-color);
+  box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+  border-radius: 10px;
+
+  text-align: left;
+  color:var(--primary-color);
+}
+
+.barchar1{
+  gap: 30px;
+  width: 200%;
+  height: fit-content;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  border: 1px solid var(--secondary-color);
+  box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+  border-radius: 10px;
+
+  text-align: left;
+  color:var(--primary-color);
+}
+
+.barchar2{
+  gap: 30px;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 3%;
+  border: 1px solid var(--secondary-color);
+  box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+  border-radius: 10px;
+
+  text-align: left;
+  color:var(--primary-color);
+}
+
+
+.content{
+  margin-right: 50px;
+}
+
+
+.soa_upload_title{
+  white-space: nowrap;
+  padding-right: 100px;
 }
