@@ -4,6 +4,8 @@
     <title>Invoice Hub</title>
     <link rel="stylesheet" type ="text/css" href="../css/Template.css">
     <link rel="stylesheet" type ="text/css" href="../css/InvoicePage.css">
+    <script src="../js/login-check.js" defer></script>    
+    <script src="../js/helper-functions.js" defer></script> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
@@ -55,7 +57,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class = "soa">
+                <a href="SOAPage.html" class = "soa">
                     <div >
                         <svg class="ic_soa" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-check" viewBox="0 0 16 16">
                             <path d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
@@ -160,8 +162,8 @@
                 <div class="box_search">
                     <select class="search_type_dropdown" id="search_type_dropdown">
                         <option value="id">ID</option>
-                        <option value="name">Invoice Name</option>
-                        <option value="date">INVOICE DATE</option>
+                        <option value="name">COMPANY NAME</option>
+                        <option value="date">UPLOAD DATE</option>
                         <option value="amount">AMOUNT</option>
                         <option value="status">STATUS</option>
                     </select>

@@ -126,7 +126,7 @@ CREATE TABLE `invoices` (
   `status` varchar(50) DEFAULT NULL,
   `detectedText` blob,
   `path` varchar(255) NOT NULL,
-  `total` decimal(10,2) DEFAULT NULL,
+  `total` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`path`),
   KEY `users` (`users`),
   CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`users`) REFERENCES `users` (`user`)

@@ -129,7 +129,8 @@ function acceptFileInput(event) {
         path: data,
         total:fakeTotal
       }
-      console.log(fakerequestBody.upload_date);
+
+      sessionStorage.setItem('invoiceid',JSON.stringify(fakerequestBody.invoiceid));
       
       // Send the POST request to the server
       fetch('/invoice/insert-record', {
@@ -155,15 +156,17 @@ function acceptFileInput(event) {
 
     });
 
-  if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){
     detectTextBuckets(formData).then(detectedText=>{
-    const output = extractDetails(detectedText);
-      fetch('/invoice/save-detected-text', {
+    const output = extractDetails(detectedText.invoice_data);
+    const payload= {extractedDetails :output, table_data:detectedText.table_data};
+      console.log(payload);
+
+      fetch('/invoice/save-detected-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ invoiceid: 12345, detectedText: JSON.stringify(output) })
+        body: JSON.stringify({ invoiceid:JSON.parse(sessionStorage.getItem('invoiceid')), detectedText: JSON.stringify(payload) })
       }).then(response=>response.json())
       .then(data=>{
       });
@@ -171,24 +174,8 @@ function acceptFileInput(event) {
     .catch(error=>{
       console.error("Error occured"+error);
     })
-  }
-  else{
-    detectText(formData).then(detectedText=>{
-      fetch('/invoice/save-detected-text', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ invoiceid: 12345, detectedText: detectedText })
-      }).then(response=>response.json())
-      .then(data=>{
-        console.log(data);
-      }); 
-    })
-    .catch(error=>{
-      console.error("Error occured"+error);
-    })
-  }
+
+
 }
 
 function fillTable() {
@@ -233,24 +220,9 @@ function deleteAccount(event){
   }
 }
 
-async function detectText(formData) {
-  try {
-    const response = await fetch('/rekognition/upload-jpeg-bucket', {
-      method: 'POST',
-      body: formData
-    });
-    const data = await response.json();
-    console.log('Text Detected:', data);
-    return data;
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    throw error; // Throw the error to propagate it further
-  }
-}
-
 async function detectTextBuckets(formData) {
   try {
-    const response = await fetch('/rekognition/upload-jpeg-bucket-new', {
+    const response = await fetch('/rekognition/upload-jpeg-bucket', {
       method: 'POST',
       body: formData
     });
@@ -502,3 +474,5 @@ function extractDetails(ocrResult) {
   
   return keyvalue;
 }
+
+
