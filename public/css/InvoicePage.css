@@ -1,7 +1,3 @@
-:root{
-    --extra-bright-color: #485f68;
-}
-
 /* changes for the side menu */
 .invoice{
     background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
