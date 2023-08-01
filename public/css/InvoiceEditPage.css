@@ -30,7 +30,7 @@
 
 .id_container,
 .comp_name_container,
-.phone_no_container,
+/* .phone_no_container, */
 .issue_date_container,
 .total_amount_container,
 .status_container{
@@ -48,7 +48,7 @@
 
 .inp_id_title,
 .inp_comp_name_title,
-.inp_phone_no_title,
+/* .inp_phone_no_title, */
 .inp_issue_date_title,
 .inp_total_amount_title,
 .inp_status_title{
@@ -72,6 +72,11 @@ input[type="text"]{
 
 #inp_id, #inp_status{
     text-align: center;
+}
+
+#inp_id{
+    color: #838383;
+    background-color: #dfdfdf;
 }
 
 /* style for update button */

@@ -125,6 +125,27 @@ router.delete('/invoiceid', async (req, res) => {
     console.error('ERROR', error);
     res.status(500).json({error: "an error"});
   }});
+
+  router.post('/update_data', async (req, res) => {
+    const { invoice_name, upload_date, total, invoiceid } = req.body;
+  
+    try {
+      const connection = await pool.getConnection();
+      const query = 'UPDATE invoicehub.invoices SET invoice_name = ?, upload_date = ?, total = ? WHERE invoiceid = ?';
+      const [result] = await connection.query(query, [invoice_name, upload_date, total, invoiceid]);
+  
+      if (result.affectedRows > 0) {
+        res.status(200).json({ message: "Updated successfully" });
+      } else {
+        res.status(404).json({ error: "Invoice not found" });
+      }
+      connection.release();
+    } catch (error) {
+      console.error('ERROR', error);
+      res.status(500).json({ error: "An error occurred" });
+    }
+  });
+  
  
 router.get('/dummy', async (req, res) => {
   try {
