@@ -47,8 +47,8 @@ function convertToMySQLDateFormat(dateString) {
     const month = parseInt(dateComponents[1], 10);
     const year = parseInt(dateComponents[2], 10);
   
-    // Create a new Date object (Note: Month is 0-based in JavaScript Date objects)
-    const dateObject = new Date(year, month - 1, day);
+    // Create a new Date object with Singapore's time zone (Asia/Singapore)
+    const dateObject = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
   
     // Format the date object into a string with 'YYYY-MM-DD' format
     const mysqlDateFormat = dateObject.toISOString().slice(0, 10);
