@@ -156,7 +156,6 @@ function acceptFileInput(event) {
 
     });
 
-  if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5 || 1 ){
     detectTextBuckets(formData).then(detectedText=>{
     const output = extractDetails(detectedText.invoice_data);
     const payload= {extractedDetails :output, table_data:detectedText.table_data};
@@ -175,24 +174,8 @@ function acceptFileInput(event) {
     .catch(error=>{
       console.error("Error occured"+error);
     })
-  }
-  else{
-    detectText(formData).then(detectedText=>{
-      fetch('/invoice/save-detected-text', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ invoiceid: 12345, detectedText: detectedText })
-      }).then(response=>response.json())
-      .then(data=>{
-        console.log(data);
-      }); 
-    })
-    .catch(error=>{
-      console.error("Error occured"+error);
-    })
-  }
+
+
 }
 
 function fillTable() {
@@ -237,24 +220,9 @@ function deleteAccount(event){
   }
 }
 
-async function detectText(formData) {
-  try {
-    const response = await fetch('/rekognition/upload-jpeg-bucket', {
-      method: 'POST',
-      body: formData
-    });
-    const data = await response.json();
-    console.log('Text Detected:', data);
-    return data;
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    throw error; // Throw the error to propagate it further
-  }
-}
-
 async function detectTextBuckets(formData) {
   try {
-    const response = await fetch('/rekognition/upload-jpeg-bucket-new', {
+    const response = await fetch('/rekognition/upload-jpeg-bucket', {
       method: 'POST',
       body: formData
     });
