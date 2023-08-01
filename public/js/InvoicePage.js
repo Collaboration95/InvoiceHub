@@ -271,39 +271,38 @@ function openText(value) {
 }
 
 
-
 // Function to convert detected texts to CSV format
 function convertToCSV(detectedTexts) {
-  // Initialize an array to store the rows in csv
+  // Initialize an array to store the CSV rows
   const csvRows = [];
 
   // Push the CSV header as the first row
   csvRows.push('"Name","Telephone","Total","IssuedDate","Table Data"');
 
-  // Loop through each entry in detectedTexts
-  detectedTexts.forEach(entry => {
-    // Extract the relevant data from each entry
-    const { extractedDetails, table_data } = entry;
-    const name = extractedDetails.Name.join(', ');
-    const telephone = extractedDetails.Telephone.join(', ');
-    const total = extractedDetails.Total.join(', ');
-    const issuedDate = extractedDetails.IssuedDate.join(', ');
+  // Extract the extractedDetails from the object
+  const { extractedDetails } = detectedTexts;
 
-    // Combine the rows for table_data into a single string
-    const tableData = table_data.map(row => row[0]).join('\n');
+  // Extract the relevant data from the extractedDetails
+  const name = extractedDetails.Name.join(', ');
+  const telephone = extractedDetails.Telephone.join(', ');
+  const total = extractedDetails.Total.join(', ');
+  const issuedDate = extractedDetails.IssuedDate.join(', ');
 
-    // Combine the extracted data and table data into a single CSV row
-    const csvRow = `"${name}","${telephone}","${total}","${issuedDate}","${tableData}"`;
+  // Combine the rows for table_data into a single string
+  const tableData = detectedTexts.table_data.map(row => row[0]).join('\n');
 
-    // Push the CSV row to the array
-    csvRows.push(csvRow);
-  });
+  // Combine the extracted data and table data into a single CSV row
+  const csvRow = `"${name}","${telephone}","${total}","${issuedDate}","${tableData}"`;
+
+  // Push the CSV row to the array
+  csvRows.push(csvRow);
 
   // Join the rows using newline characters to form the complete CSV content
   const csvContent = csvRows.join('\n');
 
   return csvContent;
 }
+
 
 // Function which exports detected texts to CSV and downloads the file
 function exportToCSV(invoiceid) {
