@@ -3,7 +3,7 @@
 // Declare data variable outside the init() function
 let data;
 var selectedRows = []; // Array to track selected rows
-var table = document.getElementById("invoice_table");
+var table = document.getElementById("supplier_table");
 var filter = false;
 
 // Function to fetch data from the server
@@ -30,10 +30,8 @@ function showTable(data) {
       <th>EDIT</th> <!-- New column for Edditing -->
     </tr>
   `;
-
   // Loop through the data and create table rows
   data.forEach((supplier) => {
-    
     const row = document.createElement('tr');
     // var for saving the status' color column
     
@@ -42,7 +40,7 @@ function showTable(data) {
       <td>${supplier.contact_number}</td>
       <td>${supplier.address}</td>
       <td>${supplier.email}</td>
-      <td><input type="checkbox" name="selectedRow" value="${supplier.company_name}"></td>
+      <td><input type="radio" name="selectedRow" value="${supplier.company_name}"></td>
     `;
     table.appendChild(row);
   });
@@ -132,7 +130,7 @@ document.getElementById("inp_search_blank").addEventListener("keyup", function()
 
 
 // Add event listener to checkboxes
-var table = document.getElementById("invoice_table");
+var table = document.getElementById("supplier_table");
 table.addEventListener("change", function(event) {
   if (event.target.name === "selectedRow") {
       checkSelectedRows();

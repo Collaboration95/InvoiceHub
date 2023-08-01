@@ -3,6 +3,7 @@
     --primary-color: #033246;
     --secondary-color: #2D5261;
     --tertiary-color: #D3D4CD;
+    --extra-bright-color: #485f68;
 }
 
 /* style for the main body */
@@ -136,13 +137,13 @@ a {
 .home,
 .invoice,
 .soa,
+.supplier,
 .payment,
 .setting{
     padding: 10px;
     width: 100%;
     color: white;
 }
-
 
 .home:hover,
 .invoice:hover,
@@ -152,13 +153,7 @@ a {
 .setting:hover{
     background-color: var(--secondary-color);
 }
-.supplier{
-    background-image: linear-gradient(to left, #2D5261 99%, #D3D4CD 1%);
-    /* background-color: #2D5261; */
-    width: 100%;
-    padding: 10px;
 
-}
 
 /* style for the main content */
 
@@ -166,14 +161,4 @@ a {
     margin-left: max(250px, 17%);
     padding: 20px;
 }
-
-.supplier_title{
-    font-size: 35px;
-    color: #2D5261;
-    font-weight: bold;
-}
-
-
-
-/* styles.css */
-
+    

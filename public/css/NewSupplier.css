@@ -1,16 +1,16 @@
 /* changes for the side menu */
-.payment{
-    background-image: linear-gradient(to left, #2D5261 99%, #D3D4CD 1%);
-    /* background-color: #2D5261; */
-    /* width: 100%; */
-    padding: 10px;
+.supplier{
+        background-image: linear-gradient(to left, #2D5261 99%, #D3D4CD 1%);
+        /* background-color: #2D5261; */
+        width: 95%;
+        padding: 10px;
 }
 
-.payment:hover{
+.supplier:hover{
     background-color: #2D5261;
 }
 
-.ic_payment{
+.supplier{
     color:#D3D4CD;
     margin-right: 10px;
 }
@@ -29,14 +29,14 @@
     gap: 20px
 }
 
-/* style for invoice page title */
-
-.invoice_title{
-    font-size: 30px;
+/* style for Supplier page title */
+.supplier_title{
+    font-size: 35px;
+    color: #2D5261;
+    font-weight: bold;
 }
 
 /* style for summary content */
-
 .summary{
 
     display: flex;
@@ -56,33 +56,9 @@
     color:#033246;
 }
 
-.total_outstanding{
-    min-width: 90px;
-    max-width: 150px;
-    width: 40%;
 
-    align-self: center;
-    border-right: 1px solid #2D5261;
-    padding-right: 20px;
-}
 
-.overdue{
-    min-width: 65px;
-    max-width: 150px;
-    width: 30%;
 
-    align-self: center;
-}
-
-.due{
-    min-width: 50px;
-    max-width: 150px;
-    width: 30%;
-
-    align-self: center;
-    border-left: 1px solid #2D5261;
-    padding-left: 20px;
-}
 
 /* style for invoice navigation */
 
@@ -193,7 +169,7 @@ input[type="text"]{
 
 /* styles for the invoice table */
 
-.invoice_table{
+.supplier_table{
     margin-top: 20px;
     table-layout: auto;
     width: 100%;
@@ -206,21 +182,21 @@ input[type="text"]{
     margin-bottom: 20px;
 }
 
-.invoice_table thead {
+.supplier_table thead {
     display: table-header-group;
 
     color:white;
     align-items: center;
 }
 
-.invoice_table th{
+.supplier_table th{
     color: white;
     padding-left: 10px;
     padding-right: 10px;
     padding:5px;
 }
 
-.invoice_table td{
+.supplier_table td{
     color: #033246;
     background-color: white;
     padding:5px;
@@ -230,11 +206,11 @@ input[type="text"]{
     vertical-align: middle;
 }
 
-.invoice_table td:nth-child(1) {
+.supplier_table td:nth-child(1) {
     color: #033246;
 }
 
-.invoice_table td:nth-child(6) {
+.supplier_table td:nth-child(6) {
     /* display: flex; */
     justify-content: space-between;
 }
@@ -283,4 +259,4 @@ input[type="text"]{
     gap: 5px;
     align-items: center;
 }
-  
+
