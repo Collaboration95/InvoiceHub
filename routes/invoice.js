@@ -34,11 +34,10 @@ router.post('/save-image', upload.single('jpeg'), (req, res) => {
 });
 
 router.post('/insert-record', async (req, res) => {
-    const { user, invoiceid, invoice_name, upload_date, status, path, total } = req.body;
-  
+    const { user, invoiceid, invoice_name, upload_date, status, path, total,type } = req.body;
     // Insert the record into the table
-    const query = `INSERT INTO ${table_name.invoice} (users, invoiceid, invoice_name, upload_date, status, path, total) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const values = [user, invoiceid, invoice_name, upload_date, status, path, total];
+    const query = `INSERT INTO ${table_name.invoice} (users, invoiceid, invoice_name, upload_date, status, path, total) VALUES (?, ?, ?, ?, ?, ?, ?,?)`;
+    const values = [user, invoiceid, invoice_name, upload_date, status, path, total,type];
     
     try {
       const connection = await pool.getConnection();
@@ -59,7 +58,7 @@ router.post('/insert-record', async (req, res) => {
 router.post('/save-detected-data', async (req, res) => {
   const { invoiceid, detectedText } = req.body;
   const total = JSON.parse(detectedText).extractedDetails.Total[0];
-  const query = `UPDATE invoices SET detectedText = ?, total = ? WHERE invoiceid = ?`;
+  const query = `UPDATE ${table_name.invoice} SET detectedText = ?, total = ? WHERE invoiceid = ?`;
   try {
     const connection = await pool.getConnection();
     const results = await connection.query(query, [detectedText, total, invoiceid]);
@@ -74,11 +73,10 @@ router.post('/save-detected-data', async (req, res) => {
   }
 });
 
-
 router.get('/get-detected-text/:invoiceid', async (req, res) => {
     const invoiceId = req.params.invoiceid;
   
-    const query = `SELECT detectedText FROM invoices WHERE invoiceid = ?`;
+    const query = `SELECT detectedText FROM ${table_name.invoice} WHERE invoiceid = ?`;
     try {
       const connection = await pool.getConnection();
       const [rows] = await connection.query(query, [invoiceId]);
@@ -97,10 +95,10 @@ router.get('/get-detected-text/:invoiceid', async (req, res) => {
     }
 });
   
-router.get('/table', async (req, res) => {
+router.get('/get-all-invoices', async (req, res) => {
     try {
       const connection = await pool.getConnection();
-      const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, path , upload_date , total, status FROM ${table_name.invoice}`);
+      const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, path , upload_date , total, status FROM ${table_name.invoice} WHERE type='invoice'`);
       connection.release();
       res.json(rows);
     } catch (error) {
@@ -109,12 +107,24 @@ router.get('/table', async (req, res) => {
     }
 });
 
-router.delete('/invoiceid', async (req, res) => {
+router.get('/get-all-soa', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, path , upload_date , total, status FROM ${table_name.invoice} WHERE type='SOA'`);
+    connection.release();
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching invoices:', error);
+    res.status(500).json({ error: 'An error occurred while fetching invoices' });
+  }
+});
+
+router.delete('/delete-record', async (req, res) => {
   const {invoiceid} = req.body;
 
   try {
     const connection = await pool.getConnection();
-    const query = 'DELETE FROM invoicehub.invoices WHERE invoiceid = ?'
+    const query = `DELETE FROM ${table_name.invoice} WHERE invoiceid = ?`;
     const [result] = await connection.query(query, [invoiceid]);
 
     if (result.affectRows > 0) {
@@ -128,27 +138,6 @@ router.delete('/invoiceid', async (req, res) => {
     res.status(500).json({error: "an error"});
   }});
 
-  router.post('/update_data', async (req, res) => {
-    const { invoice_name, upload_date, total, invoiceid } = req.body;
-  
-    try {
-      const connection = await pool.getConnection();
-      const query = 'UPDATE invoicehub.invoices SET invoice_name = ?, upload_date = ?, total = ? WHERE invoiceid = ?';
-      const [result] = await connection.query(query, [invoice_name, upload_date, total, invoiceid]);
-  
-      if (result.affectedRows > 0) {
-        res.status(200).json({ message: "Updated successfully" });
-      } else {
-        res.status(404).json({ error: "Invoice not found" });
-      }
-      connection.release();
-    } catch (error) {
-      console.error('ERROR', error);
-      res.status(500).json({ error: "An error occurred" });
-    }
-  });
-  
- 
 router.get('/dummy', async (req, res) => {
   try {
     res.json("Dummy output");

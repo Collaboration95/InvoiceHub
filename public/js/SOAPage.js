@@ -3,7 +3,7 @@ var table = document.getElementById("soa_table");
 // Function to fetch data from the server
 async function getData() {
     try {
-      const response = await fetch('/soa/table');
+      const response = await fetch('/invoice/get-all-soa');
       const data = await response.json();
       console.log('Data from server:', data); // Add this log
       data.forEach(soa => {
@@ -58,7 +58,7 @@ function renderTable(data) {
           </svg>
         </a>`;
         var deleteIcon = `
-        <svg class="ic_delete" id="${soa.soa_number}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+        <svg class="ic_delete" id="${soa.invoiceid}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
             <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
           </svg>`;
 
@@ -88,8 +88,8 @@ function renderTable(data) {
         // render each row of data
         table.innerHTML += `
           <tr>
-            <td>${soa.soa_number}</td>
-            <td>${soa.company_name}</td>
+            <td>${soa.invoiceid}</td>
+            <td>${soa.invoice_name}</td>
             <td>${soa.upload_date}</td>
             <td>$S ${soa.total}</td>
             <td style="background-color: ${statusColor};">${status}</td>
@@ -122,7 +122,7 @@ table.addEventListener("click", function (event) {
     var confirmed = confirm("Are you sure you want to delete this SOA?");
 
     if (confirmed) {
-      fetch('/soa/soa_number',{
+      fetch('/invoice/delete-record',{
         method: "DELETE",
         headers: {
           'Content-type': 'application/json',
@@ -184,14 +184,10 @@ input.addEventListener("keyup", function() {
   });
 });
 
-
 searchDropdown.addEventListener('change', function() {
   input.value = '';
   getData().then(data => renderTable(data)); 
 });
-
-
-
 
 /* CODE FOR SORT/ SORTING FUNCTION */
 
@@ -280,7 +276,7 @@ function openImage(value){
   }
   
   function openText(value){
-      const newURL = `http://localhost:8000/soa/get-detected-text/${value}`;
+      const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;
           window.open(newURL);
   }
   
