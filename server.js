@@ -77,10 +77,6 @@ if (require.main === module) {
   const paidRouter = require('./routes/paid');
   app.use('/paid', paidRouter);
 
-  
-
-
-
   app.get('*', function (req, res) { // Catch 404 errors 
     res.status(404).sendFile(path.join(__dirname, 'public', 'html', '404.html'));
   });

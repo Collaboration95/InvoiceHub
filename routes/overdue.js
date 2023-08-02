@@ -1,10 +1,4 @@
 const mysql = require('mysql2/promise');
-const express = require('express');
-const router = express.Router();
-
-const{pool,table_name}=require ('../server');
-const path = require('path');
-const { route } = require('./account');
 
 
 const mysqlConfig = {

@@ -222,19 +222,7 @@ function deleteAccount(event){
   }
 }
 
-async function detectTextBuckets(formData) {
-  try {
-    const response = await fetch('/rekognition/upload-jpeg-bucket', {
-      method: 'POST',
-      body: formData
-    });
-    const data = await response.json(); // Convert the response to JSON
-    return data;
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    throw error;
-  }
-}
+
 
 function logout(){
   sessionStorage.removeItem('localData');
@@ -449,60 +437,3 @@ function openText(value){
     const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;
         window.open(newURL);
 }
-
-function extractDetails(ocrResult) {
-  console.log(ocrResult);
-  const validTypes = {
-    Name: ["VENDOR_NAME", "NAME"],
-    Address: ["VENDOR_ADDRESS","ADDRESS"],
-    Telephone: ["VENDOR_PHONE"],
-    Total: ["TOTAL"],
-    IssuedDate: ["INVOICE_RECEIPT_DATE"]
-  };
-
-  const extractEmailAddresses = (data) => [].concat(...data.map(({ value }) => (value.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g) || [])));
-  const keyvalue = {Name:[],Address:[],Telephone:[],Total:[],IssuedDate:[]};
-  
-  ocrResult.forEach(item=>{
-    for (const category in validTypes) {
-      if (validTypes[category].includes(item.type)) {
-        if(keyvalue[category].includes(item.value)){
-          continue; // Skip duplicate values
-        }
-        else{
-          keyvalue[category].push(item.value);
-        }
-      }
-    }
-  });
-  keyvalue.email = extractEmailAddresses(ocrResult);
-  console.log(keyvalue);
-  return keyvalue;
-}
-
-
-function sanitizeDetails(details,input){
-  console.log(details);
-  const flatInput = input.flat();
-  // Bug fix later 
-  // const uniqueWordsList = Array.from(new Set(flatInput.join(' ').split(/\s+/).map(word => word.replace(/[^a-zA-Z]/g, ''))));
-
-  const arrayToRemove = ["Kim Eng ", "BLK 103 YISHUN"];
-  console.log(arrayToRemove);
-  Object.keys(details).forEach(key => {
-    if (Array.isArray(details[key])) {
-        details[key] = details[key].filter(value => {
-            const lowercaseValue = value.toLowerCase();
-            return !arrayToRemove.some(removeValue => lowercaseValue.includes(removeValue.toLowerCase()));
-        });
-    }
-});
-
-if (details.Name.length >1) {
-  const longestName = details.Name.reduce((longest, current) => (current.length > longest.length ? current : longest), "");
-  details.Name[0]=longestName;
-  
-}
-return details;
-}
-
