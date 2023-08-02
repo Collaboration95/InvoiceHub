@@ -159,7 +159,8 @@ function acceptFileInput(event) {
 
     detectTextBuckets(formData).then(detectedText=>{
     const output = extractDetails(detectedText.invoice_data);
-    const payload= {extractedDetails :output, table_data:detectedText.table_data};
+    const output2 = sanitizeDetails(output,detectedText.table_data);
+    const payload= {extractedDetails :output2, table_data:detectedText.table_data};
       // console.log(payload);
 
       fetch('/invoice/save-detected-data', {
@@ -475,7 +476,33 @@ function extractDetails(ocrResult) {
     }
   });
   keyvalue.email = extractEmailAddresses(ocrResult);
+  console.log(keyvalue);
   return keyvalue;
 }
 
+
+function sanitizeDetails(details,input){
+  console.log(details);
+  const flatInput = input.flat();
+  // Bug fix later 
+  // const uniqueWordsList = Array.from(new Set(flatInput.join(' ').split(/\s+/).map(word => word.replace(/[^a-zA-Z]/g, ''))));
+
+  const arrayToRemove = ["Kim Eng ", "BLK 103 YISHUN"];
+  console.log(arrayToRemove);
+  Object.keys(details).forEach(key => {
+    if (Array.isArray(details[key])) {
+        details[key] = details[key].filter(value => {
+            const lowercaseValue = value.toLowerCase();
+            return !arrayToRemove.some(removeValue => lowercaseValue.includes(removeValue.toLowerCase()));
+        });
+    }
+});
+
+if (details.Name.length >1) {
+  const longestName = details.Name.reduce((longest, current) => (current.length > longest.length ? current : longest), "");
+  details.Name[0]=longestName;
+  
+}
+return details;
+}
 
