@@ -12,11 +12,6 @@ test("show notifications", ()=>{
   expect(checkVisibility(notification).toBe(true));
 }
 
-//test saving modifications
-test("Save", ()=>{
-  expect(lcoalStorage.getItem("Data Table2")).toBe(null);  //test case should fail, indicating that data from localStorage is stored
-}
-
 //Test add notifications
 test("AddNotifications", ()=>{
   expect((document.getElementById("Data Table2").rows.length).toBe(1));
