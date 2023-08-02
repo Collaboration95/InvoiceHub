@@ -128,12 +128,13 @@
                         }; 
                         
                     };
-                    new Notification(message);
                     
-                    
+                    let notifications = new Notification(message);
+                    notifications.addEventListener("click", ()=>{
+                        alert("Notifications acknowledged");
+                    });
                     
                 };
-
 
             });
 
