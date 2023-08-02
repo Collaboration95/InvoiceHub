@@ -1,8 +1,10 @@
+
+
  :root{
   --extra-bright-color: #485f68;
 }
 
-/* changes for the side menu */
+
 .home{
   background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
   padding: 10px;
@@ -18,33 +20,92 @@
 }
 
 
-/* style for the top contents (summary) */
-
+/* 
 .content_top{
-  margin-top: 20px;
   display: flex;
+  flex-wrap: wrap;
   width: fit-content;
-
-  height: 100%;
+  height: auto;
   max-width: 80%;
   
   gap: 20px
 }
 
 
-/* style for invoice page title */
-
 .invoice_title{
   font-size: 30px;
 }
 
-/* style for summary content */
 
 .summary{
 
   display: flex;
   gap: 30px;
-  width: 100%;
+  width: fit-content;
+  height: fit-content;
+  
+
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  border: 1px solid var(--secondary-color);
+  box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+  border-radius: 10px;
+
+  text-align: center;
+  color:var(--primary-color);
+}
+
+ */
+
+ /* .content_top{
+  display: flex;
+  flex-wrap: wrap;
+  width: auto;
+  height: auto;
+  gap: 20px
+} */
+
+
+/* .content_top{
+  gap: 30px;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 3%;
+  border: 1px solid var(--secondary-color);
+  box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+  border-radius: 10px;
+
+  text-align: left;
+  color:var(--primary-color);
+} */
+
+ /* .content_top{
+  display: flex;
+  flex-wrap: wrap;
+  width: auto;
+  height: auto;
+  gap: 20px
+}  */
+.content_top{
+  gap: 30px;
+  width: fit-content;
+  height: fit-content;
+  display: flex ;
+  flex-wrap: wrap;
+
+} 
+
+ .summary{
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: fit-content;
   height: fit-content;
   
 
@@ -61,40 +122,30 @@
 }
 
 .total_outstanding{
-  min-width: 90px;
-  max-width: 150px;
-  width: 30%;
-
+  width: auto;
   align-self: center;
-  border-right: 1px solid var(--secondary-color);
-  padding-right: 30px;
+  padding-left: 20px;
 }
 
 .overdue{
-  min-width: 65px;
-  max-width: 150px;
-  width: 30%;
-
+  width: auto;
   align-self: center;
+  border-left: 1px solid var(--secondary-color);
+  padding-left: 20px;
 }
 
 .due{
-  min-width: 50px;
-  max-width: 150px;
-  width: 30%;
 
+  width: auto;
   align-self: center;
   border-left: 1px solid var(--secondary-color);
   padding-left: 20px;
 }
 
 
-
-/* styles for uploading invoices */
-
-.upload{
+ .upload{
   gap: 30px;
-  width: 40%;
+  width: fit-content;
   height: fit-content;
 
   padding: 10px;
@@ -108,6 +159,8 @@
   text-align: left;
   color:var(--primary-color);
 }
+
+
 
 .upload_invoice,
 .upload_soa,
@@ -118,33 +171,18 @@
   gap: 10px;
 }
 
+
 .ic_upload{
   width: auto;
   color:var(--primary-color);
 }
 
 
-
-.overdue_stat{
-  gap: 30px;
-  width: 40%;
-
-  padding: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-
-  border: 1px solid var(--secondary-color);
-  box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
-  border-radius: 10px;
-
-  text-align: left;
-  color:var(--primary-color);
-}
-
 .barchar1{
   gap: 30px;
-  width: 200%;
-  height: fit-content;
+  width: auto;
+  height: auto;
+
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
@@ -159,7 +197,7 @@
 
 .barchar2{
   gap: 30px;
-  width: 100%;
+  width: auto;
   height: auto;
   padding: 10px;
   padding-left: 20px;
@@ -173,7 +211,7 @@
   color:var(--primary-color);
 }
 
-
+/*  
 .content{
   margin-right: 50px;
 }
@@ -181,5 +219,5 @@
 
 .soa_upload_title{
   white-space: nowrap;
-  padding-right: 100px;
-}
+  padding-right: auto;
+} */
