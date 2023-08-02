@@ -116,12 +116,3 @@ describe('fetchData', () => {
     expect(mockConnection.end).not.toHaveBeenCalled();
   });
 });
-
-
-
-
-
-
-
-
-
