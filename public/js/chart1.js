@@ -25,3 +25,4 @@ function createOverdueChart(data) {
 }
 
 document.addEventListener('DOMContentLoaded', fetchOverdueData);
+module.exports = { fetchOverdueData };
