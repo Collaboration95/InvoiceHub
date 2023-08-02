@@ -52,12 +52,9 @@ function Signup(name, password, email, userType) {
           console.log("Calling elevatePrivilege");
           elevatePrivilege(name);
         }
-        
-        // Redirect to the homepage
-        var port = window.location.port || ""; // Get the current port number, or an empty string if not present
-        var url = 'http://localhost' + (port ? ':' + port : ''); // Construct the URL with the dynamic port number
-        
-        window.location.href = url; // Redirect to the dynamically constructed URL
+
+        // Redirect to the login.html page
+        window.location.href = '../html/login.html';
         
       } else if (response.status === 409) {
         // Handle the duplicate entry error
