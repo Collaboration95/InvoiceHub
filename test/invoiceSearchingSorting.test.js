@@ -144,22 +144,22 @@ describe('Searching and Sorting Testing', function() {
     await driver.findElement(By.id("search_type_dropdown")).click();
     await driver.findElement(By.id("inp_search_blank")).click();
     await driver.findElement(By.id("inp_search_blank")).sendKeys("1811");
-    expect("invoice_table".length).toBe(2); 
-    expect("invoice_table"[1].innerText).toContain('1016');
+    expect(driver.findElement(By.id("invoice_table")).length).toBe(2); 
+    expect(driver.findElement(By.id("invoice_table"[1])).innerText).toContain('1016');
   });
   it('when the user chooses ID and correct type input -> have no matching data', async function() {
     await driver.findElement(By.css(".invoice > div")).click();
     await driver.findElement(By.id("search_type_dropdown")).click();
     await driver.findElement(By.id("inp_search_blank")).click();
     await driver.findElement(By.id("inp_search_blank")).sendKeys("1111");
-    expect("invoice_table".length).toBe(1); 
+    expect(driver.findElement(By.id("invoice_table".length))).toBe(1); 
   });
   it('when the user chooses ID and wrong type input -> have no matching data', async function() {
     await driver.findElement(By.css(".invoice > div")).click();
     await driver.findElement(By.id("search_type_dropdown")).click();
     await driver.findElement(By.id("inp_search_blank")).click();
     await driver.findElement(By.id("inp_search_blank")).sendKeys("hello");
-    expect("invoice_table".length).toBe(1); 
+    expect(driver.findElement(By.id("invoice_table".length))).toBe(1); 
   });
   it('When the user choose ID and press descending button', async function() {
     await driver.findElement(By.css(".invoice > div")).click();
@@ -173,4 +173,4 @@ describe('Searching and Sorting Testing', function() {
     await driver.findElement(By.id("ic_sort_asc")).click();
     // add expect line for checking
   });
-})
+});
