@@ -160,5 +160,17 @@ describe('Searching and Sorting Testing', function() {
     await driver.findElement(By.id("inp_search_blank")).click();
     await driver.findElement(By.id("inp_search_blank")).sendKeys("hello");
     expect("invoice_table".length).toBe(1); 
-  })
+  });
+  it('When the user choose ID and press descending button', async function() {
+    await driver.findElement(By.css(".invoice > div")).click();
+    await driver.findElement(By.id("sort_dropdown")).click();
+    await driver.findElement(By.css("#ic_sort_des > path")).click();
+    // add expect line for checking
+  });
+  it('When the user choose ID and press descending button', async function() {
+    await driver.findElement(By.css(".invoice > div")).click();
+    await driver.findElement(By.id("sort_dropdown")).click();
+    await driver.findElement(By.id("ic_sort_asc")).click();
+    // add expect line for checking
+  });
 })
