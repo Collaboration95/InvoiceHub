@@ -1,0 +1,33 @@
+const request = require('supertest');
+const express = require('express');
+const page = require('showNotifications');
+
+//test loading of data from localStorage
+test("laodData", ()=>{
+  expect(load().toBe(true));
+}
+
+//test to check visibility of push notifications
+test("show notifications", ()=>{
+  expect(checkVisibility(notification).toBe(true));
+}
+
+//test saving modifications
+test("Save", ()=>{
+  expect(lcoalStorage.getItem("Data Table2")).toBe(null);  //test case should fail, indicating that data from localStorage is stored
+}
+
+//Test add notifications
+test("AddNotifications", ()=>{
+  expect((document.getElementById("Data Table2").rows.length).toBe(1));
+}
+
+//delete notofocations
+test("DeleteNotifications", ()=>{
+  expect((document.getElementById("Data Table2").table.rows.length).toBe(0));
+}
+
+//test saving data
+test("Save", ()=>{
+  expect(localStorage.getItem("Data Table2").toBe(null));  //should fail, indicating that data has been stored in localStorage
+}
