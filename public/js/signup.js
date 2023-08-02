@@ -118,9 +118,8 @@ passwordToggle.addEventListener("mouseup", function () {
 document.querySelectorAll(".redirect")
 .forEach(
   (button)=>{button.addEventListener('click',()=>{
-  var port = window.location.port || ""; // Get the current port number, or an empty string if not present
-  var url = 'http://localhost' + (port ? ':' + port : ''); // Construct the URL with the dynamic port number
-  window.location.href = url; // Redirect to the dynamically constructed URL
+  // Redirect to the login.html page
+  window.location.href = '../html/login.html';
 });
 });
 
