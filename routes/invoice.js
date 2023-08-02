@@ -147,5 +147,108 @@ router.get('/dummy', async (req, res) => {
   }
 });
 
-module.exports = router;
 
+router.get('/fetch-overdue-data', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query(`
+    SELECT
+    CASE
+      WHEN DATEDIFF(NOW(), upload_date) < 30 THEN '<30 days'
+      WHEN DATEDIFF(NOW(), upload_date) >= 30 AND DATEDIFF(NOW(), upload_date) < 60 THEN '30-60 days'
+      WHEN DATEDIFF(NOW(), upload_date) >= 60 AND DATEDIFF(NOW(), upload_date) < 90 THEN '60-90 days'
+      ELSE 'More than 90 days'
+    END AS category,
+    COUNT(*) AS count
+    FROM ${table_name.invoice}
+    WHERE status = 'Overdue'
+    GROUP BY category;
+    `); 
+
+    connection.release();
+
+    const categories = [];
+    const counts = [];
+
+    for (const data of rows) {
+      categories.push(data.category); // Corrected from month.push(data.month);
+      counts.push(data.count); // Corrected from amount.push(data.total);
+    }
+
+    const chartData = {
+      labels: categories,
+      datasets: [
+        {
+          label: 'Amount Overdue',
+          data: counts,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1,
+        },
+      ],
+    };
+    res.json(chartData);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: 'An error occurred while fetching invoices' });
+  }
+});
+
+router.get('/fetch-expense-data', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+
+    const [rows] = await connection.query(`
+    SELECT *
+FROM (
+  SELECT
+    DATE_FORMAT(upload_date, '%b') AS month,
+    SUM(total) AS total
+  FROM ${table_name.invoice}
+  GROUP BY DATE_FORMAT(upload_date, '%b')
+) AS subquery
+ORDER BY 
+  CASE month
+    WHEN 'Jan' THEN 1
+    WHEN 'Feb' THEN 2
+    WHEN 'Mar' THEN 3
+    WHEN 'Apr' THEN 4
+    WHEN 'May' THEN 5
+    WHEN 'Jun' THEN 6
+    WHEN 'Jul' THEN 7
+    WHEN 'Aug' THEN 8
+    WHEN 'Sep' THEN 9
+    WHEN 'Oct' THEN 10
+    WHEN 'Nov' THEN 11
+    WHEN 'Dec' THEN 12
+    ELSE 99
+  END;
+    `);
+
+    const month = [];
+    const amount = [];
+
+    for (const data of rows) {
+      month.push(data.month);
+      amount.push(data.total);
+    }
+
+    const chartData = {
+      labels: month,
+      datasets: [
+        {
+          label: 'Total Expense Per Month',
+          data: amount,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)', // Set a single color value for all data points
+          borderColor: 'rgba(54, 162, 235, 1)', // Set the same color value with alpha 1 for border
+          borderWidth: 1,
+        },
+      ],
+    };
+    res.json(chartData);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+module.exports = router;
