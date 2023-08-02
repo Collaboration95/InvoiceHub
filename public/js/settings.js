@@ -160,7 +160,7 @@ function acceptFileInput(event) {
     detectTextBuckets(formData).then(detectedText=>{
     const output = extractDetails(detectedText.invoice_data);
     const payload= {extractedDetails :output, table_data:detectedText.table_data};
-      console.log(payload);
+      // console.log(payload);
 
       fetch('/invoice/save-detected-data', {
         method: 'POST',
@@ -450,15 +450,17 @@ function openText(value){
 }
 
 function extractDetails(ocrResult) {
-
+  console.log(ocrResult);
   const validTypes = {
     Name: ["VENDOR_NAME", "NAME"],
+    Address: ["VENDOR_ADDRESS","ADDRESS"],
     Telephone: ["VENDOR_PHONE"],
     Total: ["TOTAL"],
     IssuedDate: ["INVOICE_RECEIPT_DATE"]
   };
-  
-  const keyvalue = {Name:[],Telephone:[],Total:[],IssuedDate:[]};
+
+  const extractEmailAddresses = (data) => [].concat(...data.map(({ value }) => (value.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g) || [])));
+  const keyvalue = {Name:[],Address:[],Telephone:[],Total:[],IssuedDate:[]};
   
   ocrResult.forEach(item=>{
     for (const category in validTypes) {
@@ -472,7 +474,7 @@ function extractDetails(ocrResult) {
       }
     }
   });
-  
+  keyvalue.email = extractEmailAddresses(ocrResult);
   return keyvalue;
 }
 

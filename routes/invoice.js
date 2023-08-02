@@ -36,7 +36,7 @@ router.post('/save-image', upload.single('jpeg'), (req, res) => {
 router.post('/insert-record', async (req, res) => {
     const { user, invoiceid, invoice_name, upload_date, status, path, total,type } = req.body;
     // Insert the record into the table
-    const query = `INSERT INTO ${table_name.invoice} (users, invoiceid, invoice_name, upload_date, status, path, total) VALUES (?, ?, ?, ?, ?, ?, ?,?)`;
+    const query = `INSERT INTO ${table_name.invoice} (users, invoiceid, invoice_name, upload_date, status, path, total , type) VALUES (?, ?, ?, ?, ?, ?, ?,?)`;
     const values = [user, invoiceid, invoice_name, upload_date, status, path, total,type];
     
     try {
