@@ -237,7 +237,7 @@ async function detectTextBuckets(formData) {
 function logout(){
   sessionStorage.removeItem('localData');
   localData = "";
-  window.location.href = "../html/FirstPage.html";
+  window.location.href = "../index.html";
 }
 
 function requestAdminAccess() {
