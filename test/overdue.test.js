@@ -67,7 +67,24 @@ describe('fetchData', () => {
     });
   });
 
+  it('handles error when fetching data', async () => {
+    const errorMessage = 'Database connection error';
+    const mockExecute = jest.fn().mockRejectedValue(new Error(errorMessage));
+    const mockConnection = {
+      execute: mockExecute,
+      end: jest.fn(),
+    };
+    jest.spyOn(require('mysql2/promise'), 'createConnection').mockResolvedValue(mockConnection);
 
+    try {
+      await fetchData();
+    } catch (error) {
+      expect(error.message).toBe(errorMessage);
+    }
+
+    expect(mockExecute).toHaveBeenCalledWith(expect.any(String));
+    expect(mockConnection.end).not.toHaveBeenCalled();
+  });
 });
 
 
