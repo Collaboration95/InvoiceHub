@@ -33,9 +33,14 @@
     "supertest": "^6.3.3"
   },
   "devDependencies": {
+    "fetch-mock": "^9.11.0",
     "jest": "^29.6.1",
+    "jest-environment-jsdom": "^29.6.2",
     "jest-fetch-mock": "^3.0.3",
     "jsdom": "^22.1.0",
     "nodemon": "^2.0.22"
+  },
+  "jest": {
+    "testEnvironment": "jest-environment-jsdom" 
   }
 }
