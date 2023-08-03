@@ -6,14 +6,15 @@ const path = require('path');
 const crypto = require('crypto');
 const { route } = require('./account');
 
-// Function to generate a unique filename
+
 function generateUniqueFilename(originalFilename) {
   const timestamp = Date.now();
+  var oroginalFilename= originalFilename.toLowerCase();
   const randomString = crypto.randomBytes(8).toString('hex');
   const filename = `${timestamp}-${randomString}-${originalFilename}`;
   return filename;
 }
-
+console.log
 const storage = multer.diskStorage({
   destination: path.join(__dirname,'..', 'public', 'img-db'), // Using __dirname to get the current directory
   filename: (req, file, cb) => {
@@ -252,3 +253,5 @@ ORDER BY
 });
 
 module.exports = router;
+
+
