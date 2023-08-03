@@ -1,8 +1,11 @@
+:root{
+    --extra-bright-color: #485f68;
+}
 /* changes for the side menu */
 .supplier{
         background-image: linear-gradient(to left, #2D5261 99%, #D3D4CD 1%);
         /* background-color: #2D5261; */
-        width: 95%;
+        width: 90%;
         padding: 10px;
 }
 
@@ -30,6 +33,7 @@
 }
 
 /* style for Supplier page title */
+
 .supplier_title{
     font-size: 35px;
     color: #2D5261;
@@ -167,7 +171,7 @@ input[type="text"]{
     border: none;
 } */
 
-/* styles for the invoice table */
+/* styles for the supplier table */
 
 .supplier_table{
     margin-top: 20px;
