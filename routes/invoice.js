@@ -99,7 +99,7 @@ router.get('/get-detected-text/:invoiceid', async (req, res) => {
 router.get('/get-all-invoices', async (req, res) => {
     try {
       const connection = await pool.getConnection();
-      const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, path , upload_date , total, status FROM ${table_name.invoice} WHERE type='invoice'`);
+      const [rows] = await connection.query(`SELECT * FROM ${table_name.invoice} WHERE type='invoice'`);
       connection.release();
       res.json(rows);
     } catch (error) {
@@ -111,7 +111,7 @@ router.get('/get-all-invoices', async (req, res) => {
 router.get('/get-all-soa', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, path , upload_date , total, status FROM ${table_name.invoice} WHERE type='SOA'`);
+    const [rows] = await connection.query(`SELECT * FROM ${table_name.invoice} WHERE type='SOA'`);
     connection.release();
     res.json(rows);
   } catch (error) {

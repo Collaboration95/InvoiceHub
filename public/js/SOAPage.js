@@ -1,5 +1,7 @@
 var table = document.getElementById("soa_table");
 
+const invoice ={};
+
 // Function to fetch data from the server
 async function getData() {
     try {
@@ -62,9 +64,9 @@ function renderTable(data) {
             <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
           </svg>`;
 
-        var exportIcon = `
+        var paymentIcon = `
           <a href="#">
-          <svg id="ic_payment" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+          <svg class="ic_payment" id="${soa.invoiceid}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
           <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
           <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
@@ -85,6 +87,8 @@ function renderTable(data) {
           statusColor = "rgb(136, 197, 136)";
         }
 
+        invoice[soa.invoiceid]=soa.contain;
+
         // render each row of data
         table.innerHTML += `
           <tr>
@@ -93,7 +97,7 @@ function renderTable(data) {
             <td>${soa.upload_date}</td>
             <td>$S ${soa.total}</td>
             <td style="background-color: ${statusColor};">${status}</td>
-            <td>${previewIcon} ${editIcon} ${deleteIcon} ${exportIcon}</td>
+            <td>${previewIcon} ${editIcon} ${deleteIcon} ${paymentIcon}</td>
           </tr>`;
   });
 }
@@ -114,7 +118,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // // Add event listener for delete icon using event delegation
 table.addEventListener("click", function (event) {
-  if (event.target.classList.contains("ic_delete")) {
+  console.log("click");
+  if (event.target.classList.contains("ic_payment")) {
+    console.log("click payment");
+    // Retrieve the invoice id from the data attribute
+    var soaId = event.target.getAttribute("id");
+    if (soaId != null ) {
+      // Encode the selected invoice IDs as a query parameter
+      var queryParams = new URLSearchParams();
+      console.log(invoice[soaId]);
+      queryParams.append("SOA", soaId);
+      queryParams.append("Invoice", invoice[soaId]);
+  
+      // Build the URL for the next page with the query parameter
+      var nextPageURL = "SOAPaymentForm.html?" + queryParams.toString();
+  
+      // Navigate to the next page
+      window.location.href = nextPageURL;
+    }
+  }
+
+  else if (event.target.classList.contains("ic_delete")) {
     // Retrieve the invoice id from the data attribute
     var soaId = event.target.getAttribute("id");
 
@@ -132,6 +156,7 @@ table.addEventListener("click", function (event) {
     }
     getData().then(data => renderTable(data));
   }
+
 });
 
 

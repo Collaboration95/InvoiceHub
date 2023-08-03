@@ -11,7 +11,7 @@ let data;
 var urlParams = new URLSearchParams(window.location.search);
 var selectedValues = urlParams.get("Invoice");
 var SOA = urlParams.get("SOA");
-console.log("read");
+console.log(SOA);
 console.log(selectedValues);
 
 // Split the selected values into an array
@@ -23,7 +23,7 @@ var selectedSOA = SOA.split(",");
 // Function to fetch data from the server
 async function retrieveData() {
   try {
-    const response = await fetch('/payment/all'); // Fetch data from the /payment/all endpoint
+    const response = await fetch('/invoice/get-all-invoices'); // Fetch data from the /payment/all endpoint
     data = await response.json();
     console.log(data);
     return data;
@@ -38,21 +38,21 @@ function showTable(data) {
 
   // Loop through the data and create table rows
   data.forEach((invoice) => {
-    console.log(invoice.Invoice_id);
-    if (selectedValuesArray.includes(String(invoice.Invoice_id))) {
+    console.log(invoice.invoiceid);
+    if (selectedValuesArray.includes(String(invoice.invoiceid))) {
       const row = document.createElement('tr');
       row.innerHTML = ` 
-      <td>${invoice.Invoice_id}</td>
-      <td>${invoice.Company}</td>
-      <td>${formatDate(invoice.date_received)}</td>
-      <td>${formatItems(invoice.items)}</td>
-      <td>${invoice.total_cost}</td>
+      <td>${invoice.invoiceid}</td>
+      <td>${invoice.invoice_name}</td>
+      <td>${formatDate(invoice.upload_date)}</td>
+      <td>${formatItems(invoice.detectedText)}</td>
+      <td>${invoice.total}</td>
       <td>${invoice.status}</td>
     `;
     selectedTable.appendChild(row);
 
     // Calculate the total amount for selected invoices
-    var amount = parseFloat(invoice.total_cost);
+    var amount = parseFloat(invoice.total);
     total_to_be_paid += amount;
     }
 
@@ -87,22 +87,17 @@ async function init() {
   }
 }
 function formatItems(items) {
-  const splitItems = items.split(",");
-  const formattedLines = splitItems.map((line) => {
-    const [quantity, item, price] = line.split('-');
-    const cost = parseFloat(price).toFixed(2);
-
-    const formattedItem =
-      quantity.trim() +
-      ' ' +
-      item.trim() +
-      (parseInt(quantity) > 1 ? 's' : '');
-
-    return formattedItem + ' -> Cost: $' + cost;
-  });
-
-  return formattedLines.join('\n');
-}
+    console.log(items);
+    if (items == null){
+      return "no item";
+    }
+    else{
+      // data = JSON.parse(items);
+      // const tableDataItems = data.table_data.map(item => item[0]).join('\n');
+      // return tableDataItems;
+      return "item";
+    }
+  }
 
 // Function to format date
 function formatDate(dateString) {
@@ -204,12 +199,40 @@ async function handleFormSubmission(event) {
       // Update the status of soa to "PAID" in the data array
       selectedSOA.forEach(async (SOA) => {
         try {
-          const response = await fetch(`../soa/update-status`, {
+          const response = await fetch(`../payment/update-soa-status`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ status: 'PAID', soa_number: SOA }),
+          });
+
+          const responseData = await response.json();
+          console.log(responseData); // Check the response data received from the server
+
+          if (response.ok) {
+            console.log(responseData.message); // Status updated successfully
+          } else {
+            console.error(responseData.error); // Invoice not found or error updating status
+          }
+        } catch (error) {
+          console.error('Error updating status:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred while updating status. Please try again later.',
+          });
+        }
+      });
+
+      selectedSOA.forEach(async (SOA) => {
+        try {
+          const response = await fetch(`../payment/update-status`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: 'PAID', invoiceId: selectedValuesArray }),
           });
 
           const responseData = await response.json();
