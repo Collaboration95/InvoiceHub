@@ -138,7 +138,6 @@ function extractDetails(ocrResult) {
       }
     });
     keyvalue.email = extractEmailAddresses(ocrResult);
-    console.log(keyvalue);
     return keyvalue;
   }
   
@@ -148,7 +147,6 @@ function extractDetails(ocrResult) {
     const flatInput = input.flat();
     // Bug fix later 
     // const uniqueWordsList = Array.from(new Set(flatInput.join(' ').split(/\s+/).map(word => word.replace(/[^a-zA-Z]/g, ''))));
-  
     const arrayToRemove = ["Kim Eng ", "BLK 103 YISHUN"];
     console.log(arrayToRemove);
     Object.keys(details).forEach(key => {
@@ -163,9 +161,24 @@ function extractDetails(ocrResult) {
   if (details.Name.length >1) {
     const longestName = details.Name.reduce((longest, current) => (current.length > longest.length ? current : longest), "");
     details.Name[0]=longestName;
-    
   }
+
+  details.IssuedDate= details.IssuedDate.map(dateString => convertToSqlDateFormat(dateString));
+
   return details;
   }
   
+  
+  function convertToSqlDateFormat(dateString) {
+    const parts = dateString.match(/(\d{1,2})[./](\d{1,2})[./](\d{4})/);
+    if (!parts) {
+      throw new Error('Invalid date format');
+    }
+    const day = parts[1].padStart(2, '0');
+    const month = parts[2].padStart(2, '0');
+    const year = parts[3];
+    return `${year}-${month}-${day}`;
+  }
+   
+
   
