@@ -272,3 +272,22 @@ router.post('/update_data', async (req, res) => {
     res.status(500).json({ error: "An error occurred" });
   }
 });
+
+router.delete('/invoiceid', async (req, res) => {
+  const {invoiceid} = req.body;
+
+  try {
+    const connection = await pool.getConnection();
+    const query = `DELETE FROM ${table_name.invoice} WHERE invoiceid = ?`
+    const [result] = await connection.query(query, [invoiceid]);
+
+    if (result.affectRows > 0) {
+      res.status (200).json({mesage: "deleted"});
+    } else {
+      res.status(404).json({error: "ERROR"});
+    }
+    connection.release();
+  } catch (error) {
+    console.error('ERROR', error);
+    res.status(500).json({error: "an error"});
+  }});
