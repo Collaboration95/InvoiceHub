@@ -56,13 +56,13 @@ async function fetchData() {
             'rgba(255, 0, 0, 0.6)',
             'rgba(192, 0, 0, 0.6)',
             'rgba(130, 0, 0, 0.6)',
-            'rgba(150, 0, 0, 0.94)'
+            'rgba(81, 9, 9, 0.6)'
           ],
           borderColor: [
             'rgba(255, 0, 0, 0.6)',
             'rgba(192, 0, 0, 0.6)',
             'rgba(130, 0, 0, 0.6)',
-            'rgba(150, 0, 0, 0.94)'
+            'rgba(81, 9, 9, 0.6)'
           ],
           borderWidth: 1,
         },
