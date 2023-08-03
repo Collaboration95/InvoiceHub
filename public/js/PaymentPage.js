@@ -9,7 +9,7 @@ var filter = false;
 // Function to fetch data from the server
 async function retrieveData() {
   try {
-    const response = await fetch('/payment/all'); // Fetch data from the /payment/all endpoint
+    const response = await fetch('/invoice/get-all-invoices'); // Fetch data 
     data = await response.json();
     return data;
   } catch (error) {
@@ -35,6 +35,7 @@ function showTable(data) {
 
   // Loop through the data and create table rows
   data.forEach((invoice) => {
+    //console.log("invoice", invoice);
     
     const row = document.createElement('tr');
     // var for saving the status' color column
@@ -50,16 +51,18 @@ function showTable(data) {
       statusColor = "rgb(136, 197, 136)";
     }
     row.innerHTML = ` 
-      <td>${invoice.Invoice_id}</td>
-      <td>${invoice.Company}</td>
-      <td>${formatDate(invoice.date_received)}</td>
-      <td>${formatItems(invoice.items)}</td>
-      <td>${invoice.total_cost}</td>
-      <td style="background-color: ${statusColor};" data-status="${status}" data-invoice-id="${invoice.Invoice_id}">${status}</td>
-      <td><input type="checkbox" name="selectedRow" value="${invoice.Invoice_id}"></td>
+      <td>${invoice.invoiceid}</td>
+      <td>${invoice.invoice_name}</td>
+      <td>${formatDate(invoice.upload_date)}</td>
+      <td>${formatItems(invoice.detected_Text)}</td>
+      <td>${invoice.total}</td>
+      <td style="background-color: ${statusColor};" data-status="${status}" data-invoice-id="${invoice.invoiceid}">${status}</td>
+      <td><input type="checkbox" name="selectedRow" value="${invoice.invoiceid}"></td>
     `;
     table.appendChild(row);
   });
+  return table;
+  
 }
 
 // Function to initialize the page
@@ -87,20 +90,15 @@ async function init() {
 
 // Function to format items 
 function formatItems(items) {
-  const splitItems = items.split(",");
-  const formattedLines = splitItems.map((line) => {
-    const [quantity, item, price] = line.split('-');
-    const cost = parseFloat(price).toFixed(2);
-    const formattedItem =
-      quantity.trim() +
-      ' ' +
-      item.trim() +
-      (parseInt(quantity) > 1 ? 's' : '');
-
-    return formattedItem + ' -> Cost: $' + cost;
-  });
-
-  return formattedLines.join('\n');
+  console.log(items);
+  if (items == null){
+    return "no item";
+  }
+  else{
+    data = JSON.parse(items);
+    const tableDataItems = data.table_data.map(item => item[0]).join('\n');
+  return tableDataItems;
+  }
 }
 
 // Function to show the default filtered data
@@ -112,12 +110,13 @@ function showDefaultData() {
 
   // Filter the data based on default conditions
   var searched = data.filter(function(val) {
-    var date = new Date(val.date_received);
+    var date = new Date(val.upload_date);
     var invoiceMonth = date.getMonth();
     var invoiceYear = date.getFullYear();
 
     // Filter conditions:
     // - Invoices with the same month and year as the current date
+    console.log(invoiceMonth, currentMonth, invoiceYear, currentYear);
     return invoiceMonth === currentMonth && invoiceYear === currentYear;
   });
 
@@ -137,16 +136,15 @@ function calCost() {
 
   // Get the selected checkbox values
   var selectedInvoiceIds = getSelectedCheckboxValues();
-  console.log(selectedInvoiceIds);
+  console.log("selected",selectedInvoiceIds);
   for (var i = 0; i < selectedInvoiceIds.length; i++) {
     var selectedRowId = selectedInvoiceIds[i];
 
     var invoice = data.find(function(row){
-      //console.log(row.Invoice_id);
-      return row.Invoice_id == selectedRowId;
+      return row.invoiceid == selectedRowId;
     });
     if (invoice) {
-      var selectedAmount = parseFloat(invoice.total_cost);
+      var selectedAmount = parseFloat(invoice.total);
       var selectedStatus = invoice.status.toLowerCase();
   
       // Add the amount of the selected row to the total cost
@@ -344,6 +342,7 @@ function checkSelectedRows() {
       selectedRows.push(checkbox.value);
     }
   });
+  return selectedRows;
 
   //nextButton.disabled = !isAnyCheckboxChecked();
 }

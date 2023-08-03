@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+.form-container {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #D3D4CD;
+    border-radius: 5px;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #2D5261;
+    color: white;
+}
+
+td {
+    background-color: #D3D4CD;
+    color: #033246;
+}
+
+.form-field {
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+.form-field-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-field {
+    margin-bottom: 20px;
+    flex-basis: 50%;
+}
+
+.form-field-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.submit-button-container {
+    margin-right: auto;
+}
+
+.back-button-container {
+    margin-left: 20px;
+}
+
+.submit-button,
+.back-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+.back-button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+}

@@ -159,7 +159,8 @@ function acceptFileInput(event) {
 
     detectTextBuckets(formData).then(detectedText=>{
     const output = extractDetails(detectedText.invoice_data);
-    const payload= {extractedDetails :output, table_data:detectedText.table_data};
+    const output2 = sanitizeDetails(output,detectedText.table_data);
+    const payload= {extractedDetails :output2, table_data:detectedText.table_data};
       // console.log(payload);
 
       fetch('/invoice/save-detected-data', {
@@ -221,19 +222,7 @@ function deleteAccount(event){
   }
 }
 
-async function detectTextBuckets(formData) {
-  try {
-    const response = await fetch('/rekognition/upload-jpeg-bucket', {
-      method: 'POST',
-      body: formData
-    });
-    const data = await response.json(); // Convert the response to JSON
-    return data;
-  } catch (error) {
-    console.error('Error uploading file:', error);
-    throw error;
-  }
-}
+
 
 function logout(){
   sessionStorage.removeItem('localData');
@@ -448,34 +437,3 @@ function openText(value){
     const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;
         window.open(newURL);
 }
-
-function extractDetails(ocrResult) {
-  console.log(ocrResult);
-  const validTypes = {
-    Name: ["VENDOR_NAME", "NAME"],
-    Address: ["VENDOR_ADDRESS","ADDRESS"],
-    Telephone: ["VENDOR_PHONE"],
-    Total: ["TOTAL"],
-    IssuedDate: ["INVOICE_RECEIPT_DATE"]
-  };
-
-  const extractEmailAddresses = (data) => [].concat(...data.map(({ value }) => (value.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g) || [])));
-  const keyvalue = {Name:[],Address:[],Telephone:[],Total:[],IssuedDate:[]};
-  
-  ocrResult.forEach(item=>{
-    for (const category in validTypes) {
-      if (validTypes[category].includes(item.type)) {
-        if(keyvalue[category].includes(item.value)){
-          continue; // Skip duplicate values
-        }
-        else{
-          keyvalue[category].push(item.value);
-        }
-      }
-    }
-  });
-  keyvalue.email = extractEmailAddresses(ocrResult);
-  return keyvalue;
-}
-
-

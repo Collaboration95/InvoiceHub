@@ -20,8 +20,12 @@ router.post('/login', async (req, res) => {
     const [rows] = await connection.query(sqlData, [username, password]);
     
     // Send the retrieved user data as a response
-    res.json(rows);
-    
+    if(rows.length > 0){
+    res.status(200).json(rows);
+    }
+    else{
+      res.status(404).json(rows);
+    }
     // Release the database connection
     connection.release();
   } catch (error) {
@@ -57,6 +61,7 @@ router.post('/elevate-privilege', async (req, res) => {
       // Account doesn't exist, elevate privilege by inserting the record
       console.log("Elevating privilege for the account");
       await connection.query(insertQuery, [flag, user]);
+      res.status(201).json({ exists: false });
     }
     
     // Release the database connection
