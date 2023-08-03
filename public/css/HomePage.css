@@ -222,20 +222,8 @@
   padding-right: auto;
 } */
 /* Style the div as needed */
-.upload {
-  display: inline-block;
-  cursor: pointer;
-  border-radius: 5px;
-  position: relative; /* Ensure it's a positioned element for the child input */
-}
+
 
 /* Style the file input to be transparent and overlay the div */
-.upload input[type="file"] {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
+
+

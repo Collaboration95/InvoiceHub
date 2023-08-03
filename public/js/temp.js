@@ -1,28 +1,48 @@
 const invoiceInput = document.getElementById('invoice');
 const soaInput = document.getElementById('soa');
 const creditInput = document.getElementById('credit');
-if(invoiceInput){
+// if(invoiceInput){
+//     invoiceInput.addEventListener('click',()=>acceptFileInput("invoice"));
+// }
+// else{
+//     console.log('Button invoiceInput does not exist');
+// }
+// if(soaInput){
 
-    invoiceInput.addEventListener('click',()=>acceptFileInput("invoice"));
-}
-else{
-    console.log('Button invoiceInput does not exist');
-}
-if(soaInput){
-    soaInput.addEventListener('change',()=>acceptFileInput("soa"));
-  }
-  else{
-    console.log('Button soaInput does not exist');
-  }
-  if(creditInput){
-    creditInput.addEventListener('change',()=>acceptFileInput("credit"));
-  }
-  else{
-    console.log('Button creditInput does not exist');
-  }
-    
+//     soaInput.addEventListener('change',()=>acceptFileInput("SOA"));
+//   }
+//   else{
+//     console.log('Button soaInput does not exist');
+//   }
+//   if(creditInput){
+//     creditInput.addEventListener('change',()=>acceptFileInput("credit"));
+//   }
+//   else{
+//     console.log('Button creditInput does not exist');
+//   }
+  function SOA(){
 
-function acceptFileInput(documentType) {
+    console.log("SOA");
+    document.getElementById(file);
+    file.text="SOA"
+    file.click();
+
+  }
+  function Credit(){
+    console.log("Credit");
+    document.getElementById(file);
+    file.text="Credit"
+    file.click();
+  }
+  function Invoice(){
+    console.log("Invoice");
+    document.getElementById(file);
+    file.text="invoice";
+    file.click();
+  }
+
+function acceptFileInput() {
+  const documentType =event.target.text;
     const file = event.target.files[0];
     const fileName = file.name;
     const formData = new FormData();
@@ -53,7 +73,6 @@ function acceptFileInput(documentType) {
           total:fakeTotal,
           type:documentType
         }
-
   
         sessionStorage.setItem('invoiceid',JSON.stringify(fakerequestBody.invoiceid));
         
