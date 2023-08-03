@@ -31,9 +31,9 @@
     gap: 20px
 }
 
-/* style for invoice page title */
+/* style for soa page title */
 
-.invoice_title{
+.soa_title{
     font-size: 30px;
 }
 
@@ -86,9 +86,9 @@
     padding-left: 20px;
 }
 
-/* style for invoice navigation */
+/* style for soa navigation */
 
-.invoice_navigation{
+.soa_navigation{
     /* width: 100%; */
 
     margin-top: 40px;
@@ -96,42 +96,11 @@
     justify-content: space-between;
 }
 
-/* styles for uploading invoices */
-
-.upload{
-    gap: 30px;
-    width: 40%;
-
-    padding: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-
-    border: 1px solid var(--secondary-color);
-    box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
-    border-radius: 10px;
-
-    text-align: left;
-    color:var(--primary-color);
-}
-
-.upload_invoice,
-.upload_soa,
-.upload_credit_note{
-    display:flex;
-    padding:5px;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.ic_upload{
-    width: 10%;
-    color:var(--primary-color);
-}
 
 
-/* styles for invoice types navigation */
+/* styles for soa types navigation */
 
-.inv_nav_list{
+.soa_nav_list{
     display: flex;
     gap: 50px;
     align-items: flex-end;
@@ -155,7 +124,7 @@
     background-image: linear-gradient(to baseline, var(--tertiary-color) 99%, var(--secondary-color) 1%);
 }
 
-/* styles for invoice search and filter */
+/* styles for soa search and filter */
 
 .search_filter{
     display: flex;
@@ -236,7 +205,7 @@ input[type="text"]{
 }
 
 
-/* styles for the invoice table */
+/* styles for the soa table */
 
 .soa_table{
     margin-top: 20px;
