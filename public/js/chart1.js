@@ -1,4 +1,5 @@
 
+
 function fetchOverdueData() {
   fetch('/overdue')
     .then(response => response.json())
@@ -22,7 +23,7 @@ function createOverdueChart(data) {
       },
     },
   });
+  console.log(data.labels)
 }
 
 document.addEventListener('DOMContentLoaded', fetchOverdueData);
-module.exports = { fetchOverdueData };
