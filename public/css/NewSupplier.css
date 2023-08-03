@@ -1,19 +1,20 @@
 :root{
     --extra-bright-color: #485f68;
 }
-
 /* changes for the side menu */
-.soa{
-    background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
-    padding: 10px;
+.supplier{
+        background-image: linear-gradient(to left, #2D5261 99%, #D3D4CD 1%);
+        /* background-color: #2D5261; */
+        width: 90%;
+        padding: 10px;
 }
 
-.soa:hover{
-    background-color: var(--secondary-color);
+.supplier:hover{
+    background-color: #2D5261;
 }
 
-.ic_soa{
-    color:var(--tertiary-color);
+.supplier{
+    color:#D3D4CD;
     margin-right: 10px;
 }
 
@@ -31,14 +32,15 @@
     gap: 20px
 }
 
-/* style for soa page title */
+/* style for Supplier page title */
 
-.soa_title{
-    font-size: 30px;
+.supplier_title{
+    font-size: 35px;
+    color: #2D5261;
+    font-weight: bold;
 }
 
 /* style for summary content */
-
 .summary{
 
     display: flex;
@@ -50,101 +52,69 @@
     padding-left: 20px;
     padding-right: 20px;
 
-    border: 1px solid var(--secondary-color);
+    border: 1px solid #2D5261;
     box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
     border-radius: 10px;
 
     text-align: center;
-    color:var(--primary-color);
+    color:#033246;
 }
 
-.total_outstanding{
-    min-width: 90px;
-    max-width: 150px;
-    width: 40%;
 
-    align-self: center;
-    border-right: 1px solid var(--secondary-color);
-    padding-right: 20px;
-}
 
-.overdue{
-    min-width: 65px;
-    max-width: 150px;
-    width: 30%;
 
-    align-self: center;
-}
 
-.due{
-    min-width: 50px;
-    max-width: 150px;
-    width: 30%;
+/* style for invoice navigation */
 
-    align-self: center;
-    border-left: 1px solid var(--secondary-color);
-    padding-left: 20px;
-}
-
-/* style for soa navigation */
-
-.soa_navigation{
+.invoice_navigation{
     /* width: 100%; */
 
-    margin-top: 40px;
+    margin-top: 50px;
     display: flex;
     justify-content: space-between;
 }
 
+/* styles for invoice types navigation */
 
-
-/* styles for soa types navigation */
-
-.soa_nav_list{
+.inv_nav_list{
     display: flex;
     gap: 50px;
     align-items: flex-end;
 
     font-size: 20px;
-    color: var(--primary-color);
+    color: #033246;
 
     order: 1;
 }
 
-.inv_nav_draft, 
-.inv_nav_overdue, 
-.inv_nav_paid{
+.inv_nav_draft, .inv_nav_overdue, .inv_nav_paid{
     font-style: italic;
 }
 
-.inv_nav_all.clicked, 
-.inv_nav_draft.clicked, 
-.inv_nav_overdue.clicked, 
-.inv_nav_paid.clicked{
-    background-image: linear-gradient(to baseline, var(--tertiary-color) 99%, var(--secondary-color) 1%);
+.inv_nav_all.clicked, .inv_nav_draft.clicked, .inv_nav_overdue.clicked, .inv_nav_paid.clicked{
+    background-image: linear-gradient(to baseline, #D3D4CD 99%, #2D5261 1%);
 }
 
-/* styles for soa search and filter */
+/* styles for invoice search and filter */
 
 .search_filter{
     display: flex;
     gap: 20px;
 
-    color:var(--extra-bright-color);
+    color:#485f68;
     order: 2;
 }
 
-/* style for serach box */
+/* style for search box */
 
 .box_search{
     display: flex;
     align-items: center;
-    
     padding:5px;
     padding-left: 10px;
     padding-right: 10px;
 
-    border: 1px solid var(--extra-bright-color);
+    border: 1px solid #485f68;
     box-shadow: 4px 4px 10px rgba(45,82,97,0.2);
     border-radius: 10px;
 }
@@ -166,7 +136,7 @@ input[type="text"]{
 
 /* style for sorting */
 
-.box_sort{
+/* .box_sort{
     display: flex;
     align-items: center;
 
@@ -174,22 +144,19 @@ input[type="text"]{
     padding-left: 10px;
     padding-right: 10px;
 
-    color:var(--extra-bright-color);
-    border: 1px solid var(--extra-bright-color);
+    color:#485f68;
+    border: 1px solid #485f68;
     box-shadow: 4px 4px 10px rgba(45,82,97,0.2);
     border-radius: 10px;
 }
 
-.ic_sort_des, 
-.ic_sort_asc{
-    margin-left: 2px;
+.ic_sort_des, .ic_sort_asc{
+    margin-left: 0px;
 }
 
-.ic_sort_des, 
-.ic_sort_asc:hover{
+.ic_sort_des, .ic_sort_asc:hover{
     cursor:pointer;
 }
-
 
 .sort_hint{
     margin-right: 5px;
@@ -199,42 +166,42 @@ input[type="text"]{
     margin-left: 5px;
     margin-right: 5px;
 
-    color:var(--primary-color);
+    color:#033246;
     font-size: 15px;
     border: none;
-}
+} */
 
+/* styles for the supplier table */
 
-/* styles for the soa table */
-
-.soa_table{
+.supplier_table{
     margin-top: 20px;
     table-layout: auto;
     width: 100%;
 
-    border: 1px solid var(--extra-bright-color);
+    border: 1px solid #485f68;
     box-shadow: 4px 4px 10px rgba(45,82,97,0.2);
     border-radius: 6px;
 
-    background-color: var(--secondary-color);
+    background-color: #2D5261;
+    margin-bottom: 20px;
 }
 
-.soa_table tbody {
+.supplier_table thead {
     display: table-header-group;
 
     color:white;
     align-items: center;
 }
 
-.soa_table th{
+.supplier_table th{
     color: white;
     padding-left: 10px;
     padding-right: 10px;
     padding:5px;
 }
 
-.soa_table td{
-    color: var(--primary-color);
+.supplier_table td{
+    color: #033246;
     background-color: white;
     padding:5px;
 
@@ -243,17 +210,23 @@ input[type="text"]{
     vertical-align: middle;
 }
 
-.soa_table td:nth-child(1) {
-    color: var(--primary-color);
+.supplier_table td:nth-child(1) {
+    color: #033246;
 }
 
-.soa_table td:nth-child(6) {
+.supplier_table td:nth-child(6) {
+    /* display: flex; */
     justify-content: space-between;
 }
 
-.ic_edit,
+.ic_edit{
+    color: #033246;
+    /* order: 1; */
+}
+
 .ic_delete{
-    color: var(--primary-color);
+    color:#033246;
+    /* order: 2; */
 }
 
 .ic_delete:hover{
@@ -262,5 +235,32 @@ input[type="text"]{
 
 .ic_export{
     margin-left: 2px;
-    color: var(--primary-color);
+    color: #033246;
+    /* order: 3; */
 }
+
+/* style for select and deselect buttons */
+.select_buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+.select_buttons button {
+    padding: 5px 10px;
+    background-color: #2d5261;
+    color: #d3d4cd;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+.select_buttons button:hover {
+    background-color: #033246;
+  }
+  
+.date_range_filter {
+    display: block;
+    gap: 5px;
+    align-items: center;
+}
+

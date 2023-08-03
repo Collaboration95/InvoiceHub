@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { pool } = require('../server');
+const { pool,table_name} = require('../server');
+
 
 // Route for retrieving all invoices
 router.get('/all', async (req, res) => {
@@ -22,8 +23,30 @@ router.put('/update-status', async (req, res) => {
 
   try {
     const connection = await pool.getConnection();
-    const query = 'UPDATE invoicehub.Sample_invoices SET status = ? WHERE Invoice_id = ?';
+    const query = 'UPDATE InvoiceHub.forms SET status = ? WHERE invoiceid = ?';
     const [result] = await connection.query(query, [status, invoiceId]);
+
+    if (result.affectedRows > 0) {
+      res.status(200).json({ message: 'Status updated successfully' });
+    } else {
+      res.status(404).json({ error: 'Invoice not found' });
+    }
+
+    connection.release();
+  } catch (error) {
+    console.error('Error updating status:', error);
+    res.status(500).json({ error: 'An error occurred while updating status' });
+  }
+});
+
+// Route for updating invoice status
+router.put('/update-soa-status', async (req, res) => {
+  const { status, soa_number } = req.body;
+
+  try {
+    const connection = await pool.getConnection();
+    const query = 'UPDATE invoicehub.forms SET status = ? WHERE invoiceid = ?';
+    const [result] = await connection.query(query, [status, soa_number]);
 
     if (result.affectedRows > 0) {
       res.status(200).json({ message: 'Status updated successfully' });

@@ -6,14 +6,15 @@ const path = require('path');
 const crypto = require('crypto');
 const { route } = require('./account');
 
-// Function to generate a unique filename
+
 function generateUniqueFilename(originalFilename) {
   const timestamp = Date.now();
+  var oroginalFilename= originalFilename.toLowerCase();
   const randomString = crypto.randomBytes(8).toString('hex');
   const filename = `${timestamp}-${randomString}-${originalFilename}`;
   return filename;
 }
-
+console.log
 const storage = multer.diskStorage({
   destination: path.join(__dirname,'..', 'public', 'img-db'), // Using __dirname to get the current directory
   filename: (req, file, cb) => {
@@ -58,10 +59,12 @@ router.post('/insert-record', async (req, res) => {
 router.post('/save-detected-data', async (req, res) => {
   const { invoiceid, detectedText } = req.body;
   const total = JSON.parse(detectedText).extractedDetails.Total[0];
-  const query = `UPDATE ${table_name.invoice} SET detectedText = ?, total = ? WHERE invoiceid = ?`;
+  const name = JSON.parse(detectedText).extractedDetails.Name[0];
+  const issuedDate= JSON.parse(detectedText).extractedDetails.IssuedDate[0];
+  const query = `UPDATE ${table_name.invoice} SET detectedText = ?, total = ?,invoice_name=? ,upload_date=? WHERE invoiceid = ?`;
   try {
     const connection = await pool.getConnection();
-    const results = await connection.query(query, [detectedText, total, invoiceid]);
+    const results = await connection.query(query, [detectedText, total, name,issuedDate,invoiceid]);
 
     console.log('Detected text and total updated successfully!');
     res.status(200).json({ message: 'Detected text and total updated successfully' });
@@ -98,7 +101,7 @@ router.get('/get-detected-text/:invoiceid', async (req, res) => {
 router.get('/get-all-invoices', async (req, res) => {
     try {
       const connection = await pool.getConnection();
-      const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, path , upload_date , total, status FROM ${table_name.invoice} WHERE type='invoice'`);
+      const [rows] = await connection.query(`SELECT * FROM ${table_name.invoice} WHERE type='invoice'`);
       connection.release();
       res.json(rows);
     } catch (error) {
@@ -110,7 +113,7 @@ router.get('/get-all-invoices', async (req, res) => {
 router.get('/get-all-soa', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query(`SELECT users, invoiceid, invoice_name, path , upload_date , total, status FROM ${table_name.invoice} WHERE type='SOA'`);
+    const [rows] = await connection.query(`SELECT * FROM ${table_name.invoice} WHERE type='SOA'`);
     connection.release();
     res.json(rows);
   } catch (error) {
@@ -253,6 +256,7 @@ ORDER BY
 
 module.exports = router;
 
+
 router.post('/update_data', async (req, res) => {
   const { invoice_name, upload_date, total, invoiceid } = req.body;
 
@@ -291,3 +295,5 @@ router.delete('/invoiceid', async (req, res) => {
     console.error('ERROR', error);
     res.status(500).json({error: "an error"});
   }});
+
+

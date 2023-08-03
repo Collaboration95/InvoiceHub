@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Supplier Information</title>
+    <link rel="stylesheet" type="text/css" href="../css/SupplierEditForm.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <h1 class = "heading1">Edit Supplier Information</h1>
+    
+    <table id="selected_table">
+        <tr>
+            <th>COMPANY NAME</th>
+            <th>CONTACT NUMBER</th>
+            <th>ADDRESS</th>
+            <th>EMAIL</th>
+        </tr>
+        
+    </table>
+
+    <form id="form">
+        <div class="form-field">
+            <label for="company_name">Company Name:</label>
+            <input id="company_name" name="company_name" readonly>
+        </div>
+        <div class="form-field">
+            <label for="contact_number">Contact Number:</label>
+            <input type="text" id="contact_number" name="contact_number" required>
+        </div>
+
+        <div class="form-field-row">
+            <!-- <div class="form-field">
+                <label for="payment_type">Payment Type:</label>
+                <select id="payment_type" name="payment_type" required>
+                    <option value="">Select</option>
+                    <option value="bank_transfer">Bank Transfer</option>
+                    <option value="cash">Cash</option>
+                    <option value="cheque">Cheque</option>
+                    <option value="paynow">PayNow</option>
+                </select>
+            </div> -->
+
+            <div class="form-field">
+                <label for="Address">Company Address:</label>
+                <input type="text" id="Address" name="Address" required>
+            </div>
+        </div>
+        <!-- <input type="file" id="imageUpload" accept="image/*" disabled>
+        <img id="imagePreview" src="" alt="Preview Image" style="max-width: 200px; max-height: 200px; display: none;"> -->
+
+        <!-- <div class="form-field">
+            <p id="total_amount"></p>
+        </div> -->
+
+        <div class="form-field">
+            <label for="Email">Email (e.g, example@gmail.com):</label>
+            <input type="text" id="Email" name="Email" required>
+        </div>
+
+        <div class="form-field-buttons">
+            <div class="submit-button-container">
+                <button class="submit-button" id="submit-button" type="submit" >Submit</button>
+               
+            </div>
+            <div class="back-button-container">
+                <a class="back-button" href="NewSupplier.html">Back</a>
+            </div>
+        </div>
+    </form>
+
+    <script type="module" src="../js/SupplierEditForm.js"></script>
+</body>
+</html>
