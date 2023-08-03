@@ -67,14 +67,6 @@ function convertToMySQLDateFormat(dateString) {
     const inp_total_amount = document.getElementById("inp_total_amount").value; //need to show it has limit
     const invoiceId = document.getElementById('inp_id').value;
 
-    // name has space 
-    if (inp_comp_name.indexOf(' ') !== -1) {
-      document.getElementById("error_msg").textContent = "Company name should not contain spaces. Please replace with '_'.";
-      return ;
-    } else {
-      document.getElementById("error_msg").textContent = ""
-    }
-
     // Validate date format (dd/mm/yyyy)
     const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
     // Split the date string by '/'
@@ -101,16 +93,6 @@ function convertToMySQLDateFormat(dateString) {
     } else{
         document.getElementById("error_msg").textContent = ""
     }
-
-    // // Validate phone number format (contains only numbers)
-    // const phoneNumberRegex = /^\d+$/;
-    // if (!phoneNumberRegex.test(inp_phone_no)) {
-    //     document.getElementById("error_msg").textContent = "Invalid phone number format (should contain only numbers)";
-    //     return;
-    // }
-    // else{
-    //     document.getElementById("error_msg").textContent = ""
-    // }
   
     // // You can use the input values for further processing, like updating data on the server, etc.
     fetch('/invoice/update_data', {
