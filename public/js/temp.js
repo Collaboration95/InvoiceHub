@@ -79,7 +79,7 @@ function acceptFileInput() {
       const output = extractDetails(detectedText.invoice_data);
       const output2 = sanitizeDetails(output,detectedText.table_data);
       const payload= {extractedDetails :output2, table_data:detectedText.table_data};
-        // console.log(payload);
+      console.log(payload.extractedDetails.IssuedDate[0]);
   
         fetch('/invoice/save-detected-data', {
           method: 'POST',
@@ -113,18 +113,19 @@ function acceptFileInput() {
 
 
 function extractDetails(ocrResult) {
-    console.log(ocrResult);
-    const validTypes = {
-      Name: ["VENDOR_NAME", "NAME"],
-      Address: ["VENDOR_ADDRESS","ADDRESS"],
-      Telephone: ["VENDOR_PHONE"],
-      Total: ["TOTAL"],
-      IssuedDate: ["INVOICE_RECEIPT_DATE"]
-    };
+  console.log(ocrResult);
+  const validTypes = {
+    Id:["INVOICE_RECEIPT_ID","INVOICE_ID"],
+    Name: ["VENDOR_NAME", "NAME"],
+    Address: ["VENDOR_ADDRESS","ADDRESS"],
+    Telephone: ["VENDOR_PHONE"],
+    Total: ["TOTAL"],
+    IssuedDate: ["INVOICE_RECEIPT_DATE"]
+  };
+
+  const extractEmailAddresses = (data) => [].concat(...data.map(({ value }) => (value.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g) || [])));
+  const keyvalue = {Id:[],Name:[],Address:[],Telephone:[],Total:[],IssuedDate:[]};
   
-    const extractEmailAddresses = (data) => [].concat(...data.map(({ value }) => (value.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g) || [])));
-    const keyvalue = {Name:[],Address:[],Telephone:[],Total:[],IssuedDate:[]};
-    
     ocrResult.forEach(item=>{
       for (const category in validTypes) {
         if (validTypes[category].includes(item.type)) {
@@ -181,4 +182,3 @@ function extractDetails(ocrResult) {
   }
    
 
-  
