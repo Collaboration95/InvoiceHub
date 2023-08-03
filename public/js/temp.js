@@ -1,45 +1,20 @@
-const invoiceInput = document.getElementById('invoice');
-const soaInput = document.getElementById('soa');
-const creditInput = document.getElementById('credit');
-// if(invoiceInput){
-//     invoiceInput.addEventListener('click',()=>acceptFileInput("invoice"));
-// }
-// else{
-//     console.log('Button invoiceInput does not exist');
-// }
-// if(soaInput){
-
-//     soaInput.addEventListener('change',()=>acceptFileInput("SOA"));
-//   }
-//   else{
-//     console.log('Button soaInput does not exist');
-//   }
-//   if(creditInput){
-//     creditInput.addEventListener('change',()=>acceptFileInput("credit"));
-//   }
-//   else{
-//     console.log('Button creditInput does not exist');
-//   }
-  function SOA(){
-
-    console.log("SOA");
+function SOA(){
     document.getElementById(file);
     file.text="SOA"
     file.click();
-
   }
-  function Credit(){
-    console.log("Credit");
+
+function Credit(){
     document.getElementById(file);
     file.text="Credit"
     file.click();
-  }
-  function Invoice(){
-    console.log("Invoice");
+}
+
+function Invoice(){
     document.getElementById(file);
     file.text="invoice";
     file.click();
-  }
+}
 
 function acceptFileInput() {
   const documentType =event.target.text;
@@ -60,7 +35,7 @@ function acceptFileInput() {
         var invoiceid =Math.floor(Math.random() * (2500 - 200 + 1)) + 100;
         var invoice_name = fileName;
         var uploadDate = new Date().toISOString().split('T')[0];
-        var status ="Paid";
+        var status ="Unpaid";
         var fakeTotal = Math.floor(Math.random() * (2000 - 200 + 1)) + 200;
   
         var fakerequestBody = {
