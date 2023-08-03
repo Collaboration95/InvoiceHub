@@ -257,3 +257,43 @@ ORDER BY
 module.exports = router;
 
 
+router.post('/update_data', async (req, res) => {
+  const { invoice_name, upload_date, total, invoiceid } = req.body;
+
+  try {
+    const connection = await pool.getConnection();
+    const query = `UPDATE ${table_name.invoice} SET invoice_name = ?, upload_date = ?, total = ? WHERE invoiceid = ?`;
+    const [result] = await connection.query(query, [invoice_name, upload_date, total, invoiceid]);
+
+    if (result.affectedRows > 0) {
+      res.status(200).json({ message: "Updated successfully" });
+    } else {
+      res.status(404).json({ error: "Invoice not found" });
+    }
+    connection.release();
+  } catch (error) {
+    console.error('ERROR', error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
+router.delete('/invoiceid', async (req, res) => {
+  const {invoiceid} = req.body;
+
+  try {
+    const connection = await pool.getConnection();
+    const query = `DELETE FROM ${table_name.invoice} WHERE invoiceid = ?`
+    const [result] = await connection.query(query, [invoiceid]);
+
+    if (result.affectRows > 0) {
+      res.status (200).json({mesage: "deleted"});
+    } else {
+      res.status(404).json({error: "ERROR"});
+    }
+    connection.release();
+  } catch (error) {
+    console.error('ERROR', error);
+    res.status(500).json({error: "an error"});
+  }});
+
+

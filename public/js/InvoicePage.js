@@ -5,7 +5,7 @@ async function getData() {
   try {
     const response = await fetch('/invoice/get-all-invoices');
     const data = await response.json();
-    data.forEach(invoice => {
+    data.forEach((invoice) => {
       // Determine statusColor based on status
       if (invoice.status.toUpperCase() === 'DRAFT') {
         invoice.statusColor = '#acacac';
@@ -36,6 +36,7 @@ function renderTable(data) {
   `;
   // Render each row of data
   data.forEach(invoice => {
+    // console.log(invoice);
     invoice.upload_date = new Date(invoice.upload_date);
     const options = { timeZone: 'Asia/Singapore' };
     invoice.upload_date = (invoice.upload_date).toLocaleDateString('en-SG', options);
@@ -93,13 +94,16 @@ function renderTable(data) {
 }
 
 // Call getData() and renderTable() when the page loads
-document.addEventListener('DOMContentLoaded', () => {
+if (document) {
+  document.addEventListener('DOMContentLoaded', () => {
   getData().then(data => renderTable(data));
 });
+}
 
 
 // // Add event listener for delete icon using event delegation
-table.addEventListener("click", function (event) {
+if (table) {
+  table.addEventListener("click", function (event) {
   if (event.target.classList.contains("ic_delete")) {
     // Retrieve the invoice id from the data attribute
     var invoiceId = event.target.getAttribute("id");
@@ -119,9 +123,11 @@ table.addEventListener("click", function (event) {
     getData().then(data => renderTable(data));
   }
 });
+}
 
 // Add event listener for edit icon using event delegation
-table.addEventListener("click", function (event) {
+if (table) {
+  table.addEventListener("click", function (event) {
   if (event.target.classList.contains("ic_edit")) {
     var invoiceId = event.target.getAttribute("id");
     var invoiceStatus = event.target.getAttribute("status");
@@ -136,6 +142,7 @@ table.addEventListener("click", function (event) {
     window.location.href = 'InvoiceEditPage.html';
   }
 });
+}
 
 
 /* CODE FOR CALCULATING THE COST FOR SUMMARY */
@@ -156,40 +163,43 @@ var input = document.getElementById("inp_search_blank");
 var searchDropdown = document.getElementById("search_type_dropdown");
 
 // code for searching and filter based on it
-input.addEventListener("keyup", function () {
-  var searchInput = this.value.toLowerCase();
-  var filterValue = searchDropdown.value;
+if (input) {
+  input.addEventListener("keyup", function () {
+    var searchInput = this.value.toLowerCase();
+    var filterValue = searchDropdown.value;
 
-  getData().then(data => {
+    getData().then(data => {
 
-    // convert all saved data into lower case for easy searching
-    searched = data.filter(function (val) {
-      var id = val.invoiceid.toString().toLowerCase();
-      var name = val.invoice_name.toLowerCase();
-      var date = val.upload_date.toLowerCase();
-      var amount = val.total.toLowerCase();
-      var status = val.status.toLowerCase();
+      // convert all saved data into lower case for easy searching
+      searched = data.filter(function (val) {
+        var id = val.invoiceid.toString().toLowerCase();
+        var name = val.invoice_name.toLowerCase();
+        var date = val.upload_date.toLowerCase();
+        var amount = val.total.toLowerCase();
+        var status = val.status.toLowerCase();
 
-      // check if input and searched input are the same
-      return (
-        (filterValue === "id" && id.includes(searchInput)) ||
-        (filterValue === "name" && name.includes(searchInput)) ||
-        (filterValue === "date" && date.includes(searchInput)) ||
-        (filterValue === "amount" && amount.includes(searchInput)) ||
-        (filterValue === "status" && status.includes(searchInput))
-      );
-    });
+        // check if input and searched input are the same
+        return (
+          (filterValue === "id" && id.includes(searchInput)) ||
+          (filterValue === "name" && name.includes(searchInput)) ||
+          (filterValue === "date" && date.includes(searchInput)) ||
+          (filterValue === "amount" && amount.includes(searchInput)) ||
+          (filterValue === "status" && status.includes(searchInput))
+        );
+      });
 
     // render the searched result
     renderTable(searched);
   });
 });
+}
 
-
-searchDropdown.addEventListener('change', function () {
-  input.value = '';
-  getData().then(data => renderTable(data));
-});
+if (searchDropdown){
+    searchDropdown.addEventListener('change', function () {
+    input.value = '';
+    getData().then(data => renderTable(data));
+  });
+}
 
 
 /* CODE FOR SORT/ SORTING FUNCTION */
@@ -201,21 +211,24 @@ var sortDropdown = document.getElementById('sort_dropdown');
 var ascendingButton = document.getElementById('ic_sort_asc');
 var descendingButton = document.getElementById('ic_sort_des');
 
-ascendingButton.addEventListener('click', function () {
+if (ascendingButton) {
+  ascendingButton.addEventListener('click', function () {
   if (searched.length === 0) {
     sort_asc();
   } else {
     sort_asc();
   }
 });
+}
 
-descendingButton.addEventListener('click', function () {
+if (descendingButton) {
+  descendingButton.addEventListener('click', function () {
   if (searched.length === 0) {
     sort_des();
   } else {
     sort_des();
   }
-});
+});}
 
 function sort_des() {
   getData().then(data => {
