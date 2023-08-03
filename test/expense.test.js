@@ -1,6 +1,6 @@
 const fetchData = require('../routes/expense');
 
-describe('fetchData', () => {
+describe('fetchData function for Expense Graph', () => {
   it('fetches and processes data correctly for different categories', async () => {
     const fakeRows = [
       { month: 'Jan', total: 100 },
