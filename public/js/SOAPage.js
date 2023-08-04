@@ -331,7 +331,7 @@ function sort_asc() {
 }
 
 function openImage(value){
-  window.open('http://127.0.0.1:8080/'+value)
+  window.open('http://127.0.0.1:8080/img-db/'+value)
   }
   
   function openText(value){

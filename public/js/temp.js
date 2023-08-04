@@ -62,7 +62,14 @@ function acceptFileInput() {
           .then(response => {
             if (response.ok) {
               console.log('Record inserted successfully.');
-            } else {
+            }else if(response.status == 409){
+              console.log('Record already exists.');
+            }else if(response.status == 403){
+              alert("Failed to extract data from image");
+
+            } 
+            
+            else {
               console.error('Failed to insert the record.');
             }
           })
@@ -74,7 +81,7 @@ function acceptFileInput() {
         console.error('Error occurred while saving the image:', error);
   
       });
-  
+
       detectTextBuckets(formData).then(detectedText=>{
       const output = extractDetails(detectedText.invoice_data);
       const output2 = sanitizeDetails(output,detectedText.table_data);
@@ -112,7 +119,6 @@ function acceptFileInput() {
     }
   }
 
-
 function extractDetails(ocrResult) {
   console.log(ocrResult);
   const validTypes = {
@@ -143,7 +149,6 @@ function extractDetails(ocrResult) {
     return keyvalue;
   }
   
-  
   function sanitizeDetails(details,input){
     console.log(details);
     const flatInput = input.flat();
@@ -173,7 +178,6 @@ function extractDetails(ocrResult) {
   details.Total= [maxNumber];
   return details;
   }
-  
   
   function convertToSqlDateFormat(dateString) {
     const parts = dateString.match(/(\d{1,2})[./](\d{1,2})[./](\d{2}|\d{4})/);
