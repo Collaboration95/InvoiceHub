@@ -21,6 +21,7 @@ FROM (
     DATE_FORMAT(upload_date, '%b') AS month,
     SUM(total) AS total
   FROM forms
+  WHERE type = 'invoice'
   GROUP BY DATE_FORMAT(upload_date, '%b')
 ) AS subquery
 ORDER BY 

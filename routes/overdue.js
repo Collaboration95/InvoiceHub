@@ -22,7 +22,7 @@ async function fetchData() {
     END AS category,
     COUNT(*) AS count
     FROM forms
-    WHERE status = 'Overdue'
+    WHERE status = 'Overdue' AND type = 'invoice'
     GROUP BY category
     ORDER BY
       CASE category
