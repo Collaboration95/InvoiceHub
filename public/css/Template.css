@@ -116,7 +116,7 @@ a {
 }
 
 .ic_notificaiton:hover{
-    background-color: var(--secondary-color);
+    cursor:pointer;
 }
 /* style for navigation on the side bar */
 
@@ -162,4 +162,67 @@ a {
     margin-left: max(250px, 17%);
     padding: 20px;
 }
+
+.bell{
+    background-color: transparent;
+    border: 1mm solid transparent;
+    padding-top: 1.5mm;
+    color:white;
+}
+
+.menu{
+    list-style:none;
+    padding: 0.2em 0.5em;
+    background-color: white;
+    color: var(--primary-color);    
+    width:210px;
+    height:250px;
+    position: absolute;
+    right: 0px;
+    top: 60px;
+    overflow-y: auto;   
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
+}
+
+.menu::-webkit-scrollbar {
+    width: 0px; /* Width of the scrollbar thumb */
+  }
+  
+.menu::-webkit-scrollbar-thumb {
+    background-color: white;  /* Color of the thumb */
+    border-radius: 0px; /* Rounded corners */
+  }
+
+.menu::-webkit-scrollbar-track {
+    background-color:white;
+    border-radius: 0px; /* Color of the track */
+  }
+.menu li{
+    padding: 0.7em 0.5em;
+    cursor:pointer;
+}
+
+.menu li div {
+    display: flex;
+    flex-direction: column;
+  }
+
+.menu li div span{
+    font-size: 10px;
+}
+  
+
+.menu li:hover{
+    background:white;
+
+}
+
+.menu-open{
+    display: block;
+    opacity: 1;
+}
+
+
     
