@@ -15,10 +15,11 @@ function fetchOverdueData() {
 
 function createOverdueChart(data) {
   const ctx = document.getElementById('myChart1').getContext('2d');
+  const labels = ['<30 days', '30-60 days', '60-90 days', '>90 days'];
   return new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: data.labels,
+      labels: labels,
       datasets: data.datasets,
     },
     options: {
