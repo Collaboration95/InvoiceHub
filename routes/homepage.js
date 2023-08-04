@@ -11,6 +11,7 @@ router.get('/fetch-overdue-data', async (req, res) => {
   try {
     const connection = await pool.getConnection();
     const [rows] = await connection.query(`
+
     SELECT
     CASE
         WHEN DATEDIFF(NOW(), upload_date) < 30 THEN '<30 days'
@@ -19,10 +20,9 @@ router.get('/fetch-overdue-data', async (req, res) => {
         WHEN DATEDIFF(NOW(), upload_date) >= 90 THEN '>90 days'
         ELSE 'More than 90 days'
     END AS category,
-    COUNT(*) AS count
+    SUM(CASE WHEN status = 'Overdue' OR status = 'Unpaid' THEN total ELSE 0 END) AS total_overdue_amount
 FROM forms
-WHERE (status = 'Overdue' OR status = 'Unpaid') AND type = 'invoice'
-      AND DATEDIFF(NOW(), upload_date) > 30
+WHERE type = 'invoice' AND DATEDIFF(NOW(), upload_date) > 30
 GROUP BY category
 ORDER BY
     CASE category
@@ -32,7 +32,6 @@ ORDER BY
         WHEN '>90 days' THEN 4
         ELSE 5
     END;
-
     `); 
 
     connection.release();
@@ -41,8 +40,8 @@ ORDER BY
     const counts = [];
 
     for (const data of rows) {
-      categories.push(data.category); // Corrected from month.push(data.month);
-      counts.push(data.count); // Corrected from amount.push(data.total);
+      categories.push(data.category);
+      counts.push(data.total_overdue_amount); 
     }
 
     const chartData = {

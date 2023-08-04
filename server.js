@@ -28,18 +28,7 @@ pool.on('error', (err) => {
 });
 
 
-// API endpoint for Summary total outstanding
-const updateTotalOutstanding = require('./routes/summary'); 
 
-// API endpoint for Summary
-app.get('/summary', async (req, res) => {
-  try {
-    const data = await updateTotalOutstanding();
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 
 
 // Increase payload size limit
