@@ -21,16 +21,46 @@ dropdown.forEach(notifications => {
     //const dd_menu = notifications.querySelector('.menu');  
     const dd_menu = notifs.closest('.menu'); 
     bell.addEventListener('click', ()=> {
-    createNotif(notifs, "New Notification6", "10 minutes ago");
-    createNotif(notifs, "New Notification5", "20 minutes ago");
-    createNotif(notifs, "New Notification4", "30 minutes ago");
-    createNotif(notifs, "New Notification3", "40 minutes ago");
-    createNotif(notifs, "New Notification2", "50 minutes ago");
-    createNotif(notifs, "New Notification1", "50 minutes ago");
+    getData();
+    data.forEach(invoice => {
+        const id = invoice.invoiceid;
+        const total = invoice.invoice.total;
+        const dleft = invoice.daysLeft;
+        var event = id +  " of " +  total + " is " + dleft ;
+        var time = "10 minutes ago";
+
+        createNotif(notifs, event, time);
+    });
     dd_menu.classList.toggle('menu-open');
     })
 })
-
+// return an array witth invoice objects that have invoiceid, invoice_name, upload_date, total, status, daysLeft
+async function getData() {
+    try {
+      const oneWeekLeft = await fetch('/notification/get-unpaid-invoices-7');
+      const threeDaysLeft = await fetch('/notification/get-unpaid-invoices-3');
+      const OverDue = await fetch('/notification/get-unpaid-invoices-7');
+      const data1 = await oneWeekLeft.json();
+      data1.forEach(invoice => {
+        // set days left on payment
+        invoice.daysLeft = 'due in 3 days.';
+      });
+      const data2 = await threeDaysLeft.json();
+      data1.forEach(invoice => {
+        // set days left on payment
+        invoice.daysLeft = 'due in a week.';
+      });
+      const data3  = await OverDue.json();
+      data1.forEach(invoice => {
+        // set days left on payment
+        invoice.daysLeft = 'overdue.';
+      });
+      const data = [...data1,...data2,...data3];
+      return data;
+    } catch (error) {
+      console.error('Error fetching invoices data:', error);
+    }
+  }
 
 
 
@@ -45,12 +75,12 @@ dropdown.forEach(notifications => {
 
 
   // load list of events to display (in the past week) when clicked [fake data for now] x
-  // generate containers for each event  
+  // generate containers for each event x
   // wrap the events in the box (box exists in html?) fix box size x
   // add ability to scroll to view more events x
   //  CSS
   // remove the scrolling bar thing if its default x
-  // add hover function for bell 
-  // style the fonts and size for the timing plus event 
+  // add hover function for bell x
+  // style the fonts and size for the timing plus event x
   // style box? x
   // connect to db and figuire out how to retrive the events fom db instead of the fake shiz
