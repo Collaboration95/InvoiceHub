@@ -299,10 +299,27 @@ function sort_asc() {
   });
 }
 
+// function openImage(value) {
+//   // window.open('http://127.0.0.1:8080/' + value)
+//   window.open('http://127.0.0.1:8080/img-db/'+value);
+// }
+//  handles non existant image errors
 function openImage(value) {
-  // window.open('http://127.0.0.1:8080/' + value)
-  window.open('http://127.0.0.1:8080/img-db/'+value);
+  const imageUrl = 'http://localhost:8000/img-db/' + value;
+  const img = new Image();
+  img.onload = function() {
+    window.open(imageUrl);
+  };
+  img.onerror = function() {
+    alert('Image not found!');
+  };
+
+  img.crossOrigin = 'anonymous'; // Set the crossorigin attribute
+  img.src = imageUrl;
 }
+
+
+
 
 function openText(value) {
   const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;

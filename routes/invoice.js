@@ -173,7 +173,20 @@ router.get('/dummy', async (req, res) => {
   }
 });
 
+router.get('/img-db/:imageName', async (req, res) => {
+  const imageName = req.params.imageName;
+  const imageUrl = `http://127.0.0.1:8080/img-db/${imageName}`;
 
+  try {
+    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+    const contentType = response.headers['content-type'];
+    res.set('Content-Type', contentType);
+    res.send(response.data);
+  } catch (error) {
+    // Handle the 404 error here
+    res.status(404).send('Image not found');
+  }
+});
 router.get('/fetch-overdue-data', async (req, res) => {
   try {
     const connection = await pool.getConnection();
