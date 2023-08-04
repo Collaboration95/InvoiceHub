@@ -18,35 +18,38 @@ async function retrieveData() {
     const response = await fetch('/supplier/all'); // Fetch data from the /payment/all endpoint
     data = await response.json();
     return data;
+
   } catch (error) {
     console.error('Error retrieving data from the server:', error);
     throw error;
   }
 }
-
+//console.log(retrieveData.data);
 // Function to display the table
 function showTable(data) {
   
   table.innerHTML = `
     <tr>
-      <th>Name</th>
-      <th>Number</th>
-      <th>Address</th>
-      <th>Email</th>
+      <th>COMPANY NAME</th>
+      <th>CONTACT NUMBER</th>
+      <th>ADDRESS</th>
+      <th>EMAIL</th>
       <th>EDIT</th> <!-- New column for Edditing -->
     </tr>
   `;
   // Loop through the data and create table rows
   data.forEach((supplier) => {
+
     const row = document.createElement('tr');
     // var for saving the status' color column
     
+    
     row.innerHTML = ` 
-      <td>${supplier.company_name}</td>
-      <td>${supplier.contact_number}</td>
-      <td>${supplier.address}</td>
-      <td>${supplier.email}</td>
-      <td><input type="radio" name="selectedRow" value="${supplier.company_name}"></td>
+      <td>${supplier.Name}</td>
+      <td>${supplier.Telephone}</td>
+      <td>${supplier.Address}</td>
+      <td>${supplier.Email}</td>
+      <td><input type="radio" name="selectedRow" value="${supplier.Name}"></td>
     `;
     table.appendChild(row);
   });
@@ -130,10 +133,6 @@ document.getElementById("inp_search_blank").addEventListener("keyup", function()
   // Render the searched result
   showTable(searched);
 });
-
-
-
-
 
 // Add event listener to checkboxes
 var table = document.getElementById("supplier_table");
