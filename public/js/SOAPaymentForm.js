@@ -6,13 +6,16 @@ var selectedTable = document.getElementById("selected_table");
 
 var total_to_be_paid = 0;
 let data;
+var selectedImage = null;
+var enteredAmount;
+var date;
 
 // Retrieve the selected checkbox values from the URL query parameter
 var urlParams = new URLSearchParams(window.location.search);
 var selectedValues = urlParams.get("Invoice");
 var SOA = urlParams.get("SOA");
-console.log(SOA);
-console.log(selectedValues);
+console.log("SOA",SOA);
+console.log("selectedvalue",selectedValues);
 
 // Split the selected values into an array
 var selectedValuesArray = selectedValues.split(",");
@@ -23,9 +26,9 @@ var selectedSOA = SOA.split(",");
 // Function to fetch data from the server
 async function retrieveData() {
   try {
-    const response = await fetch('/invoice/get-all-invoices'); // Fetch data from the /payment/all endpoint
+    const response = await fetch('/invoice/get-all-soa-invoice'); // Fetch data from the /payment/all endpoint
     data = await response.json();
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (error) {
     console.error('Error retrieving data from the server:', error);
@@ -38,8 +41,9 @@ function showTable(data) {
 
   // Loop through the data and create table rows
   data.forEach((invoice) => {
-    console.log(invoice.invoiceid);
+    //console.log(selectedValuesArray, invoice.invoiceid);
     if (selectedValuesArray.includes(String(invoice.invoiceid))) {
+      //console.log(invoice.invoiceid);
       const row = document.createElement('tr');
       row.innerHTML = ` 
       <td>${invoice.invoiceid}</td>
@@ -122,28 +126,59 @@ paymentTypeSelect.addEventListener('change', function () {
   }
 });
 
-// Function to handle file selection for image upload
-function handleImageUpload(event) {
-  const fileInput = event.target;
-  const file = fileInput.files[0];
+imageUpload.addEventListener("change", function () {
+  selectedImage = this.files[0];
+});
 
-  if (file) {
-    // Create a FileReader to read the file as data URL
-    const reader = new FileReader();
-    reader.onload = function () {
-      // Set the data URL as the src attribute of the image element to display the preview
-      const imagePreview = document.getElementById('imagePreview');
-      imagePreview.src = reader.result;
-      imagePreview.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  } else {
-    console.log("No image selected.");
-  }
+function acceptFileInput() {
+  const fileName = selectedImage.name;
+  const formData = new FormData();
+  formData.append('jpeg', selectedImage);
+  const fileSizeInMB = selectedImage.size / (1024 * 1024);
+  console.log('File Size:', fileSizeInMB.toFixed(2), 'MB');
+
+  // Send the form data to the server-side script
+  fetch('/paid/uploadImage', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(()=>{
+      var body = {
+        invoiceId: String(selectedValuesArray),
+        Company: "Company",
+        amount_paid: parseFloat(amountPaid.value).toFixed(2),
+        payment_type: paymentTypeSelect.value,
+        payment_date: document.getElementById("date_input").value,
+        payment_image: fileName,
+        soa: SOA,
+      }
+      sessionStorage.setItem('invoiceid',JSON.stringify(body.invoiceid));
+      
+      // Send the POST request to the server
+      fetch('/paid/form-data-soa', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Record inserted successfully.');
+          } else {
+            console.error('Failed to insert the record.');
+          }
+        })
+        .catch(error => {
+          console.error('Error occurred while inserting the record:', error);
+        });
+    })
+    .catch(error => {
+      console.error('Error occurred while saving the image:', error);
+    });
+
 }
-
-// Add an event listener to the file input element
-document.getElementById('imageUpload').addEventListener('change', handleImageUpload);
 
 
 // Function to handle form submission
@@ -151,23 +186,16 @@ async function handleFormSubmission(event) {
   event.preventDefault(); // Prevent the form from submitting
 
   // Convert the entered amount to a number
-  var enteredAmount = parseFloat(amountPaid.value).toFixed(2);
+  var enteredAmount = await parseFloat(amountPaid.value).toFixed(2);
+  const date = document.getElementById("date_input").value;
 
   if (enteredAmount === parseFloat(total_to_be_paid).toFixed(2)) {
-    try {
-      // Prepare the data to be sent to the server
-      const date = document.getElementById("date_input").value;
-      console.log("date", date);
-
-      const formData = {
-        invoiceId: String(selectedValuesArray),
-        Company: "testphoto",
-        amount_paid: enteredAmount,
-        payment_type: paymentTypeSelect.value,
-        payment_date: date,
-      };
-
-      // Update the status of invoices to "PAID" in the data array
+      console.log(enteredAmount);
+      console.log(date);
+      await acceptFileInput();
+      console.log(enteredAmount);
+      
+      //Update the status of invoices to "PAID" in the data array
       selectedValuesArray.forEach(async (invoiceId) => {
         try {
           const response = await fetch(`../payment/update-status`, {
@@ -175,7 +203,7 @@ async function handleFormSubmission(event) {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ status: 'PAID', invoiceId: invoiceId }),
+            body: JSON.stringify({ status: 'PAID', invoiceid: invoiceId }),
           });
 
           const responseData = await response.json();
@@ -204,7 +232,7 @@ async function handleFormSubmission(event) {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ status: 'PAID', soa_number: SOA }),
+            body: JSON.stringify({ status: 'PAID', invoiceid: SOA }),
           });
 
           const responseData = await response.json();
@@ -224,101 +252,11 @@ async function handleFormSubmission(event) {
           });
         }
       });
-
-      selectedSOA.forEach(async (SOA) => {
-        try {
-          const response = await fetch(`../payment/update-status`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ status: 'PAID', invoiceId: selectedValuesArray }),
-          });
-
-          const responseData = await response.json();
-          console.log(responseData); // Check the response data received from the server
-
-          if (response.ok) {
-            console.log(responseData.message); // Status updated successfully
-          } else {
-            console.error(responseData.error); // Invoice not found or error updating status
-          }
-        } catch (error) {
-          console.error('Error updating status:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'An error occurred while updating status. Please try again later.',
-          });
-        }
-      });
-
-      // Send a POST request to the server to save the form data
-      const formDataResponse = await fetch('../paid/form-data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      // Parse the response data as JSON
-      const formDataResponseData = await formDataResponse.json();
-
-      if (!formDataResponse.ok) {
-        console.error('Error saving form data:', formDataResponseData);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'An error occurred while saving form data. Please try again later.',
-        });
-        return; // Exit the function if there's an error in form data saving
-      }
-
-      // Check if an image is uploaded
-      const imageUpload = document.getElementById('imageUpload');
-      if (imageUpload.files.length > 0) {
-        //console.log("run"); works
-        const image = imageUpload.files[0];
-        //console.log("image", image); works
-        // Create a FormData object to send the image
-        const imageFormData = new FormData();
-        imageFormData.append('image', image);
-        console.log("image2",imageFormData);
-
-
-        // Send a POST request to the server to save the image associated with the invoiceId
-        const imageUploadResponse = await fetch(`../paid/uploadImage`, {
-          method: 'POST',
-          //body: imageFormData,
-          body:image,
-        });
-
-        // Parse the image upload response data as JSON
-        const imageUploadResponseData = await imageUploadResponse.json();
-
-        if (!imageUploadResponse.ok) {
-          console.error('Error uploading image:', imageUploadResponseData);
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'An error occurred while uploading the image. Please try again later.',
-          });
-          return; // Exit the function if there's an error in image uploading
-        }
-      }
-
-    } catch (error) {
-      console.error('Error processing payment:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'An error occurred while processing the payment. Please try again later.',
-      });
-    }
 
       // If the request is successful, redirect to the payment page
-      window.location.href = 'SOAPage.html?redirect=true';
+      setTimeout(() => {
+        window.location.href = 'SOAPage.html?redirect=true';
+      }, 100);
 
   } else {
     Swal.fire({

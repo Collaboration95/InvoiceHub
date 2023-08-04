@@ -4,6 +4,7 @@
     <title>Payment Form</title>
     <link rel="stylesheet" type="text/css" href="../css/PaymentForm.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/paynow.js" defer></script>
 </head>
 
 <body>
@@ -43,7 +44,7 @@
                 <input type="text" id="bank_number" name="bank_number" required>
             </div>
         </div>
-        <input type="file" id="imageUpload" accept="image/*" disabled>
+        <input type="file" id="imageUpload" accept=".jpeg" disabled>
         <img id="imagePreview" src="" alt="Preview Image" style="max-width: 200px; max-height: 200px; display: none;">
 
         <div class="form-field">

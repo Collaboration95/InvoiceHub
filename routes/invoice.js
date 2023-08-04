@@ -4,7 +4,7 @@ const multer = require('multer');
 const{pool,table_name}=require ('../server');
 const path = require('path');
 const crypto = require('crypto');
-const { route } = require('./account');
+const { route } = require('./account'); 
 
 
 function generateUniqueFilename(originalFilename) {
@@ -122,6 +122,18 @@ router.get('/get-all-soa', async (req, res) => {
   try {
     const connection = await pool.getConnection();
     const [rows] = await connection.query(`SELECT * FROM ${table_name.invoice} WHERE type='SOA'`);
+    connection.release();
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching invoices:', error);
+    res.status(500).json({ error: 'An error occurred while fetching invoices' });
+  }
+});
+
+router.get('/get-all-soa-invoice', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query(`SELECT * FROM ${table_name.invoice} `);
     connection.release();
     res.json(rows);
   } catch (error) {

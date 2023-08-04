@@ -1,4 +1,5 @@
 var table = document.getElementById("soa_table");
+ 
 
 const invoice ={};
 
@@ -29,11 +30,15 @@ async function getData() {
 
 // Function to render the table with data
 function renderTable(data) {
+  var unpaidCost =0;
+  var overdueCost=0;
+  var totalCost = 0;
   // set up the title of each column
   table.innerHTML = `
     <tr>
       <th>ID</th>
       <th>COMPANY NAME</th>
+      <th>INVOICES</th>
       <th>SOA DATE</th>
       <th>AMOUNT</th>
       <th>STATUS</th>
@@ -82,24 +87,35 @@ function renderTable(data) {
         if (status === "DRAFT") {
           statusColor = "#acacac";
         } else if (status === "OVERDUE") {
+          console.log("not correct");
+          overdueCost += parseFloat(soa.total);
           statusColor = "rgb(252, 183, 137)";
         } else if (status === "PAID") {
           statusColor = "rgb(136, 197, 136)";
+        } else if (status === "UNPAID"){
+          unpaidCost += parseFloat(soa.total);
         }
 
-        invoice[soa.invoiceid]=soa.contain;
+        invoice[soa.invoiceid]=soa.soa_invoice;
 
         // render each row of data
         table.innerHTML += `
           <tr>
             <td>${soa.invoiceid}</td>
             <td>${soa.invoice_name}</td>
+            <td>${soa.soa_invoice}</td>
             <td>${soa.upload_date}</td>
             <td>$S ${soa.total}</td>
-            <td style="background-color: ${statusColor};">${status}</td>
+            <td style="background-color: ${statusColor};" data-status="${status}" data-invoice-id="${soa.invoiceid}">${status}</td>
             <td>${previewIcon} ${editIcon} ${deleteIcon} ${paymentIcon}</td>
           </tr>`;
+        
   });
+  totalCost = unpaidCost + overdueCost;
+  console.log("cost",totalCost);
+  document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
+  document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
+  document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
 }
 
 
@@ -159,16 +175,34 @@ table.addEventListener("click", function (event) {
 
 });
 
+// Add event listener to the table for status cells
+table.addEventListener("click", function(event) {
+  const targetCell = event.target;
+  // Check if the clicked cell is a status cell and the status is "PAID"
+  if (targetCell.tagName === "TD" && targetCell.dataset.status === "PAID") {
+    const invoiceId = targetCell.dataset.invoiceId;
+    console.log("invoiceID", invoiceId);
+    if (invoiceId) {
+      
+      // Build the URL for the next page with the invoice number as a query parameter
+      var queryParams = new URLSearchParams();
+      queryParams.append("invoiceId", null);
+      queryParams.append("SOA", invoiceId );
 
+      // Replace "NextPage.html" with the actual name of your next page
+      var nextPageURL = "Paid.html?" + queryParams.toString();
 
+      // Redirect to the next page
+      window.location.href = nextPageURL;
+    }
 
-/* CODE FOR CALCULATING THE COST FOR SUMMARY */
+  }
+});
 
 // get the elements for the cost
 var total_outstanding_cost = document.getElementById("total_outstanding_cost");
 var overdue_cost = document.getElementById("overdue_cost");
 var due_cost = document.getElementById("due_cost");
-
 
 /* CODE FOR THE SEARCHING FUNCTION */
 
