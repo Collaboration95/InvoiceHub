@@ -12,7 +12,7 @@ var filter = false;
 //   });
 // }
 
-// Function to fetch data from the server
+// Function to fetch data from the server to put into page 
 async function retrieveData() {
   try {
     const response = await fetch('/supplier/all'); // Fetch data from the /payment/all endpoint

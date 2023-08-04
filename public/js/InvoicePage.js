@@ -5,7 +5,7 @@ async function getData() {
   try {
     const response = await fetch('/invoice/get-all-invoices');
     const data = await response.json();
-    data.forEach(invoice => {
+    data.forEach((invoice) => {
       // Determine statusColor based on status
       if (invoice.status.toUpperCase() === 'DRAFT') {
         invoice.statusColor = '#acacac';
@@ -23,6 +23,9 @@ async function getData() {
 
 // Function to render the table with data
 function renderTable(data) {
+  var unpaidCost =0;
+  var overdueCost=0;
+  var totalCost = 0;
   // set up the title of each column
   table.innerHTML = `
     <tr>
@@ -36,6 +39,7 @@ function renderTable(data) {
   `;
   // Render each row of data
   data.forEach(invoice => {
+    // console.log(invoice);
     invoice.upload_date = new Date(invoice.upload_date);
     const options = { timeZone: 'Asia/Singapore' };
     invoice.upload_date = (invoice.upload_date).toLocaleDateString('en-SG', options);
@@ -74,9 +78,13 @@ function renderTable(data) {
     if (status === "DRAFT") {
       statusColor = "#acacac";
     } else if (status === "OVERDUE") {
+      console.log("not correct");
+      overdueCost += parseFloat(invoice.total);
       statusColor = "rgb(252, 183, 137)";
     } else if (status === "PAID") {
       statusColor = "rgb(136, 197, 136)";
+    } else if (status === "UNPAID"){
+      unpaidCost += parseFloat(invoice.total);
     }
 
     // render each row of data
@@ -86,20 +94,28 @@ function renderTable(data) {
             <td>${invoice.invoice_name}</td>
             <td>${invoice.upload_date}</td>
             <td>$S ${invoice.total}</td>
-            <td style="background-color: ${statusColor};">${status}</td>
+            <td style="background-color: ${statusColor};" data-status="${status}" data-invoice-id="${invoice.invoiceid}">${status}</td>
             <td>${previewIcon} ${editIcon} ${deleteIcon} ${exportIcon}</td>
           </tr>`;
   });
+  totalCost = unpaidCost + overdueCost;
+  console.log("cost",totalCost);
+  document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
+  document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
+  document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
 }
 
 // Call getData() and renderTable() when the page loads
-document.addEventListener('DOMContentLoaded', () => {
+if (document) {
+  document.addEventListener('DOMContentLoaded', () => {
   getData().then(data => renderTable(data));
 });
+}
 
 
 // // Add event listener for delete icon using event delegation
-table.addEventListener("click", function (event) {
+if (table) {
+  table.addEventListener("click", function (event) {
   if (event.target.classList.contains("ic_delete")) {
     // Retrieve the invoice id from the data attribute
     var invoiceId = event.target.getAttribute("id");
@@ -119,9 +135,11 @@ table.addEventListener("click", function (event) {
     getData().then(data => renderTable(data));
   }
 });
+}
 
 // Add event listener for edit icon using event delegation
-table.addEventListener("click", function (event) {
+if (table) {
+  table.addEventListener("click", function (event) {
   if (event.target.classList.contains("ic_edit")) {
     var invoiceId = event.target.getAttribute("id");
     var invoiceStatus = event.target.getAttribute("status");
@@ -136,6 +154,7 @@ table.addEventListener("click", function (event) {
     window.location.href = 'InvoiceEditPage.html';
   }
 });
+}
 
 
 /* CODE FOR CALCULATING THE COST FOR SUMMARY */
@@ -156,40 +175,43 @@ var input = document.getElementById("inp_search_blank");
 var searchDropdown = document.getElementById("search_type_dropdown");
 
 // code for searching and filter based on it
-input.addEventListener("keyup", function () {
-  var searchInput = this.value.toLowerCase();
-  var filterValue = searchDropdown.value;
+if (input) {
+  input.addEventListener("keyup", function () {
+    var searchInput = this.value.toLowerCase();
+    var filterValue = searchDropdown.value;
 
-  getData().then(data => {
+    getData().then(data => {
 
-    // convert all saved data into lower case for easy searching
-    searched = data.filter(function (val) {
-      var id = val.invoiceid.toString().toLowerCase();
-      var name = val.invoice_name.toLowerCase();
-      var date = val.upload_date.toLowerCase();
-      var amount = val.total.toLowerCase();
-      var status = val.status.toLowerCase();
+      // convert all saved data into lower case for easy searching
+      searched = data.filter(function (val) {
+        var id = val.invoiceid.toString().toLowerCase();
+        var name = val.invoice_name.toLowerCase();
+        var date = val.upload_date.toLowerCase();
+        var amount = val.total.toLowerCase();
+        var status = val.status.toLowerCase();
 
-      // check if input and searched input are the same
-      return (
-        (filterValue === "id" && id.includes(searchInput)) ||
-        (filterValue === "name" && name.includes(searchInput)) ||
-        (filterValue === "date" && date.includes(searchInput)) ||
-        (filterValue === "amount" && amount.includes(searchInput)) ||
-        (filterValue === "status" && status.includes(searchInput))
-      );
-    });
+        // check if input and searched input are the same
+        return (
+          (filterValue === "id" && id.includes(searchInput)) ||
+          (filterValue === "name" && name.includes(searchInput)) ||
+          (filterValue === "date" && date.includes(searchInput)) ||
+          (filterValue === "amount" && amount.includes(searchInput)) ||
+          (filterValue === "status" && status.includes(searchInput))
+        );
+      });
 
     // render the searched result
     renderTable(searched);
   });
 });
+}
 
-
-searchDropdown.addEventListener('change', function () {
-  input.value = '';
-  getData().then(data => renderTable(data));
-});
+if (searchDropdown){
+    searchDropdown.addEventListener('change', function () {
+    input.value = '';
+    getData().then(data => renderTable(data));
+  });
+}
 
 
 /* CODE FOR SORT/ SORTING FUNCTION */
@@ -201,21 +223,24 @@ var sortDropdown = document.getElementById('sort_dropdown');
 var ascendingButton = document.getElementById('ic_sort_asc');
 var descendingButton = document.getElementById('ic_sort_des');
 
-ascendingButton.addEventListener('click', function () {
+if (ascendingButton) {
+  ascendingButton.addEventListener('click', function () {
   if (searched.length === 0) {
     sort_asc();
   } else {
     sort_asc();
   }
 });
+}
 
-descendingButton.addEventListener('click', function () {
+if (descendingButton) {
+  descendingButton.addEventListener('click', function () {
   if (searched.length === 0) {
     sort_des();
   } else {
     sort_des();
   }
-});
+});}
 
 function sort_des() {
   getData().then(data => {
@@ -274,10 +299,27 @@ function sort_asc() {
   });
 }
 
+// function openImage(value) {
+//   // window.open('http://127.0.0.1:8080/' + value)
+//   window.open('http://127.0.0.1:8080/img-db/'+value);
+// }
+//  handles non existant image errors
 function openImage(value) {
-  // window.open('http://127.0.0.1:8080/' + value)
-  window.open('http://127.0.0.1:8080/img-db/'+value);
+  const imageUrl = 'http://localhost:8000/img-db/' + value;
+  const img = new Image();
+  img.onload = function() {
+    window.open(imageUrl);
+  };
+  img.onerror = function() {
+    alert('Image not found!');
+  };
+
+  img.crossOrigin = 'anonymous'; // Set the crossorigin attribute
+  img.src = imageUrl;
 }
+
+
+
 
 function openText(value) {
   const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;
@@ -352,3 +394,25 @@ function downloadCSV(csvContent, fileName) {
 
   document.body.removeChild(downloadLink);
 }
+
+// Add event listener to the table for status cells
+table.addEventListener("click", function(event) {
+  const targetCell = event.target;
+  // Check if the clicked cell is a status cell and the status is "PAID"
+  if (targetCell.tagName === "TD" && targetCell.dataset.status === "PAID") {
+    const invoiceId = targetCell.dataset.invoiceId;
+    if (invoiceId) {
+      // Build the URL for the next page with the invoice number as a query parameter
+      var queryParams = new URLSearchParams();
+      queryParams.append("invoiceId", invoiceId);
+      queryParams.append("SOAId", null );
+
+      // Replace "NextPage.html" with the actual name of your next page
+      var nextPageURL = "Paid.html?" + queryParams.toString();
+
+      // Redirect to the next page
+      window.location.href = nextPageURL;
+    }
+
+  }
+});

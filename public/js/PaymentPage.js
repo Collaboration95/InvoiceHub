@@ -231,8 +231,8 @@ document.getElementById("inp_search_blank").addEventListener("keyup", function()
   // Convert all saved data into lower case for easy searching
   var searched = data.filter(function(val) {
     //console.log(val.Invoice_id);
-    var id = String(val.Invoice_id);;
-    var name = val.Company.toLowerCase();
+    var id = String(val.invoiceid);;
+    var name = val.invoice_name.toLowerCase();
     //var date = formatDate(val.date_received);
     // var amount = val.total_cost.toLowerCase();
     // var status = val.status.toLowerCase();
@@ -250,7 +250,7 @@ document.getElementById("inp_search_blank").addEventListener("keyup", function()
 
         // Filter the data based on the date range
       
-        var dateObj = new Date(val.date_received);
+        var dateObj = new Date(val.upload_date);
         console.log("startdateobj",startDateObj);
         console.log("dateobj",dateObj);
         console.log("enddate",endDateObj);
@@ -265,7 +265,7 @@ document.getElementById("inp_search_blank").addEventListener("keyup", function()
         var currentYear = currentDate.getFullYear();
 
         // Filter the data based on default conditions
-        var date = new Date(val.date_received);
+        var date = new Date(val.upload_date);
         var invoiceMonth = date.getMonth();
         var invoiceYear = date.getFullYear();
 
@@ -293,7 +293,7 @@ function filterByDateRange(startDate, endDate) {
 
   // Filter the data based on the date range
   var searched = data.filter(function(val) {
-    var dateObj = new Date(val.date_received);
+    var dateObj = new Date(val.upload_date);
     return dateObj >= startDateObj && dateObj <= endDateObj;
   });
 
@@ -364,7 +364,8 @@ table.addEventListener("click", function(event) {
     if (invoiceId) {
       // Build the URL for the next page with the invoice number as a query parameter
       var queryParams = new URLSearchParams();
-      queryParams.append("invoiceNumber", invoiceId);
+      queryParams.append("invoiceId", invoiceId);
+      queryParams.append("SOAId", null );
 
       // Replace "NextPage.html" with the actual name of your next page
       var nextPageURL = "Paid.html?" + queryParams.toString();
@@ -372,5 +373,6 @@ table.addEventListener("click", function(event) {
       // Redirect to the next page
       window.location.href = nextPageURL;
     }
+
   }
 });

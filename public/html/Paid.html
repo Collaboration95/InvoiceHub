@@ -1,67 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Invoice Details</title>
+    <title>Display Payment</title>
+    <link rel="stylesheet" href="../css/Paid.css">
 </head>
 <body>
-  <h1>Invoice Details</h1>
-  <div id="invoiceDetails">
-    <!-- The fetched invoice details will be displayed here -->
+    <div class="front_page_top">
+        <div class="front_page_top_left">
+            <h2 class="front_page_title">Payment Details</h2>
+        </div>
+    </div>
+
+    <!-- Payment details and other elements -->
+    <div class="form-field">
+      <label for="invoiceId">Invoice ID:</label>
+      <span id="invoiceId"></span>
   </div>
 
-  <button id="closeButton">Close</button>
+    <div class="form-field">
+      <label for="company">Company Name:</label>
+        <span id="company"></span>
+      </div>
 
-  <script>
-    // Extract the invoice number from the URL query parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const invoiceNumber = urlParams.get('invoiceNumber');
-    console.log(invoiceNumber);
-    // // Function to fetch invoice details based on the invoice number
-    // async function fetchInvoiceDetails(invoiceNumber) {
-    //   try {
-    //     const response = await fetch(`/payment/${invoiceNumber}`); // Replace "/payment/${invoiceNumber}" with the appropriate endpoint to fetch details for the specific invoice
-    //     const invoiceDetails = await response.json();
-    //     return invoiceDetails;
-    //   } catch (error) {
-    //     console.error('Error fetching invoice details:', error);
-    //     throw error;
-    //   }
-    // }
+    <div class="form-field">
+      <label for="datePaid">Date Paid:</label>
+        <span id="datePaid"></span>
+      </div>
+  
+    <div class="form-field">
+      <label for="totalPaid">Total Paid:</label>
+        <span id="totalPaid"></span>
+  </div>
+   
+    <div class="form-field">
+      <label for="paymenttype">Payment Type:</label>
+      <span id="paymenttype"></span>
+    </div>
 
-    // // Function to display the fetched invoice details
-    // function displayInvoiceDetails(details) {
-    //   const invoiceDetailsDiv = document.getElementById('invoiceDetails');
-    //   // You can format the details as per your requirement and display them here
-    //   invoiceDetailsDiv.innerHTML = `
-    //     <p>Invoice Number: ${details.Invoice_id}</p>
-    //     <p>Company: ${details.Company}</p>
-    //     <p>Invoice Date: ${formatDate(details.date_received)}</p>
-    //     <!-- Add more details as needed -->
-    //   `;
-    // }
+    <div class="form-field">
+      <div id="soaDetails" style="display: none;">
+        <label for="soaNumber">SOA Number:</label>
+        <span id="soaNumber"></span>
+        <br>
+        <label for="allInvoicesPaid">Invoices Paid:</label>
+        <span id="allInvoicesPaid"></span>
+    </div>
+    <div>
+        <label for="paymentImage"></label>
+        <img id="paymentImagePreview" src="" alt="Payment Image" style="max-width: 400px; max-height: 400px;">
+    </div>
 
-    // // Function to format date (similar to the one used in PaymentPage.js)
-    // function formatDate(dateString) {
-    //   // ... Date formatting logic ...
-    // }
+  </div>
+    <div class="btns">
+      <!-- Back button -->
+      <button onclick="goBack()" class="btn_signup_front">Back</button>
+  </div>
 
-    // // Fetch and display the invoice details
-    // async function init() {
-    //   try {
-    //     const invoiceDetails = await fetchInvoiceDetails(invoiceNumber);
-    //     displayInvoiceDetails(invoiceDetails);
-    //   } catch (error) {
-    //     console.error('Error initializing page:', error);
-    //   }
-    // }
+    <script src="../js/displaypayments.js"></script>
 
-    // // Call the init function when the page loads
-    // document.addEventListener('DOMContentLoaded', init);
-    // Close button event listener
-    document.getElementById('closeButton').addEventListener('click', function() {
-      // Redirect back to the PaymentPage
-      window.location.href = 'PaymentPage.html'; // Replace 'PaymentPage.html' with the actual URL of your PaymentPage
-    });
-  </script>
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+    </script>
 </body>
 </html>

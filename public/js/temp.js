@@ -1,45 +1,20 @@
-const invoiceInput = document.getElementById('invoice');
-const soaInput = document.getElementById('soa');
-const creditInput = document.getElementById('credit');
-// if(invoiceInput){
-//     invoiceInput.addEventListener('click',()=>acceptFileInput("invoice"));
-// }
-// else{
-//     console.log('Button invoiceInput does not exist');
-// }
-// if(soaInput){
-
-//     soaInput.addEventListener('change',()=>acceptFileInput("SOA"));
-//   }
-//   else{
-//     console.log('Button soaInput does not exist');
-//   }
-//   if(creditInput){
-//     creditInput.addEventListener('change',()=>acceptFileInput("credit"));
-//   }
-//   else{
-//     console.log('Button creditInput does not exist');
-//   }
-  function SOA(){
-
-    console.log("SOA");
+function SOA(){
     document.getElementById(file);
     file.text="SOA"
     file.click();
-
   }
-  function Credit(){
-    console.log("Credit");
+
+function Credit(){
     document.getElementById(file);
     file.text="Credit"
     file.click();
-  }
-  function Invoice(){
-    console.log("Invoice");
+}
+
+function Invoice(){
     document.getElementById(file);
     file.text="invoice";
     file.click();
-  }
+}
 
 function acceptFileInput() {
   const documentType =event.target.text;
@@ -60,7 +35,7 @@ function acceptFileInput() {
         var invoiceid =Math.floor(Math.random() * (2500 - 200 + 1)) + 100;
         var invoice_name = fileName;
         var uploadDate = new Date().toISOString().split('T')[0];
-        var status ="Paid";
+        var status ="Unpaid";
         var fakeTotal = Math.floor(Math.random() * (2000 - 200 + 1)) + 200;
   
         var fakerequestBody = {
@@ -87,7 +62,14 @@ function acceptFileInput() {
           .then(response => {
             if (response.ok) {
               console.log('Record inserted successfully.');
-            } else {
+            }else if(response.status == 409){
+              console.log('Record already exists.');
+            }else if(response.status == 403){
+              alert("Failed to extract data from image");
+
+            } 
+            
+            else {
               console.error('Failed to insert the record.');
             }
           })
@@ -99,12 +81,13 @@ function acceptFileInput() {
         console.error('Error occurred while saving the image:', error);
   
       });
-  
+
       detectTextBuckets(formData).then(detectedText=>{
       const output = extractDetails(detectedText.invoice_data);
       const output2 = sanitizeDetails(output,detectedText.table_data);
       const payload= {extractedDetails :output2, table_data:detectedText.table_data};
-        // console.log(payload);
+      console.log(payload);
+
   
         fetch('/invoice/save-detected-data', {
           method: 'POST',
@@ -136,20 +119,20 @@ function acceptFileInput() {
     }
   }
 
-
 function extractDetails(ocrResult) {
-    console.log(ocrResult);
-    const validTypes = {
-      Name: ["VENDOR_NAME", "NAME"],
-      Address: ["VENDOR_ADDRESS","ADDRESS"],
-      Telephone: ["VENDOR_PHONE"],
-      Total: ["TOTAL"],
-      IssuedDate: ["INVOICE_RECEIPT_DATE"]
-    };
+  console.log(ocrResult);
+  const validTypes = {
+    Id:["INVOICE_RECEIPT_ID","INVOICE_ID"],
+    Name: ["VENDOR_NAME", "NAME"],
+    Address: ["VENDOR_ADDRESS","ADDRESS"],
+    Telephone: ["VENDOR_PHONE"],
+    Total: ["TOTAL","SUBTOTAL"],
+    IssuedDate: ["INVOICE_RECEIPT_DATE"]
+  };
+
+  const extractEmailAddresses = (data) => [].concat(...data.map(({ value }) => (value.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g) || [])));
+  const keyvalue = {Id:[],Name:[],Address:[],Telephone:[],Total:[],IssuedDate:[]};
   
-    const extractEmailAddresses = (data) => [].concat(...data.map(({ value }) => (value.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g) || [])));
-    const keyvalue = {Name:[],Address:[],Telephone:[],Total:[],IssuedDate:[]};
-    
     ocrResult.forEach(item=>{
       for (const category in validTypes) {
         if (validTypes[category].includes(item.type)) {
@@ -163,17 +146,14 @@ function extractDetails(ocrResult) {
       }
     });
     keyvalue.email = extractEmailAddresses(ocrResult);
-    console.log(keyvalue);
     return keyvalue;
   }
-  
   
   function sanitizeDetails(details,input){
     console.log(details);
     const flatInput = input.flat();
     // Bug fix later 
     // const uniqueWordsList = Array.from(new Set(flatInput.join(' ').split(/\s+/).map(word => word.replace(/[^a-zA-Z]/g, ''))));
-  
     const arrayToRemove = ["Kim Eng ", "BLK 103 YISHUN"];
     console.log(arrayToRemove);
     Object.keys(details).forEach(key => {
@@ -183,14 +163,36 @@ function extractDetails(ocrResult) {
               return !arrayToRemove.some(removeValue => lowercaseValue.includes(removeValue.toLowerCase()));
           });
       }
+
   });
   
   if (details.Name.length >1) {
     const longestName = details.Name.reduce((longest, current) => (current.length > longest.length ? current : longest), "");
     details.Name[0]=longestName;
-    
   }
+
+  console.log(details.Total);
+  details.IssuedDate= details.IssuedDate.map(dateString => convertToSqlDateFormat(dateString));
+  details.Total= details.Total.map(total => total.replace(/[^0-9.]/g, ''));
+  const maxNumber = Math.max(...details.Total);
+  details.Total= [maxNumber];
   return details;
   }
   
+  function convertToSqlDateFormat(dateString) {
+    const parts = dateString.match(/(\d{1,2})[./](\d{1,2})[./](\d{2}|\d{4})/);
+    if (!parts) {
+      throw new Error('Invalid date format');
+    }
+    const day = parts[1].padStart(2, '0');
+    const month = parts[2].padStart(2, '0');
+    let year = parts[3];
+    
+    if (year.length === 2) {
+      // Convert 2-digit year to 4-digit format
+      const currentYear = new Date().getFullYear().toString().slice(0, 2);
+      year = currentYear + year;
+    }
   
+    return `${year}-${month}-${day}`;
+  }

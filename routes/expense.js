@@ -21,6 +21,7 @@ FROM (
     DATE_FORMAT(upload_date, '%b') AS month,
     SUM(total) AS total
   FROM forms
+  WHERE type = 'invoice'
   GROUP BY DATE_FORMAT(upload_date, '%b')
 ) AS subquery
 ORDER BY 
@@ -58,8 +59,8 @@ ORDER BY
         {
           label: 'Total Expense Per Month',
           data: amount,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)', // Set a single color value for all data points
-          borderColor: 'rgba(54, 162, 235, 1)', // Set the same color value with alpha 1 for border
+          backgroundColor: 'rgba(54, 162, 235, 0.2)', 
+          borderColor: 'rgba(54, 162, 235, 1)', 
           borderWidth: 1,
         },
       ],
