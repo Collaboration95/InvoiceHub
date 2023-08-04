@@ -15,8 +15,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
-    <script src="../js/chart1.js"></script>
-    <script src="../js/chart2.js"></script>
+    <script src="../js/Homepage.js"></script>
+    
    
 
 
@@ -119,17 +119,24 @@
         <div class="content_top">
             <!-- box for the top summary -->
             <div class="summary">
-                <div class ="total_outstanding">
+                <div class="total_outstanding">
                     <span class="total_outstanding_title">TOTAL OUTSTANDING</span>
-                    <span class="total_outstanding_cost" id="total_outstanding_cost"><br>S$ 39,225</span>
+                    <span class="total_outstanding_cost" id="total_outstanding_cost">
+                        <br>S$ <span id="total_value"></span>
+                    </span>
+                </div>
+                
+                <div class ="due">
+                    <span class="due_title">DUE</span>
+                    <span class="due_cost" id="overdue_cost">
+                        <br>S$ <span id="total_due_value"></span>
+                    </span>
                 </div>
                 <div class ="overdue">
                     <span class="overdue_title">OVERDUE</span>
-                    <span class="overdue_cost" id="overdue_cost"><br>S$ 9,225</span>
-                </div>
-                <div class ="due">
-                    <span class="due_title">DUE</span>
-                    <span class="due_cost" id="due_cost"><br>S$ 25</span>
+                    <span class="overdue_cost" id="overdue_cost">
+                        <br>S$ <span id="total_overdue_value"></span>
+                    </span>
                 </div>
             </div>
             <!-- box for the uploading documents -->

@@ -3,10 +3,10 @@ const fetchData = require('../routes/overdue');
 describe('fetchData function for Overdue Graph', () => {
   it('fetches and processes data correctly for different categories', async () => {
     const fakeRows = [
-      { category: '<30 days', count: 5 },
-      { category: '30-60 days', count: 10 },
-      { category: '60-90 days', count: 15 },
-      { category: '>90 days', count: 5 },
+      { category: '<30 days', count: 5000 },
+      { category: '30-60 days', count: 1000 },
+      { category: '60-90 days', count: 1500 },
+      { category: '>90 days', count: 5050 },
     ];
 
     const mockExecute = jest.fn().mockResolvedValue([fakeRows]);
@@ -26,7 +26,7 @@ describe('fetchData function for Overdue Graph', () => {
       datasets: [
         {
           label: 'Amount Overdue',
-          data: [5, 10, 15, 5],
+          data: [5000, 1000, 1500, 5050],
           backgroundColor: [
             'rgba(255, 0, 0, 0.6)',
             'rgba(192, 0, 0, 0.6)',

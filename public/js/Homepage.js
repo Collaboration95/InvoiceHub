@@ -2,7 +2,7 @@ let expenseChart = null;
 let overdueChart = null;
 
 function fetchOverdueData() {
-  fetch('/invoice/fetch-overdue-data')
+  fetch('/homepage/fetch-overdue-data')
     .then(response => response.json())
     .then(data => {
       if (overdueChart) {
@@ -31,8 +31,10 @@ function createOverdueChart(data) {
   });
 }
 
+document.addEventListener('DOMContentLoaded', fetchOverdueData);
+
 function fetchExpenseData() {
-  fetch('/invoice/fetch-expense-data')
+  fetch('/homepage/fetch-expense-data')
     .then(response => response.json())
     .then(data => {
       if (expenseChart) {
@@ -58,10 +60,48 @@ function createExpenseChart(data) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  fetchExpenseData();
-  fetchOverdueData();
-});
+document.addEventListener('DOMContentLoaded', fetchExpenseData);
+
+function updateTotalOutstanding() {
+  fetch("/homepage/fetch-total-outstanding")
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById("total_value").textContent = data;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("total_value").textContent = "Error loading data";
+      });
+}
+
+document.addEventListener('DOMContentLoaded', updateTotalOutstanding);
 
 
-module.exports = {fetchExpenseData, fetchOverdueData};
+function updateTotalDue() {
+  fetch("/homepage/fetch-total-due")
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById("total_due_value").textContent = data;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("total_due_value").textContent = "Error loading data";
+      });
+}
+
+document.addEventListener('DOMContentLoaded', updateTotalDue);
+
+
+function updateTotalOverdue() {
+  fetch("/homepage/fetch-total-overdue")
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById("total_overdue_value").textContent = data;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("total_overdue_value").textContent = "Error loading data";
+      });
+}
+
+document.addEventListener('DOMContentLoaded', updateTotalOverdue);
