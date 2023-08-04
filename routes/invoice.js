@@ -58,16 +58,22 @@ router.post('/insert-record', async (req, res) => {
 
 router.post('/save-detected-data', async (req, res) => {
   const { invoiceid, detectedText } = req.body;
+
+  const updatedInvoiceid = invoiceid.toString();
   const total = JSON.parse(detectedText).extractedDetails.Total[0];
+
   const name = JSON.parse(detectedText).extractedDetails.Name[0];
   const issuedDate= JSON.parse(detectedText).extractedDetails.IssuedDate[0];  
   const detectedId = JSON.parse(detectedText).extractedDetails.Id[0];
 
+  console.log(typeof detectedId);
+  // const issuedDate='2020-12-12';
+
+
   const query = `UPDATE ${table_name.invoice} SET detectedText = ?, total = ?,invoice_name=? ,upload_date=?,invoiceid=? WHERE invoiceid = ?`;
   try {
     const connection = await pool.getConnection();
-    const results = await connection.query(query, [detectedText, total, name,issuedDate,detectedId,invoiceid]);
-
+    const results = await connection.query(query, [detectedText, total, name,issuedDate,detectedId,updatedInvoiceid]);
     console.log('Detected text and total updated successfully!');
     res.status(200).json({ message: 'Detected text and total updated successfully' });
 

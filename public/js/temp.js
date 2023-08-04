@@ -79,7 +79,8 @@ function acceptFileInput() {
       const output = extractDetails(detectedText.invoice_data);
       const output2 = sanitizeDetails(output,detectedText.table_data);
       const payload= {extractedDetails :output2, table_data:detectedText.table_data};
-      console.log(payload.extractedDetails.IssuedDate[0]);
+      console.log(payload);
+
   
         fetch('/invoice/save-detected-data', {
           method: 'POST',
@@ -119,7 +120,7 @@ function extractDetails(ocrResult) {
     Name: ["VENDOR_NAME", "NAME"],
     Address: ["VENDOR_ADDRESS","ADDRESS"],
     Telephone: ["VENDOR_PHONE"],
-    Total: ["TOTAL"],
+    Total: ["TOTAL","SUBTOTAL"],
     IssuedDate: ["INVOICE_RECEIPT_DATE"]
   };
 
@@ -157,6 +158,7 @@ function extractDetails(ocrResult) {
               return !arrayToRemove.some(removeValue => lowercaseValue.includes(removeValue.toLowerCase()));
           });
       }
+
   });
   
   if (details.Name.length >1) {
@@ -164,21 +166,29 @@ function extractDetails(ocrResult) {
     details.Name[0]=longestName;
   }
 
+  console.log(details.Total);
   details.IssuedDate= details.IssuedDate.map(dateString => convertToSqlDateFormat(dateString));
-
+  details.Total= details.Total.map(total => total.replace(/[^0-9.]/g, ''));
+  const maxNumber = Math.max(...details.Total);
+  details.Total= [maxNumber];
   return details;
   }
   
   
   function convertToSqlDateFormat(dateString) {
-    const parts = dateString.match(/(\d{1,2})[./](\d{1,2})[./](\d{4})/);
+    const parts = dateString.match(/(\d{1,2})[./](\d{1,2})[./](\d{2}|\d{4})/);
     if (!parts) {
       throw new Error('Invalid date format');
     }
     const day = parts[1].padStart(2, '0');
     const month = parts[2].padStart(2, '0');
-    const year = parts[3];
+    let year = parts[3];
+    
+    if (year.length === 2) {
+      // Convert 2-digit year to 4-digit format
+      const currentYear = new Date().getFullYear().toString().slice(0, 2);
+      year = currentYear + year;
+    }
+  
     return `${year}-${month}-${day}`;
   }
-   
-
