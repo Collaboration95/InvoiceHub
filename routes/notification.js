@@ -1,88 +1,45 @@
 const express = require('express');
+const { pool, table_name } = require('../server');
+
 const router = express.Router();
-const multer = require('multer');
-const{pool,table_name}=require ('../server');
 
-router.get('/get-unpaid-invoices-30', async (req, res) => {
-    try {
-      const connection = await pool.getConnection();
-      
-      // Calculate 23 days ago 
-      const threeWeeksAgo = new Date();
-      threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 30);
-  
-      // Format the date in MySQL-compatible format (YYYY-MM-DD)
-      const formattedDate = threeWeeksAgo.toISOString().split('T')[0];
-  
-      // Query to fetch unpaid invoices that have been unpaid for 3 weeks
-      const query = `
-        SELECT * FROM ${table_name.invoice}
-        WHERE status = 'Unpaid' AND upload_date >= ?
-      `;
-      
-      const [rows] = await connection.query(query, [formattedDate]);
-      connection.release();
-      
-      res.json(rows);
-    } catch (error) {
-      console.error('Error fetching unpaid invoices:', error);
-      res.status(500).json({ error: 'An error occurred while fetching unpaid invoices' });
-    }
-  });
+router.get('/fetch-overdue-data', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    
+    const dueInAWeekQuery = `
+      SELECT *
+      FROM ${table_name.invoice}
+      WHERE status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) = 23;
+    `;
+    
+    const dueIn3DaysQuery = `
+      SELECT *
+      FROM ${table_name.invoice}
+      WHERE status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) = 27;
+    `;
 
-router.get('/get-unpaid-invoices-7', async (req, res) => {
-    try {
-      const connection = await pool.getConnection();
-      
-      // Calculate 23 days ago 
-      const threeWeeksAgo = new Date();
-      threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 23);
-  
-      // Format the date in MySQL-compatible format (YYYY-MM-DD)
-      const formattedDate = threeWeeksAgo.toISOString().split('T')[0];
-  
-      // Query to fetch unpaid invoices that have been unpaid for 3 weeks
-      const query = `
-        SELECT * FROM ${table_name.invoice}
-        WHERE status = 'Unpaid' AND upload_date = ?
-      `;
-      
-      const [rows] = await connection.query(query, [formattedDate]);
-      connection.release();
-      
-      res.json(rows);
-    } catch (error) {
-      console.error('Error fetching unpaid invoices:', error);
-      res.status(500).json({ error: 'An error occurred while fetching unpaid invoices' });
-    }
-  });
+    const overdueQuery = `
+      SELECT *
+      FROM ${table_name.invoice}
+      WHERE status = 'Overdue' AND DATEDIFF(NOW(), upload_date) >= 30;
+    `;
 
-  router.get('/get-unpaid-invoices-3', async (req, res) => {
-    try {
-      const connection = await pool.getConnection();
-      
-      // Calculate 27 days ago
-      const threeWeeksAgo = new Date();
-      threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 27);
-  
-      // Format the date in MySQL-compatible format (YYYY-MM-DD)
-      const formattedDate = threeWeeksAgo.toISOString().split('T')[0];
-  
-      // Query to fetch unpaid invoices that have been unpaid for 3 weeks
-      const query = `
-        SELECT * FROM ${table_name.invoice}
-        WHERE status = 'Unpaid' AND upload_date = ?
-      `;
-      
-      const [rows] = await connection.query(query, [formattedDate]);
-      connection.release();
-      
-      res.json(rows);
-    } catch (error) {
-      console.error('Error fetching unpaid invoices:', error);
-      res.status(500).json({ error: 'An error occurred while fetching unpaid invoices' });
-    }
-  });
+    const [dueInAWeekRows] = await connection.query(dueInAWeekQuery);
+    const [dueIn3DaysRows] = await connection.query(dueIn3DaysQuery);
+    const [overdueRows] = await connection.query(overdueQuery);
+
+    connection.release();
+
+    res.json({
+      dueInAWeek: dueInAWeekRows,
+      dueIn3Days: dueIn3DaysRows,
+      overdue: overdueRows,
+    });
+  } catch (error) {
+    console.error('Error fetching overdue data:', error);
+    res.status(500).json({ error: 'An error occurred while fetching overdue data' });
+  }
+});
+
 module.exports = router;
-
-

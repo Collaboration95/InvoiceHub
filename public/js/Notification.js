@@ -12,7 +12,8 @@ function createNotif(menu,p_value, span_value) {
     cont.appendChild(p);
     cont.appendChild(span);
     li.appendChild(cont);
-    menu.appendChild(li);       
+    menu.appendChild(li); 
+    console.log("createNotif x");     
 }
 
 const dropdown = document.querySelectorAll('.notification')
@@ -36,31 +37,26 @@ dropdown.forEach(notifications => {
 })
 // return an array witth invoice objects that have invoiceid, invoice_name, upload_date, total, status, daysLeft
 async function getData() {
-    try {
-      const oneWeekLeft = await fetch('/notification/get-unpaid-invoices-7');
-      const threeDaysLeft = await fetch('/notification/get-unpaid-invoices-3');
-      const OverDue = await fetch('/notification/get-unpaid-invoices-7');
-      const data1 = await oneWeekLeft.json();
-      data1.forEach(invoice => {
-        // set days left on payment
-        invoice.daysLeft = 'due in 3 days.';
-      });
-      const data2 = await threeDaysLeft.json();
-      data1.forEach(invoice => {
-        // set days left on payment
+  try {
+    const response = await fetch('/notification/fetch-overdue-data'); // Change the endpoint to match your combined route
+    const data = await response.json();
+
+    data.forEach(invoice => {
+      if (invoice.daysLeft === 23) {
         invoice.daysLeft = 'due in a week.';
-      });
-      const data3  = await OverDue.json();
-      data1.forEach(invoice => {
-        // set days left on payment
+      } else if (invoice.daysLeft === 27) {
+        invoice.daysLeft = 'due in 3 days.';
+      } else if (invoice.daysLeft >= 30) {
         invoice.daysLeft = 'overdue.';
-      });
-      const data = [...data1,...data2,...data3];
-      return data;
-    } catch (error) {
-      console.error('Error fetching invoices data:', error);
-    }
+      }
+    });
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching invoices data:', error);
   }
+}
+
 
 
 
