@@ -6,9 +6,15 @@ const { pool } = require('../server');
 router.get('/all', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const query = 'SELECT DISTINCT company_name, contact_number, address, email FROM suppliersdb.supplier';
+    const query = `SELECT 
+    JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.Name[0]')) AS Name,
+    JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.Address[0]')) AS Address,
+    JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.Telephone[0]')) AS Telephone,
+    JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.email[0]')) AS Email
+    FROM 
+    forms;`
     const [rows] = await connection.query(query);
-    connection.release();
+    connection.release(); 
     res.json(rows);
   } catch (error) {
     console.error('Error fetching invoices:', error);

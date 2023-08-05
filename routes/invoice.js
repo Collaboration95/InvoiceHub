@@ -4,7 +4,7 @@ const multer = require('multer');
 const{pool,table_name}=require ('../server');
 const path = require('path');
 const crypto = require('crypto');
-const { route } = require('./account');
+const { route } = require('./account'); 
 
 
 function generateUniqueFilename(originalFilename) {
@@ -58,12 +58,25 @@ router.post('/insert-record', async (req, res) => {
 
 router.post('/save-detected-data', async (req, res) => {
   const { invoiceid, detectedText } = req.body;
+  try{
+  const updatedInvoiceid = invoiceid.toString();
   const total = JSON.parse(detectedText).extractedDetails.Total[0];
-  const query = `UPDATE ${table_name.invoice} SET detectedText = ?, total = ? WHERE invoiceid = ?`;
-  try {
-    const connection = await pool.getConnection();
-    const results = await connection.query(query, [detectedText, total, invoiceid]);
-
+  const name = JSON.parse(detectedText).extractedDetails.Name[0];
+  const issuedDate= JSON.parse(detectedText).extractedDetails.IssuedDate[0];  
+  const detectedId = JSON.parse(detectedText).extractedDetails.Id[0];
+  } catch(error){
+console.error("Error:", error);
+  res.status(403);
+  }
+try {
+  const updatedInvoiceid = invoiceid.toString();
+  const total = JSON.parse(detectedText).extractedDetails.Total[0];
+  const name = JSON.parse(detectedText).extractedDetails.Name[0];
+  const issuedDate= JSON.parse(detectedText).extractedDetails.IssuedDate[0];  
+  const detectedId = JSON.parse(detectedText).extractedDetails.Id[0];
+  const connection = await pool.getConnection();
+  const query = `UPDATE ${table_name.invoice} SET detectedText = ?, total = ?,invoice_name=? ,upload_date=?,invoiceid=? WHERE invoiceid = ?`;
+  const results = await connection.query(query, [detectedText, total, name,issuedDate,detectedId,updatedInvoiceid]);
     console.log('Detected text and total updated successfully!');
     res.status(200).json({ message: 'Detected text and total updated successfully' });
 
@@ -120,6 +133,18 @@ router.get('/get-all-soa', async (req, res) => {
   }
 });
 
+router.get('/get-all-soa-invoice', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query(`SELECT * FROM ${table_name.invoice} `);
+    connection.release();
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching invoices:', error);
+    res.status(500).json({ error: 'An error occurred while fetching invoices' });
+  }
+});
+
 router.delete('/delete-record', async (req, res) => {
   const {invoiceid} = req.body;
 
@@ -148,7 +173,20 @@ router.get('/dummy', async (req, res) => {
   }
 });
 
+router.get('/img-db/:imageName', async (req, res) => {
+  const imageName = req.params.imageName;
+  const imageUrl = `http://127.0.0.1:8080/img-db/${imageName}`;
 
+  try {
+    const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+    const contentType = response.headers['content-type'];
+    res.set('Content-Type', contentType);
+    res.send(response.data);
+  } catch (error) {
+    // Handle the 404 error here
+    res.status(404).send('Image not found');
+  }
+});
 router.get('/fetch-overdue-data', async (req, res) => {
   try {
     const connection = await pool.getConnection();
@@ -253,5 +291,45 @@ ORDER BY
 });
 
 module.exports = router;
+
+
+router.post('/update_data', async (req, res) => {
+  const { invoice_name, upload_date, total, invoiceid } = req.body;
+
+  try {
+    const connection = await pool.getConnection();
+    const query = `UPDATE ${table_name.invoice} SET invoice_name = ?, upload_date = ?, total = ? WHERE invoiceid = ?`;
+    const [result] = await connection.query(query, [invoice_name, upload_date, total, invoiceid]);
+
+    if (result.affectedRows > 0) {
+      res.status(200).json({ message: "Updated successfully" });
+    } else {
+      res.status(404).json({ error: "Invoice not found" });
+    }
+    connection.release();
+  } catch (error) {
+    console.error('ERROR', error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
+router.delete('/invoiceid', async (req, res) => {
+  const {invoiceid} = req.body;
+
+  try {
+    const connection = await pool.getConnection();
+    const query = `DELETE FROM ${table_name.invoice} WHERE invoiceid = ?`
+    const [result] = await connection.query(query, [invoiceid]);
+
+    if (result.affectRows > 0) {
+      res.status (200).json({mesage: "deleted"});
+    } else {
+      res.status(404).json({error: "ERROR"});
+    }
+    connection.release();
+  } catch (error) {
+    console.error('ERROR', error);
+    res.status(500).json({error: "an error"});
+  }});
 
 

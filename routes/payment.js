@@ -19,12 +19,12 @@ router.get('/all', async (req, res) => {
 
 // Route for updating invoice status
 router.put('/update-status', async (req, res) => {
-  const { status, invoiceId } = req.body;
+  const { status, invoiceid } = req.body;
 
   try {
     const connection = await pool.getConnection();
     const query = 'UPDATE InvoiceHub.forms SET status = ? WHERE invoiceid = ?';
-    const [result] = await connection.query(query, [status, invoiceId]);
+    const [result] = await connection.query(query, [status, invoiceid]);
 
     if (result.affectedRows > 0) {
       res.status(200).json({ message: 'Status updated successfully' });
@@ -41,12 +41,14 @@ router.put('/update-status', async (req, res) => {
 
 // Route for updating invoice status
 router.put('/update-soa-status', async (req, res) => {
-  const { status, soa_number } = req.body;
+  const { status, invoiceid } = req.body;
+  console.log("invoiceid", invoiceid);
 
   try {
     const connection = await pool.getConnection();
     const query = 'UPDATE invoicehub.forms SET status = ? WHERE invoiceid = ?';
-    const [result] = await connection.query(query, [status, soa_number]);
+    const [result] = await connection.query(query, [status, invoiceid]);
+    
 
     if (result.affectedRows > 0) {
       res.status(200).json({ message: 'Status updated successfully' });
