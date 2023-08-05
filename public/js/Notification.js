@@ -13,7 +13,7 @@ function createNotif(menu,p_value, span_value) {
     cont.appendChild(span);
     li.appendChild(cont);
     menu.appendChild(li); 
-    console.log("createNotif x");     
+         
 }
 
 const dropdown = document.querySelectorAll('.notification')
@@ -57,26 +57,3 @@ async function getData() {
   }
 }
 
-
-
-
-    
-
-
-
-
-
-
-
-
-
-  // load list of events to display (in the past week) when clicked [fake data for now] x
-  // generate containers for each event x
-  // wrap the events in the box (box exists in html?) fix box size x
-  // add ability to scroll to view more events x
-  //  CSS
-  // remove the scrolling bar thing if its default x
-  // add hover function for bell x
-  // style the fonts and size for the timing plus event x
-  // style box? x
-  // connect to db and figuire out how to retrive the events fom db instead of the fake shiz
