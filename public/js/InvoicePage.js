@@ -78,7 +78,6 @@ function renderTable(data) {
     if (status === "DRAFT") {
       statusColor = "#acacac";
     } else if (status === "OVERDUE") {
-      console.log("not correct");
       overdueCost += parseFloat(invoice.total);
       statusColor = "rgb(252, 183, 137)";
     } else if (status === "PAID") {
@@ -99,7 +98,6 @@ function renderTable(data) {
           </tr>`;
   });
   totalCost = unpaidCost + overdueCost;
-  console.log("cost",totalCost);
   document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
   document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
   document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
@@ -129,11 +127,11 @@ if (table) {
         headers: {
           'Content-type': 'application/json',
         },
-        body: JSON.stringify({ invoiceid: (invoiceId) }),
+        body: JSON.stringify({ invoiceid: (invoiceId) })
       });
     }
-    getData().then(data => renderTable(data));
   }
+  getData().then(data => renderTable(data));
 });
 }
 
