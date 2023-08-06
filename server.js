@@ -63,6 +63,9 @@ if (require.main === module) {
 
   const supplierRouter = require('./routes/supplier'); // Replace the path with the actual path to your payment.js file
   app.use('/supplier', supplierRouter);
+
+  const notificationRouter = require('./routes/notification'); 
+  app.use('/notification', notificationRouter);
   
   app.get('*', function (req, res) { // Catch 404 errors 
     res.status(404).sendFile(path.join(__dirname, 'public', 'html', '404.html'));
