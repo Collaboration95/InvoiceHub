@@ -40,18 +40,18 @@ td {
 .form-field {
     margin-bottom: 20px;
     width: fit-content;
+
 }
+
 
 .form-field-row {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    width: fit-content;
+
 }
 
-.form-field {
-    margin-bottom: 20px;
-    flex-basis: 50%;
-}
 
 .form-field-buttons {
     display: flex;

@@ -5,8 +5,8 @@ var selectedTable = document.getElementById("selected_table");
 // Retrieve the selected checkbox values from the URL query parameter
 var urlParams = new URLSearchParams(window.location.search);
 var selectedValues = urlParams.get("selectedValues");
-console.log("read");
-console.log(selectedValues);
+//console.log("read");
+//console.log(selectedValues);
 
 let data;
 
@@ -55,21 +55,21 @@ function showTable(data) {
   // Loop through the data and create table rows
   data.forEach((supplier) => {
     //console.log(invoice.Invoice_id);
-    if (selectedValuesArray.includes(String(supplier.company_name))) {
+    if (selectedValuesArray.includes(String(supplier.Name))) {
       
       // company.textContent = supplier.company_name;
       const row = document.createElement('tr');
       row.innerHTML = ` 
-      <td>${supplier.company_name}</td>
-      <td>${supplier.contact_number}</td>
-      <td>${supplier.address}</td>
-      <td>${supplier.email}</td>
+      <td>${supplier.Name}</td>
+      <td>${supplier.Telephone}</td>
+      <td>${supplier.Address}</td>
+      <td>${supplier.Email}</td>
     `;
     selectedTable.appendChild(row);
-    document.getElementById("company_name").value = supplier.company_name;
-    document.getElementById("contact_number").value = supplier.contact_number;
-    document.getElementById("Address").value = supplier.address;
-    document.getElementById("Email").value = supplier.email;
+    document.getElementById("company_name").value = supplier.Name;
+    document.getElementById("contact_number").value = supplier.Telephone;
+    document.getElementById("Address").value = supplier.Address;
+    document.getElementById("Email").value = supplier.Email;
 
 
     // // Calculate the total amount for selected invoices

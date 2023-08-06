@@ -6,7 +6,7 @@ const { pool } = require('../server');
 router.get('/all', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const query = `SELECT 
+    const query = `SELECT DISTINCT 
     JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.Name[0]')) AS Name,
     JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.Address[0]')) AS Address,
     JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.Telephone[0]')) AS Telephone,
@@ -16,18 +16,27 @@ router.get('/all', async (req, res) => {
     const [rows] = await connection.query(query);
     connection.release(); 
     res.json(rows);
+    //console.log("rows:", rows);
   } catch (error) {
     console.error('Error fetching invoices:', error);
     res.status(500).json({ error: 'An error occurred while fetching invoices' });
   }
+
 });
 
 router.post('/form-data', async (req, res) => {
   // Retrieve data from the request body
   const { company_name,contact_number,Address, Email} = req.body; //req body is coming from the website 
 
-  const query = 'UPDATE suppliersdb.supplier SET contact_number = ?, address = ?, email = ? WHERE company_name = ?';
-
+  //const query = 'UPDATE invoicehub.forms SET contact_number = ?, address = ?, email = ? WHERE company_name = ?';
+  const query = `UPDATE forms
+  SET detectedText = JSON_SET(
+      CONVERT(detectedText USING utf8mb4),
+      '$.extractedDetails.Telephone[0]', ?,
+      '$.extractedDetails.Address[0]', ?,
+      '$.extractedDetails.email[0]', ?
+  )
+  WHERE JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8mb4), '$.extractedDetails.Name[0]')) = ?`;
   const values = [contact_number, Address, Email,company_name];
   // console.log(company_name);
   // console.log(contact_number);
@@ -51,7 +60,15 @@ router.put('/update-supplier', async (req, res) => {
 
   try {
     const connection = await pool.getConnection();
-    const query = 'UPDATE suppliersdb.supplier SET contact_number = ?, address = ?, email = ? WHERE company_name = ?';
+    //const query = 'UPDATE suppliersdb.supplier SET contact_number = ?, address = ?, email = ? WHERE company_name = ?';
+    const query =`UPDATE forms
+      SET detectedText = JSON_SET(
+          CONVERT(detectedText USING utf8mb4),
+          '$.extractedDetails.Telephone[0]', ?,
+          '$.extractedDetails.Address[0]', ?,
+          '$.extractedDetails.email[0]', ?
+      )
+      WHERE JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8mb4), '$.extractedDetails.Name[0]')) = ?`;
     const [result] = await connection.query(query, [contact_number, Address, Email,company_name]);
 
     if (result.affectedRows > 0) {
