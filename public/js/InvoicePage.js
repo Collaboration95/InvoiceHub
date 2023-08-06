@@ -184,7 +184,7 @@ if (input) {
       searched = data.filter(function (val) {
         var id = val.invoiceid.toString().toLowerCase();
         var name = val.invoice_name.toLowerCase();
-        var date = val.upload_date.toLowerCase();
+        var date = (val.upload_date).toString().toLowerCase();
         var amount = val.total.toLowerCase();
         var status = val.status.toLowerCase();
 
