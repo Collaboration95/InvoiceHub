@@ -1,5 +1,6 @@
 const express = require('express');
 const { pool, table_name } = require('../server');
+const { route } = require('./account'); 
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get('/fetch-overdue-data', async (req, res) => {
     const overdueQuery = `
       SELECT *
       FROM ${table_name.invoice}
-      WHERE status = 'Overdue' AND DATEDIFF(NOW(), upload_date) >= 30;
+      WHERE status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) >= 30;
     `;
 
     const [dueInAWeekRows] = await connection.query(dueInAWeekQuery);
