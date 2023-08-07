@@ -12,7 +12,8 @@ function createNotif(menu,p_value, span_value) {
     cont.appendChild(p);
     cont.appendChild(span);
     li.appendChild(cont);
-    menu.appendChild(li);       
+    menu.appendChild(li); 
+         
 }
 
 const dropdown = document.querySelectorAll('.notification')
@@ -21,36 +22,37 @@ dropdown.forEach(notifications => {
     //const dd_menu = notifications.querySelector('.menu');  
     const dd_menu = notifs.closest('.menu'); 
     bell.addEventListener('click', ()=> {
-    createNotif(notifs, "New Notification6", "10 minutes ago");
-    createNotif(notifs, "New Notification5", "20 minutes ago");
-    createNotif(notifs, "New Notification4", "30 minutes ago");
-    createNotif(notifs, "New Notification3", "40 minutes ago");
-    createNotif(notifs, "New Notification2", "50 minutes ago");
-    createNotif(notifs, "New Notification1", "50 minutes ago");
+    getData();
+    data.forEach(invoice => {
+        const id = invoice.invoiceid;
+        const total = invoice.invoice.total;
+        const dleft = invoice.daysLeft;
+        var event = id +  " of " +  total + " is " + dleft ;
+        var time = "10 minutes ago";
+
+        createNotif(notifs, event, time);
+    });
     dd_menu.classList.toggle('menu-open');
     })
 })
+// return an array witth invoice objects that have invoiceid, invoice_name, upload_date, total, status, daysLeft
+async function getData() {
+  try {
+    const response = await fetch('/notification/fetch-overdue-data'); // Change the endpoint to match your combined route
+    const data = await response.json();
 
+    data.forEach(invoice => {
+      if (invoice.daysLeft === 23) {
+        invoice.daysLeft = 'due in a week.';
+      } else if (invoice.daysLeft === 27) {
+        invoice.daysLeft = 'due in 3 days.';
+      } else if (invoice.daysLeft >= 30) {
+        invoice.daysLeft = 'overdue.';
+      }
+    });
 
-
-
-    
-
-
-
-
-
-
-
-
-
-  // load list of events to display (in the past week) when clicked [fake data for now] x
-  // generate containers for each event  
-  // wrap the events in the box (box exists in html?) fix box size x
-  // add ability to scroll to view more events x
-  //  CSS
-  // remove the scrolling bar thing if its default x
-  // add hover function for bell 
-  // style the fonts and size for the timing plus event 
-  // style box? x
-  // connect to db and figuire out how to retrive the events fom db instead of the fake shiz
+    return data;
+  } catch (error) {
+    console.error('Error fetching invoices data:', error);
+  }
+}
