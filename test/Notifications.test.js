@@ -1,7 +1,4 @@
-const request = require('supertest');
-const express = require('express');
-const { pool } = require('../server');
-
+const data = require('../public/js/Notification);
 const  app = express(); 
 app.use(router);
 
