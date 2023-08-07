@@ -217,5 +217,9 @@ a {
     background-color: #f1f1f1;
   }
 
+  .less-bold {
+    font-weight: 510; /* Adjust the value to control the boldness */
+  }
+
 
     
