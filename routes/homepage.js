@@ -97,12 +97,6 @@ ORDER BY
 
 
 
-
-
-
-
-
-
 router.get('/fetch-expense-data', async (req, res) => {
   try {
     const connection = await pool.getConnection();
