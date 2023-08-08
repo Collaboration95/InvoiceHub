@@ -13,16 +13,35 @@ router.get('/fetch-overdue-data', async (req, res) => {
     const [rows] = await connection.query(`
 
     SELECT
-    CASE
-        WHEN DATEDIFF(NOW(), upload_date) < 30 THEN '<30 days'
-        WHEN DATEDIFF(NOW(), upload_date) >= 30 AND DATEDIFF(NOW(), upload_date) < 60 THEN '30-60 days'
-        WHEN DATEDIFF(NOW(), upload_date) >= 60 AND DATEDIFF(NOW(), upload_date) < 90 THEN '60-90 days'
-        WHEN DATEDIFF(NOW(), upload_date) >= 90 THEN '>90 days'
-        ELSE 'More than 90 days'
-    END AS category,
-    SUM(CASE WHEN status = 'Overdue' OR status = 'Unpaid' THEN total ELSE 0 END) AS total_overdue_amount
-FROM forms
-WHERE type = 'invoice' AND DATEDIFF(NOW(), upload_date) > 30
+    category,
+    COALESCE(SUM(total), '0.00') AS total_overdue_amount
+FROM (
+    SELECT '<30 days' AS category,
+           SUM(CASE WHEN status = 'Overdue' OR (status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) > 30) THEN total ELSE 0 END) AS total
+    FROM forms
+    WHERE type = 'invoice' AND DATEDIFF(NOW(), upload_date) < 30
+    
+    UNION ALL
+    
+    SELECT '30-60 days' AS category,
+           SUM(CASE WHEN status = 'Overdue' OR (status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) > 30) THEN total ELSE 0 END) AS total
+    FROM forms
+    WHERE type = 'invoice' AND DATEDIFF(NOW(), upload_date) >= 30 AND DATEDIFF(NOW(), upload_date) < 60
+    
+    UNION ALL
+    
+    SELECT '60-90 days' AS category,
+           SUM(CASE WHEN status = 'Overdue' OR (status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) > 30) THEN total ELSE 0 END) AS total
+    FROM forms
+    WHERE type = 'invoice' AND DATEDIFF(NOW(), upload_date) >= 60 AND DATEDIFF(NOW(), upload_date) < 90
+    
+    UNION ALL
+    
+    SELECT '>90 days' AS category,
+           SUM(CASE WHEN status = 'Overdue' OR (status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) > 30) THEN total ELSE 0 END) AS total
+    FROM forms
+    WHERE type = 'invoice' AND DATEDIFF(NOW(), upload_date) >= 90
+) AS category_totals
 GROUP BY category
 ORDER BY
     CASE category
@@ -32,9 +51,12 @@ ORDER BY
         WHEN '>90 days' THEN 4
         ELSE 5
     END;
+
     `); 
 
     connection.release();
+
+    // console.log('Retrieved Data:', rows);
 
     const categories = [];
     const counts = [];
@@ -72,6 +94,14 @@ ORDER BY
     res.status(500).json({ error: 'An error occurred while fetching invoices' });
   }
 });
+
+
+
+
+
+
+
+
 
 router.get('/fetch-expense-data', async (req, res) => {
   try {
