@@ -95,9 +95,14 @@ function acceptFileInput() {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({ invoiceid:JSON.parse(sessionStorage.getItem('invoiceid')), detectedText: JSON.stringify(payload) })
-        }).then(response=>response.json())
-        .then(data=>{
-        });
+        }).then(response=>{
+          if(response.status == 403){
+            console.log('Error Detecting data from image');
+            alert("Error Detecting data from image ");
+          }else{
+            console.error('Failed to insert the record.');
+          }
+        })
       })
       .catch(error=>{
         console.error("Error occured"+error);
