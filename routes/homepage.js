@@ -218,10 +218,10 @@ router.get('/fetch-total-outstanding', async (req, res) => {
         const connection = await pool.getConnection();
 
         const [rows] = await connection.execute(`
-            SELECT SUM(total) AS total_overdue
-            FROM forms
-            WHERE type = 'invoice' AND status IN ('Unpaid', 'Overdue')
-                  AND DATEDIFF(CURRENT_DATE, upload_date) > 30;
+        SELECT SUM(total) AS total_overdue
+        FROM forms
+        WHERE type = 'invoice'
+              AND (status = 'Overdue' OR (status = 'Unpaid' AND DATEDIFF(CURRENT_DATE, upload_date) > 30));
         `);
 
         connection.release();
