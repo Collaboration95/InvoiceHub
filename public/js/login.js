@@ -13,15 +13,15 @@ document.getElementById("login-form").addEventListener("submit", function(event)
   validateLogin(username, password);
 });
 
-function validateLogin(username, password) {
-  /**
-  * Function to validate the login credentials by making a POST request to the server-side login endpoint.
-  * It sends the provided username and password in the request body.
-  * If the login is successful and the response contains data, it stores the data in sessionStorage and redirects to the landing page.
-  * If the login is unsuccessful, it displays an alert message.
-  * @param {string} username - The entered username for login validation.
-  * @param {string} password - The entered password for login validation.
-  */
+function validateLogin (username, password) {
+  // Validate username and password for alphanumeric characters
+  const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+  if (!alphanumericRegex.test(username) || !alphanumericRegex.test(password)) {
+    alert('Invalid username or password. Username and password must be alphanumeric.');
+    return;
+  }
+
+  // Proceed with the fetch request if both username and password are alphanumeric
   fetch('/account/login', {
     method: 'POST',
     headers: {
@@ -33,9 +33,9 @@ function validateLogin(username, password) {
     .then(data => {
       const login_verified = Object.keys(data).length;
       if (login_verified !== 0) {
-        console.log("validateLogin() login successfull")
-        //  If login is verified , store login info , redirect to homepage 
-        sessionStorage.setItem('localData',JSON.stringify(data));
+        console.log("validateLogin() login successful")
+        // If login is verified, store login info, redirect to homepage
+        sessionStorage.setItem('localData', JSON.stringify(data));
         window.location.href = '../html/HomePage.html';
       } else {
         alert('Invalid username or password');
@@ -44,5 +44,3 @@ function validateLogin(username, password) {
     })
     .catch(error => console.error(error));
 }
-
-// module.exports = validateLogin;
