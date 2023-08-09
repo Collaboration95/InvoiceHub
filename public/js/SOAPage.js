@@ -111,11 +111,7 @@ function renderTable(data) {
           </tr>`;
         
   });
-  totalCost = unpaidCost + overdueCost;
-  console.log("cost",totalCost);
-  document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
-  document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
-  document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
+
 }
 
 
@@ -339,3 +335,48 @@ function openImage(value){
           window.open(newURL);
   }
   
+
+
+function updateTotalOutstanding() {
+  fetch("/homepage/fetch-total-outstanding")
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById("total_value").textContent = data;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("total_value").textContent = "Error loading data";
+      });
+}
+
+document.addEventListener('DOMContentLoaded', updateTotalOutstanding);
+
+
+function updateTotalDue() {
+  fetch("/homepage/fetch-total-due")
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById("total_due_value").textContent = data;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("total_due_value").textContent = "Error loading data";
+      });
+}
+
+document.addEventListener('DOMContentLoaded', updateTotalDue);
+
+
+function updateTotalOverdue() {
+  fetch("/homepage/fetch-total-overdue")
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById("total_overdue_value").textContent = data;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("total_overdue_value").textContent = "Error loading data";
+      });
+}
+
+document.addEventListener('DOMContentLoaded', updateTotalOverdue);
