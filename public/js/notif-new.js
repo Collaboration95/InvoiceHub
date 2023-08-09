@@ -1,12 +1,15 @@
 const dropdownItems = [];
 const testArray = [];
+const dataArray = [];
 //var box = document.getElementById("notif-box");
 
 
 async function retrieveData_overdue() {
   try {
     const response = await fetch('/notification/fetch-overdue-data'); // Fetch data 
+    
     data = await response.json();
+    console.log(typeof(data));
     return data;
   } catch (error) {
     console.error('Error retrieving data from the server:', error);
@@ -51,6 +54,7 @@ async function retrieveData_3days() {
     data.forEach((invoice) => {
         //console.log(data);
         dropdownItems.push( "Invoice "+invoice.invoiceid+ " is overdue");
+        dataArray.push(invoice.id);
   });
   }
 
@@ -58,6 +62,7 @@ async function retrieveData_3days() {
     data.forEach((invoice) => {
         
         dropdownItems.push("Invoice "+invoice.invoiceid+" is due in 3 days");
+        dataArray.push(invoice.id);
   });
   }
 
@@ -65,6 +70,7 @@ async function retrieveData_3days() {
     data.forEach((invoice) => {
         
         dropdownItems.push("Invoice "+invoice.invoiceid+" is due in 2 days" );
+        dataArray.push(invoice.id);
   });
   }
   
@@ -72,6 +78,7 @@ async function retrieveData_3days() {
     data.forEach((invoice) => {
         
         dropdownItems.push("Invoice "+invoice.invoiceid+" is due in 1 day");
+        dataArray.push(invoice.id);
   });
   }
   async function initDropdown() {
@@ -97,12 +104,22 @@ async function retrieveData_3days() {
       console.log(itemText);
       item.innerHTML = formatText(itemText);
       item.addEventListener('click', function() {
-        // Extract the invoice ID from the item text and pass it to the redirection function
-        const invoiceId = invoice.invoiceid;
-        // Build the URL for the next page with the query parameter
-        var nextPageURL = "PaymentForm.html?" + queryParams.toString();
-        // Navigate to the next page
-        window.location.href = nextPageURL;
+        
+        const inputString = itemText
+        const wordsArray = inputString.split(" ");
+        const selectedInvoiceId = wordsArray[1];
+
+        if (selectedInvoiceId) { // Check if selectedInvoiceId is valid
+          // Encode the selected invoice ID as a query parameter
+          var queryParams = new URLSearchParams();
+          queryParams.append("selectedValues", selectedInvoiceId);
+      
+          // Build the URL for the next page with the query parameter
+          var nextPageURL = "PaymentForm.html?" + queryParams.toString();
+      
+          // Navigate to the next page
+          window.location.href = nextPageURL;
+        }
       });
 
       dropdownContent.appendChild(item);
@@ -126,7 +143,6 @@ async function retrieveData_3days() {
       else {
         dropdownContent.textContent = "No notifications for now, check again later!";
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-
       }
     });
 
