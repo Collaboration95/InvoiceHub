@@ -1,4 +1,7 @@
 const dropdownItems = [];
+const testArray = [];
+//var box = document.getElementById("notif-box");
+
 
 async function retrieveData_overdue() {
   try {
@@ -87,18 +90,27 @@ async function retrieveData_3days() {
     // Items for the dropdown
     
     // Populate the dropdown content
-    dropdownItems.forEach(function(itemText) {
+      dropdownItems.forEach(function(itemText) {
+      //temp.replaceChild();
       const item = document.createElement('div');
       item.className = 'dropdown-item';
       console.log(itemText);
       item.innerHTML = formatText(itemText);
+      item.addEventListener('click', function() {
+        // Extract the invoice ID from the item text and pass it to the redirection function
+        const invoiceId = invoice.invoiceid;
+        // Build the URL for the next page with the query parameter
+        var nextPageURL = "PaymentForm.html?" + queryParams.toString();
+        // Navigate to the next page
+        window.location.href = nextPageURL;
+      });
 
       dropdownContent.appendChild(item);
     });
 
-    function formatText(text) {
+  function formatText(text) {
   const formattedText = text
-    .replace('overdue', '<strong>OVERDUE</strong>')
+    //.replace('overdue', '<strong>OVERDUE</strong>')
     .replace(/\d+/g, '<strong>$&</strong>')
     .replace('Invoice', '<strong>Invoice</strong>');
     return formattedText;
@@ -106,7 +118,15 @@ async function retrieveData_3days() {
 
     // Toggle the visibility of the dropdown content when the button is clicked
     dropdownButton.addEventListener('click', function() {
+      
+      if (dropdownItems.length > 0){
       dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+      }
+      else {
+        dropdownContent.textContent = "No notifications for now, check again later!";
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+
+      }
     });
 
    // Close the dropdown when clicking outside of it
