@@ -35,6 +35,7 @@ function validateLogin (username, password) {
       if (login_verified !== 0) {
         console.log("validateLogin() login successful")
         // If login is verified, store login info, redirect to homepage
+        console.log(data);
         sessionStorage.setItem('localData', JSON.stringify(data));
         window.location.href = '../html/HomePage.html';
       } else {
