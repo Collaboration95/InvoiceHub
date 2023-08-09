@@ -24,6 +24,5 @@ describe('ExportTestCSV', function() {
     await driver.findElement(By.css(".dark-button")).click()
     await driver.findElement(By.css(".invoice > div")).click()
     await driver.findElement(By.css("tbody:nth-child(2) .ic_export")).click()
-    await driver.findElement(By.css("tbody:nth-child(3) .ic_export > path:nth-child(1)")).click()
   })
 })
