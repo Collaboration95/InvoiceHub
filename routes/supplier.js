@@ -42,7 +42,6 @@ router.post('/form-data', async (req, res) => {
   // console.log(contact_number);
   // console.log(Address);
   // console.log(Email);
-
 try {
   const connection = await pool.getConnection();
   await connection.query(query, values);
