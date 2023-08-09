@@ -127,6 +127,7 @@ async function retrieveData_3days() {
 
   function formatText(text) {
   const formattedText = text
+
     //.replace('overdue', '<strong>OVERDUE</strong>')
     .replace(/\d+/g, '<strong>$&</strong>')
     .replace('Invoice', '<strong>Invoice</strong>');
