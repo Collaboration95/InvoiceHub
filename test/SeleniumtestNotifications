@@ -1,0 +1,23 @@
+const { Builder, By, Key, until } = require('selenium-webdriver');
+const assert = require('assert');
+
+describe("Notifications.test.js", function()=>{
+  beforeEach(async function() {
+    let driver = await new Builder().forBrowser('chrome').build()
+    vars = {}
+  })
+  afterEach(async function() {
+    await driver.quit();
+  })
+
+  it('Notification.test.js', async function() {
+    await driver.get("http://localhost:8000/")
+    await driver.manage().window().setRect({ width: 960, height: 852 })
+    await driver.findElement(By.linkText("Login")).click()
+    await driver.findElement(By.id("username")).sendKeys("test")
+    await driver.findElement(By.id("password")).sendKeys("3200")
+    await driver.findElement(By.css(".dark-button")).click()
+    await driver.findElement(By.id("notification-bell")).click()
+    await driver.findElement(By.name("notif-box")).click()
+  });
+});
