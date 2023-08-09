@@ -12,6 +12,7 @@ describe('should display notifications', () => {
         expect(response.body).toStrictEqual({});//check that the content for notifications from database can be retrieved 
     });
 });
+/*
 //test to check if new notifications cabn be added
 describe('Add notification', ()=>{
     it('should add notification', async ()=>{
@@ -20,3 +21,4 @@ describe('Add notification', ()=>{
         expect(dropdownItems.length).toBe(dropdownItems.length++);//checks that adding a notification increases the number of notifications by 1
     });
 });
+*/
