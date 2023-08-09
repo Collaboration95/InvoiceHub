@@ -30,11 +30,11 @@ if (localData.mode == "admin") {
   requestsDiv.id = 'requests';
 
   // Append the heading and requests div to the dangerzone div
-  dangerzoneDiv.appendChild(heading);
-  dangerzoneDiv.appendChild(requestsDiv);
+  // dangerzoneDiv.appendChild(heading);
+  // dangerzoneDiv.appendChild(requestsDiv);
 
   // Call the checkRequests function to populate the requests
-  checkRequests();
+  // checkRequests();
 } else {
   // Check the user's privilege level
   fetch(`/account/check-privilege?user=${localData.user}`)
@@ -266,82 +266,82 @@ function requestAdminAccess() {
     });
 }
 
-function checkRequests() {
-  /**
-  * Retrieves requests from the server and displays them on the page.
-  * If there are no requests, it displays a message indicating that no requests were found.
-  */
-  // Fetch requests from the server
-  fetch('/account/check-requests')
-    .then(response => response.json())
-    .then(data => {
-      // Get the container element for requests
-      const requestsContainer = document.getElementById('requests');
+// function checkRequests() {
+//   /**
+//   * Retrieves requests from the server and displays them on the page.
+//   * If there are no requests, it displays a message indicating that no requests were found.
+//   */
+//   // Fetch requests from the server
+//   fetch('/account/check-requests')
+//     .then(response => response.json())
+//     .then(data => {
+//       // Get the container element for requests
+//       const requestsContainer = document.getElementById('requests');
 
-      // Clear previous content
-      requestsContainer.innerHTML = '';
+//       // Clear previous content
+//       requestsContainer.innerHTML = '';
 
-      // Process the retrieved data
-      if (data.length > 0) {
-        // Iterate through each request
-        data.forEach(request => {
-          // Create a row element
-          const row = document.createElement('div');
-          row.classList.add('row');
+//       // Process the retrieved data
+//       if (data.length > 0) {
+//         // Iterate through each request
+//         data.forEach(request => {
+//           // Create a row element
+//           const row = document.createElement('div');
+//           row.classList.add('row');
 
-          // Create a wrapper for requests
-          const requestsWrapper = document.createElement('div');
-          requestsWrapper.classList.add('requests');
+//           // Create a wrapper for requests
+//           const requestsWrapper = document.createElement('div');
+//           requestsWrapper.classList.add('requests');
 
-          // Create a user element
-          const user = document.createElement('div');
-          user.classList.add('user');
-          user.textContent = request.user;
+//           // Create a user element
+//           const user = document.createElement('div');
+//           user.classList.add('user');
+//           user.textContent = request.user;
 
-          // Create an approve button
-          const approveButton = document.createElement('button');
-          approveButton.textContent = 'Approve';
-          approveButton.value = 'accept';
-          approveButton.addEventListener('click', () => {
-            // Add a selected-button class for styling
-            approveButton.classList.add("selected-button");
-            // Call the respondRequest function with the value
-            respondRequest(request.user, approveButton.value);
-          });
+//           // Create an approve button
+//           const approveButton = document.createElement('button');
+//           approveButton.textContent = 'Approve';
+//           approveButton.value = 'accept';
+//           approveButton.addEventListener('click', () => {
+//             // Add a selected-button class for styling
+//             approveButton.classList.add("selected-button");
+//             // Call the respondRequest function with the value
+//             respondRequest(request.user, approveButton.value);
+//           });
 
-          // Create a decline button
-          const declineButton = document.createElement('button');
-          declineButton.textContent = 'Decline';
-          declineButton.value = 'decline';
-          declineButton.addEventListener('click', () => {
-            // Add a selected-button class for styling
-            declineButton.classList.add("selected-button");
-            // Call the respondRequest function with the value
-            respondRequest(request.user, declineButton.value);
-          });
+//           // Create a decline button
+//           const declineButton = document.createElement('button');
+//           declineButton.textContent = 'Decline';
+//           declineButton.value = 'decline';
+//           declineButton.addEventListener('click', () => {
+//             // Add a selected-button class for styling
+//             declineButton.classList.add("selected-button");
+//             // Call the respondRequest function with the value
+//             respondRequest(request.user, declineButton.value);
+//           });
 
-          // Append elements to the requestsWrapper
-          requestsWrapper.appendChild(user);
-          requestsWrapper.appendChild(approveButton);
-          requestsWrapper.appendChild(declineButton);
+//           // Append elements to the requestsWrapper
+//           requestsWrapper.appendChild(user);
+//           requestsWrapper.appendChild(approveButton);
+//           requestsWrapper.appendChild(declineButton);
 
-          // Add requestsWrapper to the row
-          row.appendChild(requestsWrapper);
+//           // Add requestsWrapper to the row
+//           row.appendChild(requestsWrapper);
 
-          // Add the row to the requestsContainer
-          requestsContainer.appendChild(row);
-        });
-      } else {
-        // Display a message if no requests are found
-        const noRequests = document.createElement('div');
-        noRequests.textContent = 'No requests found.';
-        requestsContainer.appendChild(noRequests);
-      }
-    })
-    .catch(error => {
-      console.error('Error occurred while checking requests:', error);
-    });
-}
+//           // Add the row to the requestsContainer
+//           // requestsContainer.appendChild(row);
+//         });
+//       } else {
+//         // Display a message if no requests are found
+//         const noRequests = document.createElement('div');
+//         noRequests.textContent = 'No requests found.';
+//         // requestsContainer.appendChild(noRequests);
+//       }
+//     })
+//     .catch(error => {
+//       console.error('Error occurred while checking requests:', error);
+//     });
+// }
 
 function respondRequest(user, value) {
   /**
