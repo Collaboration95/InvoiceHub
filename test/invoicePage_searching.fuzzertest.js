@@ -43,7 +43,8 @@ function generateFuzzedInput() {
     generateRandomAmount(), generateRandomAmount(), generateRandomAmount(), generateRandomAmount(), generateRandomAmount(),
     generateRandomDate(), generateRandomDate(), generateRandomDate(), generateRandomDate(), generateRandomDate(),
     generateRandomeStatus(), generateRandomeStatus(), generateRandomeStatus(), generateRandomeStatus(), generateRandomeStatus(),
-    'Invoice 1', 'Invoice 2', 'Invoice 3', 'Invoice 4', 'Invoice 5'
+    'Invoice 1', 'Invoice 2', 'Invoice 3', 'Invoice 4', 'Invoice 5', 'Invoice 6', 'Invoice 7', 'Invoice 8', 'Invoice 9', 'Invoice 10',
+    'Invoice 11', 'Invoice 12', 'Invoice 13', 'Invoice 14', 'Invoice 15', 'Invoice 16', 'Invoice 17', 'Invoice 18', 'Invoice 19', 'Invoice 20'
   ];
 
   // Select a random input from the fuzzed data for this iteration
@@ -92,15 +93,21 @@ function generateRandomeStatus() {
 
 // Function to generate fuzzed input data
 function generateFuzzedData() {
-    const fuzzedData = [
-      { invoiceid: generateRandomId(), upload_date: generateRandomDate(), invoice_name: 'Invoice 1', total: generateRandomAmount(), status: generateRandomeStatus() },
-      { invoiceid: generateRandomId(), upload_date: generateRandomDate(), invoice_name: 'Invoice 2', total: generateRandomAmount(), status: generateRandomeStatus() },
-      { invoiceid: generateRandomId(), upload_date: generateRandomDate(), invoice_name: 'Invoice 3', total: generateRandomAmount(), status: generateRandomeStatus() },
-      { invoiceid: generateRandomId(), upload_date: generateRandomDate(), invoice_name: 'Invoice 4', total: generateRandomAmount(), status: generateRandomeStatus() },
-      { invoiceid: generateRandomId(), upload_date: generateRandomDate(), invoice_name: 'Invoice 5', total: generateRandomAmount(), status: generateRandomeStatus() }
-    ];
+    const fuzzedData = [];
+
+    for (let i = 1; i <= 20; i++) {
+        const data = {
+        invoiceid: generateRandomId(),
+        upload_date: generateRandomDate(),
+        invoice_name: `Invoice ${i}`,
+        total: generateRandomAmount(),
+        status: generateRandomeStatus(),
+        };
+        fuzzedData.push(data);
+    }
+
     return fuzzedData;
-  }
+}
   
 
 

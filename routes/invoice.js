@@ -64,6 +64,7 @@ router.post('/save-detected-data', async (req, res) => {
   const name = JSON.parse(detectedText).extractedDetails.Name[0];
   const issuedDate= JSON.parse(detectedText).extractedDetails.IssuedDate[0];  
   const detectedId = JSON.parse(detectedText).extractedDetails.Id[0];
+  console.log(JSON.parse(detectedText).extractedDetails);
   } catch(error){
 console.error("Error:", error);
   res.status(403);
