@@ -12,7 +12,7 @@ app.use('/supplier', supplierRouter);
 describe('testing the get(/all) route', () => {
   it('should obtain the data in the database ', async () => {
     const response = await request(app)
-    .get('/supplier/all')
+    .get('/supplier/all');
     //the output is sensitive to what the database has 
     output = [
       {
@@ -44,15 +44,18 @@ describe('testing the get(/all) route', () => {
 describe('testing the .post(/form-data) route', () => {
   it('should post all data through the form-data route', async () => {
     const response = await request(app)
-    .post('/supplier/form-data')
-    .send({company_name: 'testcompany',
-          contact_number:'11223344',
-          Address: 'testAddress',
-          Email: 'test@gmail.com' 
-    });
+    .post('/supplier/form-data');
   
     expect(response.status).toBe(200);
     expect(response.body).toEqual({"message": "Supplier changes have been updated successfully"});
   
   });
+});
+
+afterAll(async () => {
+  try {
+    await pool?.end(); // Close the pool if it exists
+  } catch (error) {
+    console.error('Error closing MySQL connection pool:', error);
+  }
 });
