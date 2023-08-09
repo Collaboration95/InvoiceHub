@@ -9,10 +9,9 @@ async function performFuzzTest(iterations) {
   try {
     const fuzzedData = [];
     for (let i = 0; i < iterations; i++) {
-      // Generate fuzzed input data (if needed)
-      const inputData = generateFuzzedInput();
       const dropdownValue = generateFuzzedDropdown();
-
+      const inputData = generateFuzzedInput(dropdownValue);
+      
       // Execute the searching function with the fuzzed input and dropdown values
       await search(inputData, dropdownValue);
 
@@ -21,7 +20,6 @@ async function performFuzzTest(iterations) {
         iteration: i + 1,
         input: inputData,
         dropdown: dropdownValue,
-        // You may add any relevant output data if needed
       });
 
       // Add a delay (if needed) to simulate real-world usage patterns
@@ -37,15 +35,21 @@ async function performFuzzTest(iterations) {
 }
 
 // Function to generate fuzzed input data for the searching function
-function generateFuzzedInput() {
-  const fuzzedInputData = [
-    generateRandomId(), generateRandomId(), generateRandomId(), generateRandomId(), generateRandomId(),
-    generateRandomAmount(), generateRandomAmount(), generateRandomAmount(), generateRandomAmount(), generateRandomAmount(),
-    generateRandomDate(), generateRandomDate(), generateRandomDate(), generateRandomDate(), generateRandomDate(),
-    generateRandomeStatus(), generateRandomeStatus(), generateRandomeStatus(), generateRandomeStatus(), generateRandomeStatus(),
-    'Invoice 1', 'Invoice 2', 'Invoice 3', 'Invoice 4', 'Invoice 5', 'Invoice 6', 'Invoice 7', 'Invoice 8', 'Invoice 9', 'Invoice 10',
-    'Invoice 11', 'Invoice 12', 'Invoice 13', 'Invoice 14', 'Invoice 15', 'Invoice 16', 'Invoice 17', 'Invoice 18', 'Invoice 19', 'Invoice 20'
-  ];
+function generateFuzzedInput(dropdownValue) {
+  let fuzzedInputData;
+
+  if (dropdownValue == "id"){
+    fuzzedInputData = [ generateRandomId(), generateRandomId(), generateRandomId(), generateRandomId(), generateRandomId()];
+  } else if (dropdownValue == 'name'){
+    fuzzedInputData = [ 'Invoice 1', 'Invoice 2', 'Invoice 3', 'Invoice 4', 'Invoice 5', 'Invoice 6', 'Invoice 7', 'Invoice 8', 'Invoice 9', 'Invoice 10',
+    'Invoice 11', 'Invoice 12', 'Invoice 13', 'Invoice 14', 'Invoice 15', 'Invoice 16', 'Invoice 17', 'Invoice 18', 'Invoice 19', 'Invoice 20'];
+  } else if (dropdownValue == 'date'){
+    fuzzedInputData = [ generateRandomDate(), generateRandomDate(), generateRandomDate(), generateRandomDate(), generateRandomDate()];
+  } else if (dropdownValue == 'amount'){
+    fuzzedInputData = [ generateRandomAmount(), generateRandomAmount(), generateRandomAmount(), generateRandomAmount(), generateRandomAmount()];
+  } else if (dropdownValue == 'status'){
+    fuzzedInputData = [ generateRandomeStatus(), generateRandomeStatus(), generateRandomeStatus(), generateRandomeStatus(), generateRandomeStatus()];
+  } 
 
   // Select a random input from the fuzzed data for this iteration
   const randomIndex = Math.floor(Math.random() * fuzzedInputData.length);
