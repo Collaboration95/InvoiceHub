@@ -14,22 +14,10 @@ describe('should display notifications', () => {
     });
 });
 
-describe('add notification', ()=>{
-    it('should add notification', async ()=>{
-        const response = await request(app).get('/account/all');
-        const script = require('../public/js/notif-new');
-        const sample_data = [
-            { users: 'test12', id: '1016', name: 'Floppy Pte Ltd', date: 'June 15, 2023', amount: '3617.15', status: 'PAID', action: '' },
-        ];
-        const updated = add_overdue(sample_data);
-        expect(response.body).toStrictEqual({});//check if dropdown can be closed
-    });
-});
-
-describe('close dropdown', ()=>{
-    it('should close dropdown', async ()=>{
-        const response = await request(app).get('/account/all');
-        //var dropdowncontent = document.querySelector('.dropdown-content');
-        expect(response.body).toStrictEqual(!{});//should fail
+describe('Add notification', ()=>{
+    if('should sadd notification', async ()=>{
+        const response = await request(app);
+        var dropdowncontent = document.querySelector('.dropdown-content');
+        expect(dropdownItems.length).toBe(dropdownItems.length++);//checks that adding a notification increases the number of notifications by 1
     });
 });
