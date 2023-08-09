@@ -1,5 +1,3 @@
-// const fetchData = require('../routes/invoice.js')
-
 const mysql = require('mysql2/promise')
 
 // Function to perform fuzz testing on sort_des() and sort_asc()

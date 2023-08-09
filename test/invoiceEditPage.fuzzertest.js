@@ -1,11 +1,8 @@
-// Import any necessary libraries here (if needed)
-
 // Function to perform fuzz testing on the update_data event listener
 async function performFuzzTest(iterations) {
     try {
       const fuzzedData = [];
       for (let i = 0; i < iterations; i++) {
-        // Generate fuzzed input data (if needed)
         const inputData = {
           inp_comp_name: generateFuzzedCompanyName(),
           inp_issue_date: generateRandomDate(),
@@ -23,7 +20,6 @@ async function performFuzzTest(iterations) {
           input: inputData,
         });
   
-        // Add a delay (if needed) to simulate real-world usage patterns
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
   
@@ -37,8 +33,6 @@ async function performFuzzTest(iterations) {
   
   // Function to generate fuzzed company names
 function generateFuzzedCompanyName() {
-    // You can generate different scenarios for the company name
-    // For example, you can create an array of different company names
     const fuzzedCompanyNames = ['Company 1', 'Test Company', 'Sample Corp', 'ABC Inc', 'XYZ Ltd'];
   
     // Select a random company name from the fuzzed data for this iteration

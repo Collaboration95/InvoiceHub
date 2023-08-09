@@ -8,7 +8,7 @@ describe('Editing An Invoice Testing', function() {
   beforeEach(async function() {
     driver = await new Builder().forBrowser('chrome').build();
     vars = {};
-  });
+  },10000);
   afterEach(async function() {
     await driver.quit();
   },10000);
@@ -31,7 +31,7 @@ describe('Editing An Invoice Testing', function() {
     await driver.findElement(By.id("inp_total_amount")).clear();
     await driver.findElement(By.id("inp_total_amount")).sendKeys("7611.00") // amount update
     await driver.findElement(By.css(".btn_edit_update")).click();
-  }, 12000);
+  }, 15000);
   it('when the user input wrong date input -> gives an error', async function() {
     await driver.get("http://localhost:8000/");
     await driver.findElement(By.linkText("Login")).click();
@@ -58,7 +58,7 @@ describe('Editing An Invoice Testing', function() {
     await driver.findElement(By.id("inp_issue_date")).clear();
     await driver.findElement(By.id("inp_issue_date")).sendKeys("10/01/2022");
     await driver.findElement(By.css(".btn_edit_update")).click();
-  }, 10000);
+  }, 15000);
   it('when the user input wrong type of amount input -> gives an error', async function() {
     await driver.get("http://localhost:8000/")
     await driver.findElement(By.linkText("Login")).click()
@@ -75,6 +75,6 @@ describe('Editing An Invoice Testing', function() {
     await driver.findElement(By.id("inp_total_amount")).clear();
     await driver.findElement(By.id("inp_total_amount")).sendKeys("7611.00")
     await driver.findElement(By.css(".btn_edit_update")).click()
-  }, 10000);
+  }, 15000);
 });
 

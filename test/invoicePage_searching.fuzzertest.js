@@ -2,8 +2,6 @@
 
 const mysql = require('mysql2/promise');
 
-
-
 // Function to perform fuzz testing on the searching function
 async function performFuzzTest(iterations) {
   try {
