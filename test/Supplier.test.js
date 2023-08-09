@@ -9,7 +9,7 @@ app.use(express.json()); // Parse request body as JSON
 app.use('/supplier', supplierRouter);
 
 describe('testing the get(/all) route', () => {
-  it('should get and release data to the front-end ', async () => {
+  it('should release data to the front-end ', async () => {
     const response = await request(app)
     .get('/account/all')
     expect(response.body).toEqual({});
@@ -17,7 +17,7 @@ describe('testing the get(/all) route', () => {
 });
 
 describe('testing the .post(/form-data) route', () => {
-  it('should post all data ', async () => {
+  it('should post all data through the form-data route', async () => {
     const response = await request(app)
     .post('/account/form-data')
     .send({contact_number:'11223344',

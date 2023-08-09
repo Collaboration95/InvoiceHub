@@ -16,7 +16,7 @@ router.get('/all', async (req, res) => {
     const [rows] = await connection.query(query);
     connection.release(); 
     res.json(rows);
-    //console.log("rows:", rows);
+    // console.log("rows:", rows);
   } catch (error) {
     console.error('Error fetching invoices:', error);
     res.status(500).json({ error: 'An error occurred while fetching invoices' });
