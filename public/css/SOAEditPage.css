@@ -41,6 +41,7 @@
 /* .phone_no_container, */
 .issue_date_container,
 .total_amount_container,
+.invoices_container,
 .status_container{
     display: flex;
     width: 60%;
@@ -59,6 +60,7 @@
 /* .inp_phone_no_title, */
 .inp_issue_date_title,
 .inp_total_amount_title,
+.inp_invoices_title,
 .inp_status_title{
     margin-right: 15px;
     width: 150px;
@@ -91,7 +93,7 @@ input[type="date"]{
     color: var(--primary-color);
 }
 
-#inp_id, #inp_status, #inp_comp_name, #inp_issue_date, #inp_total_amount{
+#inp_id, #inp_status, #inp_comp_name, #inp_issue_date, #inp_total_amount,#inp_invoices{
     text-align: center;
     max-width: 80%;
 }
