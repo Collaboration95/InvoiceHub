@@ -19,15 +19,13 @@
 /* style for the top contents (summary) */
 
 .content_top{
-    margin-top: 20px;
-    display: flex;
-    /* flex-direction: column; */
-
-    min-width: 350px;
-    max-width: 800px;
-
-    gap: 20px
-}
+    gap: 30px;
+    width: fit-content;
+    height: fit-content;
+    display: flex ;
+    flex-wrap: wrap;
+  
+  } 
 
 /* style for invoice page title */
 
@@ -38,51 +36,44 @@
 /* style for summary content */
 
 .summary{
-
     display: flex;
+    flex-wrap: wrap;
     gap: 30px;
-    width: 50%;
-    overflow: hidden;
-
+    width: fit-content;
+    height: fit-content;
+  
     padding: 10px;
     padding-left: 20px;
     padding-right: 20px;
-
+  
     border: 1px solid var(--secondary-color);
     box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
     border-radius: 10px;
-
+  
     text-align: center;
     color:var(--primary-color);
-}
+  }
 
-.total_outstanding{
-    min-width: 90px;
-    max-width: 150px;
-    width: 40%;
-
+  .total_outstanding{
+    width: auto;
     align-self: center;
-    border-right: 1px solid var(--secondary-color);
-    padding-right: 20px;
-}
-
-.overdue{
-    min-width: 65px;
-    max-width: 150px;
-    width: 30%;
-
-    align-self: center;
-}
-
-.due{
-    min-width: 50px;
-    max-width: 150px;
-    width: 30%;
-
+    /* padding-left: 10px; */
+  }
+  
+  .overdue{
+    width: auto;
     align-self: center;
     border-left: 1px solid var(--secondary-color);
     padding-left: 20px;
-}
+  }
+  
+  .due{
+  
+    width: auto;
+    align-self: center;
+    border-left: 1px solid var(--secondary-color);
+    padding-left: 20px;
+  }
 
 /* style for invoice navigation */
 

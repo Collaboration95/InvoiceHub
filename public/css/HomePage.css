@@ -53,7 +53,7 @@
 .total_outstanding{
   width: auto;
   align-self: center;
-  padding-left: 20px;
+  /* padding-left: 20px; */
 }
 
 .overdue{
