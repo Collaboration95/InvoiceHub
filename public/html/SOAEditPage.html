@@ -3,13 +3,12 @@
 <head>
     <title>Invoice Hub</title>
     <link rel="stylesheet" type ="text/css" href="../css/Template.css">
-    <link rel="stylesheet" type ="text/css" href="../css/PaymentPage.css">
-    <script src="../js/login-check.js" defer></script>    
-    <script src="../js/helper-functions.js" defer></script> 
-    <script src="../js/notif-new.js"></script>
+    <link rel="stylesheet" type ="text/css" href="../css/SOAEditPage.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+    <script src="../js/SOAPage.js" defer></script>
+    <script src="../js/notif-new.js"></script>
 </head>
 <body>
     <div class="sidebar">
@@ -19,12 +18,10 @@
             <a class = "title" href="HomePage.html">Invoice Hub</a>
         </li>
         <li>
-        <li>
             <div class = "profile">
                 <div class="personal_info">
                     <div class="name">Name</div>
                     <div class="position">Position</div>
-
                 </div>
                 <div class="notification">
                     <div class="dropdown">                
@@ -36,7 +33,6 @@
                         <div id="notif-box" class="dropdown-content"></div>
                     </div>    
                     </div>
-            </div>
         </li>
         <div class="navigation">
             <li>
@@ -61,7 +57,7 @@
                 </a>
             </li>
             <li>
-                <a href="SOAPage.html" class = "soa">
+                <a href="#" class = "soa">
                     <div >
                         <svg class="ic_soa" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-check" viewBox="0 0 16 16">
                             <path d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
@@ -110,75 +106,48 @@
     
     <div class="content">
         <!-- invoice page title -->
-        <div class="invoice_title">INVOICES</div>
+        <div class="invoice_edit_title">EDIT INVOICE</div>
 
-        <div class="content_top">
-            <!-- box for the top summary -->
-            <div class="summary">
-                <div class="total_outstanding">
-                    <span class="total_outstanding_title">TOTAL OUTSTANDING</span>
-                    <span class="total_outstanding_cost" id="total_outstanding_cost">
-                        <br>S$ <span id="total_value"></span>
-                    </span>
-                </div>
-                
-                <div class ="due">
-                    <span class="due_title">DUE</span>
-                    <span class="due_cost" id="overdue_cost">
-                        <br>S$ <span id="total_due_value"></span>
-                    </span>
-                </div>
-                <div class ="overdue">
-                    <span class="overdue_title">OVERDUE</span>
-                    <span class="overdue_cost" id="overdue_cost">
-                        <br>S$ <span id="total_overdue_value"></span>
-                    </span>
-                </div>
+        <div class="blanks_edit_page">
+            <div class="id_container">
+                <div class="inp_id_title">ID</div>
+                <input id="inp_id" type="text" placeholder="   ID"></input>
             </div>
-            
+            <div class="comp_name_container">
+                <div class="inp_comp_name_title">COMPANY NAME</div>
+                <input id="inp_comp_name" type="text" placeholder="   Company Name"></input>
+            </div>
+            <!-- <div class="phone_no_container">
+                <div class="inp_phone_no_title">CONTACT NUMBER</div>    
+                <input id="inp_phone_no" type="text" placeholder="   Contact Number"></input>
+            </div> -->
+            <div class="issue_date_container">
+                <div class="inp_issue_date_title">ISSUE DATE</div>
+                <input id="inp_issue_date" type="date" placeholder="Issue Date" value="2023-08-15"></input>
+            </div>
+            <div class="total_amount_container">
+                <div class="inp_total_amount_title">TOTAL AMOUNT</div>
+                <input id="inp_total_amount" type="text" placeholder="Total Amount"></input>
+            </div>
+            <div class="status_container">
+                <div class="inp_status_title">STATUS</div>
+                <input id="inp_status" type="text" placeholder="Status"></input>
+            </div>
+            <div id="path_hidden" class="hidden"></div>
+            <div id="error_msg"></div>
         </div>
-        
-        <div class="invoice_navigation">
-            <div class="inv_nav_list">INVOICE LIST</div>
-            <div class="search_filter">
-                <div class="box_search">
-                    <select class="search_type_dropdown" id="search_type_dropdown">
-                        <option value="id">ID</option>
-                        <option value="name">CUSTOMER NAME</option>
-                    </select>
-                    <input id="inp_search_blank" type="text" placeholder="Search for invoices"></input>
-                    <svg class="ic_search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </div>
-                
-                <!-- date range filter -->
-                <div class="date_range_filter">
-                    <label for="start_date">Start Date:</label>
-                    <input type="date" id="start_date">
-                    <label for="end_date">End Date:</label>
-                    <input type="date" id="end_date">
-                    <button id="filter_button">Filter</button>
-                </div>
+        <div id="btn_edit_update_container">
+            <div class="btn_edit_update">
+                UPDATE
             </div>
         </div>
-
-        <div class="invoice_table_container">
-            <table id="invoice_table" class="invoice_table"></table>
-        </div>
+        <a id="btn_edit_cancel_container" href="./SOAPage.html">
+            <div class="btn_edit_cancel">
+                CANCEL
+            </div>
+        </a>
         
-        <script src="../js/PaymentPage.js" type="module"></script>
-
-        <div class="select_buttons">
-
-        <button id="selectAllButton">Select All</button>
-
-        <button id="deselectAllButton">Deselect All</button>
-        
-        <!-- Next button -->
-        <button id="nextButton">Next</button>
-        </div>
+        <script src="../js/SOAEditPage.js" type="module"></script>
     </div>
-
 </body>
 </html>

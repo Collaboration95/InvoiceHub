@@ -1,0 +1,142 @@
+/* changes for the side menu */
+.soa{
+    background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
+    padding: 10px;
+}
+
+.soa:hover{
+    background-color: var(--secondary-color);
+}
+
+.ic_soa{
+    color:var(--tertiary-color);
+    margin-right: 10px;
+}
+
+/* style for invoice page title */
+
+.invoice_edit_title{
+    font-size: 30px;
+}
+
+/* styles for blanks on the edit page */
+
+/* .blanks_edit_page{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+} */
+.blanks_edit_page input {
+    width: 50%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+.id_container,
+.comp_name_container,
+/* .phone_no_container, */
+.issue_date_container,
+.total_amount_container,
+.status_container{
+    display: flex;
+    width: 60%;
+    /* background-color: var(--primary-color); */
+    background-image: linear-gradient(to right, var(--primary-color)0%, var(--tertiary-color) 200%);
+    color: white;
+    align-items: center;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    border-radius: 5px;
+    
+}
+
+.inp_id_title,
+.inp_comp_name_title,
+/* .inp_phone_no_title, */
+.inp_issue_date_title,
+.inp_total_amount_title,
+.inp_status_title{
+    margin-right: 15px;
+    width: 150px;
+}
+
+
+
+input[type="text"]{
+    width: 70%;
+
+    font-size: 17px;
+    border: none;
+    border-radius: 5px;
+
+    padding: 10px;
+
+    box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+    color: var(--primary-color);
+}
+input[type="date"]{
+    width: 70%;
+
+    font-size: 17px;
+    border: none;
+    border-radius: 5px;
+
+    padding: 10px;
+
+    box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+    color: var(--primary-color);
+}
+
+#inp_id, #inp_status, #inp_comp_name, #inp_issue_date, #inp_total_amount{
+    text-align: center;
+    max-width: 80%;
+}
+
+
+/* style for update button */
+
+#btn_edit_update_container,
+#btn_edit_cancel_container{
+    box-shadow: 2px 2px 10px rgba(45,82,97,0.3);
+    margin-top: 40px;
+
+    display: inline-block;
+
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 5px;
+}
+
+#btn_edit_update_container{
+    margin-right: 5px;
+}
+
+#btn_edit_cancel_container{
+    margin-left: 5px;
+}
+
+.btn_edit_update,
+.btn_edit_cancel{
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;  
+}
+
+.btn_edit_update:hover,
+.btn_edit_cancel:hover{
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+a{
+    width: fit-content;
+}
+
+#error_msg{
+    color: rgb(252, 183, 137);
+}

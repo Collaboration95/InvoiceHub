@@ -45,7 +45,6 @@ function showTable(data) {
       <td>${invoice.invoiceid}</td>
       <td>${invoice.invoice_name}</td>
       <td>${formatDate(invoice.upload_date)}</td>
-      <td>${formatItems(invoice.detectedText)}</td>
       <td>${invoice.total}</td>
       <td>${invoice.status}</td>
     `;
@@ -205,7 +204,7 @@ async function handleFormSubmission(event) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ status: 'PAID', invoiceid: invoiceId }),
+          body: JSON.stringify({ status: 'Paid', invoiceid: invoiceId }),
         });
 
         const responseData = await response.json();

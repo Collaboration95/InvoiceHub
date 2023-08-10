@@ -81,4 +81,25 @@ router.get('/fetch-overdue-data', async (req, res) => {
   }
 });
 
+router.get('/fetch-overdue-data-soa', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    console.log('no issues here');
+
+    const overdueQuery = `
+      SELECT *
+      FROM ${table_name.invoice}
+      WHERE status = 'Unpaid' AND type = 'soa' AND DATEDIFF(NOW(), upload_date) >= 30;
+    `;
+
+    const [overdueRows] = await connection.query(overdueQuery);
+    connection.release();
+
+    res.json(overdueRows);
+  } catch (error) {
+    console.error('Error fetching overdue data:', error);
+    res.status(500).json({ error: 'An error occurred while fetching overdue data' });
+  }
+});
+
 module.exports = router;

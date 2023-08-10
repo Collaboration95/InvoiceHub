@@ -7,7 +7,7 @@ router.get('/all', async (req, res) => {
   try {
     const connection = await pool.getConnection();
     const query = `SELECT DISTINCT 
-    JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.Name[0]')) AS Name,
+    invoice_name,
     JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.Address[0]')) AS Address,
     JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.Telephone[0]')) AS Telephone,
     JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8), '$.extractedDetails.email[0]')) AS Email
@@ -36,7 +36,7 @@ router.post('/form-data', async (req, res) => {
       '$.extractedDetails.Address[0]', ?,
       '$.extractedDetails.email[0]', ?
   )
-  WHERE JSON_UNQUOTE(JSON_EXTRACT(CONVERT(detectedText USING utf8mb4), '$.extractedDetails.Name[0]')) = ?`;
+  WHERE invoice_name = ?`;
   const values = [contact_number, Address, Email,company_name];
   // console.log(company_name);
   // console.log(contact_number);

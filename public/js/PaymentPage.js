@@ -9,7 +9,7 @@ var filter = false;
 // Function to fetch data from the server
 async function retrieveData() {
   try {
-    const response = await fetch('/invoice/get-all-invoices'); // Fetch data 
+    const response = await fetch('/payment/all-invoice'); // Fetch data 
     data = await response.json();
     return data;
   } catch (error) {
@@ -18,15 +18,17 @@ async function retrieveData() {
   }
 }
 
+
 // Function to display the table
+var arryaofid = []; 
 function showTable(data) {
+  console.log("data", data)
   
   table.innerHTML = `
     <tr>
       <th>ID</th>
       <th>COMPANY</th>
       <th>INVOICE DATE</th>
-      <th>ITEMS</th>
       <th>TOTAL COST</th>
       <th>STATUS</th>
       <th>SELECT</th> <!-- New column for selection -->
@@ -35,7 +37,7 @@ function showTable(data) {
 
   // Loop through the data and create table rows
   data.forEach((invoice) => {
-    //console.log("invoice", invoice);
+    console.log("invoice", invoice);
     
     const row = document.createElement('tr');
     // var for saving the status' color column
@@ -50,11 +52,11 @@ function showTable(data) {
     } else if (status === "PAID") {
       statusColor = "rgb(136, 197, 136)";
     }
+
     row.innerHTML = ` 
       <td>${invoice.invoiceid}</td>
       <td>${invoice.invoice_name}</td>
       <td>${formatDate(invoice.upload_date)}</td>
-      <td>${formatItems(invoice.detected_Text)}</td>
       <td>${invoice.total}</td>
       <td style="background-color: ${statusColor};" data-status="${status}" data-invoice-id="${invoice.invoiceid}">${status}</td>
       <td><input type="checkbox" name="selectedRow" value="${invoice.invoiceid}"></td>
@@ -88,19 +90,6 @@ async function init() {
   }
 }
 
-// Function to format items 
-function formatItems(items) {
-  console.log(items);
-  if (items == null){
-    return "no item";
-  }
-  else{
-    data = JSON.parse(items);
-    const tableDataItems = data.table_data.map(item => item[0]).join('\n');
-  return tableDataItems;
-  }
-}
-
 // Function to show the default filtered data
 function showDefaultData() {
   // Get the current month and year
@@ -117,7 +106,7 @@ function showDefaultData() {
     // Filter conditions:
     // - Invoices with the same month and year as the current date
     console.log(invoiceMonth, currentMonth, invoiceYear, currentYear);
-    return invoiceMonth === currentMonth && invoiceYear === currentYear;
+    return val.status == "Overdue" || invoiceMonth === currentMonth && invoiceYear === currentYear;
   });
 
   // Render the default filtered result
@@ -145,25 +134,29 @@ function calCost() {
     });
     if (invoice) {
       var selectedAmount = parseFloat(invoice.total);
-      var selectedStatus = invoice.status.toLowerCase();
+      var selectedStatus = invoice.status.toUpperCase();
   
       // Add the amount of the selected row to the total cost
       totalCost += selectedAmount;
   
       // Categorize the amount based on the status
-      if (selectedStatus === "overdue") {
+      if (selectedStatus === "OVERDUE") {
         overdueCost += selectedAmount;
       } 
-      if (selectedStatus === "unpaid") {
+      if (selectedStatus === "UNPAID") {
         unpaidCost += selectedAmount;
       }
     }
   }
 
   // Display the total costs
-  document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
-  document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
-  document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
+  // document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
+  //document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
+  // document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
+  console.log(totalCost,unpaidCost,overdueCost)
+  document.getElementById("total_value").textContent = totalCost.toFixed(2);
+  document.getElementById("total_due_value").textContent = unpaidCost.toFixed(2);
+  document.getElementById("total_overdue_value").textContent = overdueCost.toFixed(2);
 }
 // Function to format date
 function formatDate(dateString) {
@@ -173,6 +166,7 @@ function formatDate(dateString) {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
+
 
 // Function to get selected checkbox values (invoice IDs)
 function getSelectedCheckboxValues() {
@@ -265,8 +259,8 @@ document.getElementById("inp_search_blank").addEventListener("keyup", function()
         var currentYear = currentDate.getFullYear();
 
         // Filter the data based on default conditions
-        var date = new Date(val.upload_date);
-        var invoiceMonth = date.getMonth();
+        var date = val.upload_date;
+        var invoiceMonth = date.getMonth()+1;
         var invoiceYear = date.getFullYear();
 
         // Filter conditions:

@@ -37,11 +37,11 @@ function showTable(data) {
     // var for saving the status' color column
      
     row.innerHTML = ` 
-      <td>${supplier.Name}</td>
+      <td>${supplier.invoice_name}</td>
       <td>${supplier.Telephone}</td>
       <td>${supplier.Address}</td>
       <td>${supplier.Email}</td>
-      <td><input type="radio" name="selectedRow" value="${supplier.Name}"></td>
+      <td><input type="radio" name="selectedRow" value="${supplier.invoice_name}"></td>
     `;
     table.appendChild(row);
   });
@@ -95,13 +95,13 @@ document.addEventListener('DOMContentLoaded', init);
 
 // Add event listener to the search input and dropdown
 document.getElementById("inp_search_blank").addEventListener("keyup", function() {
-  var searchInput = this.value;
+  var searchInput = this.value.toLowerCase();
   var filterValue = document.getElementById("search_type_dropdown").value;
 
   // Convert all saved data into lower case for easy searching
   var searched = data.filter(function(val) {
 
-  var company_name = val.Name;
+  var company_name = val.invoice_name.toLowerCase();
 
     // Check if input and searched input are the same
     if (
