@@ -108,22 +108,25 @@ async function retrieveData_3days() {
         const inputString = itemText
         const wordsArray = inputString.split(" ");
         const selectedInvoiceId = wordsArray[1];
-
-        if (selectedInvoiceId) { // Check if selectedInvoiceId is valid
-          // Encode the selected invoice ID as a query parameter
-          var queryParams = new URLSearchParams();
-          queryParams.append("selectedValues", selectedInvoiceId);
-      
-          // Build the URL for the next page with the query parameter
-          var nextPageURL = "PaymentForm.html?" + queryParams.toString();
-      
-          // Navigate to the next page
-          window.location.href = nextPageURL;
+        toPaymentPage(selectedInvoiceId);        
         }
-      });
+      );
 
       dropdownContent.appendChild(item);
     });
+
+  function toPaymentPage(selectedInvoiceId){
+    if (selectedInvoiceId) { // Check if selectedInvoiceId is valid
+      // Encode the selected invoice ID as a query parameter
+      var queryParams = new URLSearchParams();
+      queryParams.append("selectedValues", selectedInvoiceId);
+  
+      // Build the URL for the next page with the query parameter
+      var nextPageURL = "PaymentForm.html?" + queryParams.toString();
+  
+      // Navigate to the next page
+      window.location.href = nextPageURL;
+  }}
 
   function formatText(text) {
   const formattedText = text
@@ -158,4 +161,4 @@ async function retrieveData_3days() {
   // Call the initDropdown function when the page loads
   document.addEventListener('DOMContentLoaded', initDropdown);
 
-
+  
