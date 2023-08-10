@@ -17,6 +17,19 @@ async function retrieveData_overdue() {
   }
 }
 
+async function retrieveData_overdue() {
+  try {
+    const response = await fetch('/notification/fetch-overdue-data-soa'); // Fetch data 
+    
+    data = await response.json();
+    console.log(typeof(data));
+    return data;
+  } catch (error) {
+    console.error('Error retrieving data from the server:', error);
+    throw error;
+  }
+}
+
 async function retrieveData_3days() {
     try {
       const response = await fetch('/notification/fetch-3-days-data'); // Fetch data 
@@ -81,9 +94,45 @@ async function retrieveData_3days() {
         dataArray.push(invoice.id);
   });
   }
+
+  async function updateoverdue(data){
+      data.forEach( async invoice => {
+        try {
+          const response = await fetch(`../payment/update-status`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: 'Overdue', invoiceid: invoice.invoiceid }),
+          });
+  
+          const responseData = await response.json();
+          console.log(responseData); // Check the response data received from the server
+  
+          if (response.ok) {
+            console.log(responseData.message); // Status updated successfully
+          } else {
+            console.error(responseData.error); // Invoice not found or error updating status
+          }
+        } catch (error) {
+          console.error('Error updating status:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'An error occurred while updating status. Please try again later.',
+          });
+        }
+          //console.log(data);
+          dropdownItems.push( "Invoice "+invoice.invoiceid+ " is overdue");
+          dataArray.push(invoice.id);
+    });
+  }
   async function initDropdown() {
     data = await retrieveData_overdue();
     add_overdue(data);
+    await updateoverdue(data);
+    data_soa = await retrieveData_overdue_soa();
+    await updateoverdue(data_soa);
     data3 = await retrieveData_3days();
     add_3days(data);
     data2 = await retrieveData_2days();

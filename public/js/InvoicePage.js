@@ -1,6 +1,6 @@
 var table = document.getElementById("invoice_table");
 
-// Function to fetch data from the server
+// Function to fetch data fsrom the server
 async function getData() {
   try {
     const response = await fetch('/invoice/get-all-invoices');
@@ -23,9 +23,9 @@ async function getData() {
 
 // Function to render the table with data
 function renderTable(data) {
-  var unpaidCost =0;
-  var overdueCost=0;
-  var totalCost = 0;
+  // var unpaidCost =0;
+  // var overdueCost=0;
+  // var totalCost = 0;
   // set up the title of each column
   table.innerHTML = `
     <tr>
@@ -63,7 +63,7 @@ function renderTable(data) {
           </svg>`;
 
     var exportIcon = `
-          <a href="#" onclick="exportToCSV('${invoice.invoiceid}')">
+          <a href="#" onclick="exportToCSV(${invoice.invoiceid})">
             <svg class="ic_export" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
               <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
@@ -78,12 +78,13 @@ function renderTable(data) {
     if (status === "DRAFT") {
       statusColor = "#acacac";
     } else if (status === "OVERDUE") {
-      overdueCost += parseFloat(invoice.total);
+      console.log("not correct");
+      // overdueCost += parseFloat(invoice.total);
       statusColor = "rgb(252, 183, 137)";
     } else if (status === "PAID") {
       statusColor = "rgb(136, 197, 136)";
     } else if (status === "UNPAID"){
-      unpaidCost += parseFloat(invoice.total);
+      // unpaidCost += parseFloat(invoice.total);
     }
 
     // render each row of data
@@ -98,17 +99,21 @@ function renderTable(data) {
           </tr>`;
   });
   totalCost = unpaidCost + overdueCost;
+  console.log("cost",totalCost);
   document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
   document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
   document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
 }
 
 // Call getData() and renderTable() when the page loads
-if (document) {
-  document.addEventListener('DOMContentLoaded', () => {
-  getData().then(data => renderTable(data));
+document.addEventListener('DOMContentLoaded', () => {
+  getData()
+    .then(data => renderTable(data))
+    .catch(error => console.error('Error rendering table:', error));
+  updateTotalDue()
+  updateTotalOutstanding()
+  updateTotalOverdue()
 });
-}
 
 
 // // Add event listener for delete icon using event delegation
@@ -127,11 +132,11 @@ if (table) {
         headers: {
           'Content-type': 'application/json',
         },
-        body: JSON.stringify({ invoiceid: (invoiceId) })
+        body: JSON.stringify({ invoiceid: (invoiceId) }),
       });
     }
+    getData().then(data => renderTable(data));
   }
-  getData().then(data => renderTable(data));
 });
 }
 
@@ -184,7 +189,7 @@ if (input) {
       searched = data.filter(function (val) {
         var id = val.invoiceid.toString().toLowerCase();
         var name = val.invoice_name.toLowerCase();
-        var date = (val.upload_date).toString().toLowerCase();
+        var date = val.upload_date.toLowerCase();
         var amount = val.total.toLowerCase();
         var status = val.status.toLowerCase();
 
@@ -414,3 +419,37 @@ table.addEventListener("click", function(event) {
 
   }
 });
+function updateTotalOutstanding() {
+  fetch("/homepage/fetch-total-outstanding")
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById("total_value").textContent = data;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("total_value").textContent = "Error loading data";
+      });
+}
+function updateTotalDue() {
+  fetch("/homepage/fetch-total-due")
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById("total_due_value").textContent = data;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("total_due_value").textContent = "Error loading data";
+      });
+}
+
+function updateTotalOverdue() {
+  fetch("/homepage/fetch-total-overdue")
+      .then(response => response.text())
+      .then(data => {
+          document.getElementById("total_overdue_value").textContent = data;
+      })
+      .catch(error => {
+          console.error("Error fetching data:", error);
+          document.getElementById("total_overdue_value").textContent = "Error loading data";
+      });
+}

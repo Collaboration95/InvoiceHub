@@ -230,6 +230,79 @@ router.get('/fetch-total-outstanding', async (req, res) => {
     }
 });
 
+router.get('/fetch-total-outstanding-soa', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+
+    const [rows] = await connection.execute(`
+      SELECT SUM(total) AS total_outstanding
+      FROM forms
+      WHERE type = 'soa' AND status = 'unpaid';
+    `);
+
+    connection.release();
+
+    const totalOutstanding = Number(rows[0].total_outstanding); 
+    const formattedTotal = totalOutstanding.toFixed(2);
+
+    res.send(formattedTotal);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
+router.get('/fetch-total-due-soa', async (req, res) => {
+  try {
+      const connection = await pool.getConnection();
+
+      const [rows] = await connection.execute(`
+          SELECT SUM(total) AS total_due
+          FROM forms
+          WHERE type = 'soa' AND status = 'unpaid'
+                AND DATE_FORMAT(upload_date, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m');
+      `);
+
+      connection.release();
+
+      const totalDue = Number(rows[0].total_due);
+      const formattedTotal = totalDue.toFixed(2); 
+
+      res.send(formattedTotal);
+  } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
+
+router.get('/fetch-total-overdue-soa', async (req, res) => {
+  try {
+      const connection = await pool.getConnection();
+
+      const [rows] = await connection.execute(`
+      SELECT SUM(total) AS total_overdue
+      FROM forms
+      WHERE type = 'soa'
+            AND (status = 'Overdue' OR (status = 'Unpaid' AND DATEDIFF(CURRENT_DATE, upload_date) > 30));
+      `);
+
+      connection.release();
+
+      const totalOverdue = Number(rows[0].total_overdue); 
+      const formattedTotal = totalOverdue.toFixed(2);
+
+      res.send(formattedTotal);
+  } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 
 

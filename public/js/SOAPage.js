@@ -2,37 +2,85 @@ var table = document.getElementById("soa_table");
  
 
 const invoice ={};
+let soaData;
+let data;
 
 // Function to fetch data from the server
 async function getData() {
     try {
-      const response = await fetch('/invoice/get-all-soa');
+      const response = await fetch('/payment/all-soa');
       const data = await response.json();
       console.log('Data from server:', data); // Add this log
-      data.forEach(soa => {
-        // Determine statusColor based on status
-        if (soa.status.toUpperCase() === 'DRAFT') {
-          soa.statusColor = '#acacac';
-        } else if (soa.status.toUpperCase() === 'OVERDUE') {
-          soa.statusColor = 'rgb(252, 183, 137)';
-        } else if (soa.status.toUpperCase() === 'PAID') {
-          soa.statusColor = 'rgb(136, 197, 136)';
-        }
-      });
       return data;
     } catch (error) {
       console.error('Error fetching soa data:', error);
       return [];
     }
   }
+  async function getsoaData() {
+    try {
+      const response = await fetch('/payment/get-soa-invoice');
+      const data = await response.json();
+      console.log('Data from server:', data); // Add this log
+      return data;
+    } catch (error) {
+      console.error('Error fetching soa data:', error);
+      return [];
+    }
+  }
+  async function updatesoa(data){
+    data.forEach(async soa =>{
+      const extractedCodes = [];
+        // console.log("soatype",typeof soa.table_data);
+      const firstWord = soa.table_data.replace(/[\[\]'"`]/g, '').split(",");
+      // console.log("firsyword",firstWord);
+      for (let i = 0; i < firstWord.length; i++) {
+        const currentItem = firstWord[i].trimLeft().split(" ");
+        item = currentItem[0];
+        // console.log("current",String(item));
+        extractedCodes.push(item);
+    }
+    // console.log(extractedCodes, typeof extractedCodes.toString());
+    extracted = extractedCodes.toString();
+    console.log(extracted);
+    if (soa.soa_invoice == null){
+      try {
+        const response = await fetch(`../payment/update-soa`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ soa: extracted, path: soa.path }),
+        });
+
+        const responseData = await response.json();
+        console.log(responseData); // Check the response data received from the server
+
+        if (response.ok) {
+          console.log(responseData.message); // Status updated successfully
+        } else {
+          console.error(responseData.error); // Invoice not found or error updating status
+        }
+      } catch (error) {
+        console.error('Error updating status:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'An error occurred while updating status. Please try again later.',
+        });
+      }
+    }
+    })
+    
+  }
 
   
 
 // Function to render the table with data
 function renderTable(data) {
-  var unpaidCost =0;
-  var overdueCost=0;
-  var totalCost = 0;
+  // var unpaidCost =0;
+  // var overdueCost=0;
+  // var totalCost = 0;
   // set up the title of each column
   table.innerHTML = `
     <tr>
@@ -60,7 +108,7 @@ function renderTable(data) {
         </a>`
         var editIcon = `
         <a href="#">
-          <svg class="ic_edit"xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+        <svg class="ic_edit" path="${soa.path}" id="${soa.invoiceid}" status="${soa.status}" name="${soa.invoice_name}" date="${soa.upload_date}" amount="${soa.total}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
           </svg>
         </a>`;
@@ -88,12 +136,12 @@ function renderTable(data) {
           statusColor = "#acacac";
         } else if (status === "OVERDUE") {
           console.log("not correct");
-          overdueCost += parseFloat(soa.total);
+          // overdueCost += parseFloat(soa.total);
           statusColor = "rgb(252, 183, 137)";
         } else if (status === "PAID") {
           statusColor = "rgb(136, 197, 136)";
         } else if (status === "UNPAID"){
-          unpaidCost += parseFloat(soa.total);
+          // unpaidCost += parseFloat(soa.total);
         }
 
         invoice[soa.invoiceid]=soa.soa_invoice;
@@ -115,17 +163,25 @@ function renderTable(data) {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    getData()
-      .then(data => renderTable(data))
-      .catch(error => console.error('Error rendering table:', error));
-  });
+document.addEventListener('DOMContentLoaded', init);
 
+async function init() {
+  try {
+    soaData = await getsoaData(); // Retrieve data from the server
+    console.log("soadata", soaData.table_data);
+    await updatesoa(soaData);
+    data = await getData();
+    renderTable(data);// Display the data in the table
+    updateTotalDue();
+    updateTotalOutstanding();
+    updateTotalOverdue();
 
-// Call getData() and renderTable() when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-  getData().then(data => renderTable(data));
-});
+  } catch (error) {
+    // Handle any errors that occur during data retrieval
+    console.error('Error initializing page:', error);
+  }
+}
+
 
 
 // // Add event listener for delete icon using event delegation
@@ -150,7 +206,28 @@ table.addEventListener("click", function (event) {
     }
   }
 
-  else if (event.target.classList.contains("ic_delete")) {
+  if (event.target.classList.contains("ic_edit")) {
+    console.log("edit");
+    var path = event.target.getAttribute("path");
+    var invoiceId = event.target.getAttribute("id");
+    var invoiceStatus = event.target.getAttribute("status");
+    var invoiceName = event.target.getAttribute("name");
+    var invoiceDate = event.target.getAttribute("date");
+    var invoiceAmount = event.target.getAttribute("amount");
+    console.log(invoiceAmount,invoiceId);
+    var queryParams = new URLSearchParams();
+    queryParams.append('path', path);
+    queryParams.append('invoiceId', invoiceId);
+    queryParams.append('invoiceStatus', invoiceStatus);
+    queryParams.append('invoiceName', invoiceName);
+    queryParams.append('invoiceDate', invoiceDate);
+    queryParams.append('invoiceAmount', invoiceAmount);
+    var nextPageURL = "SOAEditPage.html?" + queryParams.toString();
+    window.location.href = nextPageURL;
+
+  }
+
+  if (event.target.classList.contains("ic_delete")) {
     // Retrieve the invoice id from the data attribute
     var soaId = event.target.getAttribute("id");
 
@@ -195,10 +272,10 @@ table.addEventListener("click", function(event) {
   }
 });
 
-// get the elements for the cost
-var total_outstanding_cost = document.getElementById("total_outstanding_cost");
-var overdue_cost = document.getElementById("overdue_cost");
-var due_cost = document.getElementById("due_cost");
+// // get the elements for the cost
+// var total_outstanding_cost = document.getElementById("total_outstanding_cost");
+// var overdue_cost = document.getElementById("overdue_cost");
+// var due_cost = document.getElementById("due_cost");
 
 /* CODE FOR THE SEARCHING FUNCTION */
 
@@ -218,8 +295,9 @@ input.addEventListener("keyup", function() {
 
     // convert all saved data into lower case for easy searching
     searched = data.filter(function(val) {
-      var id = val.soa_number.toString().toLowerCase();
-      var name = val.company_name.toLowerCase();
+      console.log(val);
+      var id = val.invoiceid.toString().toLowerCase();
+      var name = val.invoice_name.toLowerCase();
       var date = val.upload_date.toLowerCase();
       var amount = val.total.toLowerCase();
       var status = val.status.toLowerCase();
@@ -274,21 +352,21 @@ function sort_des() {
     var selectedValue = sortDropdown.value;
 
     if (selectedValue === 'id_choice') {
-      data.sort(function(a, b) {
-        return parseInt(a.soa_number) - parseInt(b.soa_number);
+      data.sort(function (a, b) {
+        return parseInt(a.invoiceid) - parseInt(b.invoiceid);
       });
     } else if (selectedValue === 'id_date') {
-      data.sort(function(a, b) {
+      data.sort(function (a, b) {
         var dateA = new Date(a.upload_date);
         var dateB = new Date(b.upload_date);
         return dateB - dateA;
       });
     } else if (selectedValue === "id_name") {
-      data.sort(function(a, b) {
-        return a.company_name.localeCompare(b.company_name);
+      data.sort(function (a, b) {
+        return a.invoice_name.localeCompare(b.invoice_name);
       });
     } else if (selectedValue === 'id_amount') {
-      data.sort(function(a, b) {
+      data.sort(function (a, b) {
         return parseInt(a.total) - parseInt(b.total);
       });
     }
@@ -338,7 +416,7 @@ function openImage(value){
 
 
 function updateTotalOutstanding() {
-  fetch("/homepage/fetch-total-outstanding")
+  fetch("/homepage/fetch-total-outstanding-soa")
       .then(response => response.text())
       .then(data => {
           document.getElementById("total_value").textContent = data;
@@ -348,12 +426,8 @@ function updateTotalOutstanding() {
           document.getElementById("total_value").textContent = "Error loading data";
       });
 }
-
-document.addEventListener('DOMContentLoaded', updateTotalOutstanding);
-
-
 function updateTotalDue() {
-  fetch("/homepage/fetch-total-due")
+  fetch("/homepage/fetch-total-due-soa")
       .then(response => response.text())
       .then(data => {
           document.getElementById("total_due_value").textContent = data;
@@ -364,11 +438,8 @@ function updateTotalDue() {
       });
 }
 
-document.addEventListener('DOMContentLoaded', updateTotalDue);
-
-
 function updateTotalOverdue() {
-  fetch("/homepage/fetch-total-overdue")
+  fetch("/homepage/fetch-total-overdue-soa")
       .then(response => response.text())
       .then(data => {
           document.getElementById("total_overdue_value").textContent = data;
@@ -379,4 +450,3 @@ function updateTotalOverdue() {
       });
 }
 
-document.addEventListener('DOMContentLoaded', updateTotalOverdue);
