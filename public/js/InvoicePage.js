@@ -78,7 +78,7 @@ function renderTable(data) {
     if (status === "DRAFT") {
       statusColor = "#acacac";
     } else if (status === "OVERDUE") {
-      console.log("not correct");
+      // console.log("not correct");
       // overdueCost += parseFloat(invoice.total);
       statusColor = "rgb(252, 183, 137)";
     } else if (status === "PAID") {
@@ -99,7 +99,7 @@ function renderTable(data) {
           </tr>`;
   });
   totalCost = unpaidCost + overdueCost;
-  console.log("cost",totalCost);
+  // console.log("cost",totalCost);
   document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
   document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
   document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
@@ -189,7 +189,10 @@ if (input) {
       searched = data.filter(function (val) {
         var id = val.invoiceid.toString().toLowerCase();
         var name = val.invoice_name.toLowerCase();
-        var date = val.upload_date.toLowerCase();
+        val.upload_date = new Date(val.upload_date);
+        const options = { timeZone: 'Asia/Singapore' };
+        var upload_date = (val.upload_date).toLocaleDateString('en-SG', options);
+        var date = upload_date.toLowerCase();
         var amount = val.total.toLowerCase();
         var status = val.status.toLowerCase();
 

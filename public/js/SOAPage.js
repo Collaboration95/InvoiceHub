@@ -1,6 +1,5 @@
 var table = document.getElementById("soa_table");
  
-
 const invoice ={};
 let soaData;
 let data;
@@ -298,7 +297,11 @@ input.addEventListener("keyup", function() {
       console.log(val);
       var id = val.invoiceid.toString().toLowerCase();
       var name = val.invoice_name.toLowerCase();
-      var date = val.upload_date.toLowerCase();
+      val.upload_date = new Date(val.upload_date);
+      const options = { timeZone: 'Asia/Singapore' };
+      var upload_date = (val.upload_date).toLocaleDateString('en-SG', options);
+      console.log("date", upload_date);
+      var date = upload_date.toLowerCase();
       var amount = val.total.toLowerCase();
       var status = val.status.toLowerCase();
 
