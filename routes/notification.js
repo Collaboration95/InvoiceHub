@@ -68,7 +68,7 @@ router.get('/fetch-overdue-data', async (req, res) => {
     const overdueQuery = `
       SELECT *
       FROM ${table_name.invoice}
-      WHERE status = 'Unpaid' AND type = 'invoice' AND DATEDIFF(NOW(), upload_date) >= 30;
+      WHERE type = 'invoice' AND DATEDIFF(NOW(), upload_date) >= 30;
     `;
 
     const [overdueRows] = await connection.query(overdueQuery);

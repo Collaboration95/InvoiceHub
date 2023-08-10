@@ -237,7 +237,7 @@ router.get('/fetch-total-outstanding-soa', async (req, res) => {
     const [rows] = await connection.execute(`
       SELECT SUM(total) AS total_outstanding
       FROM forms
-      WHERE type = 'soa' AND status = 'unpaid';
+      WHERE type = 'soa' AND (status = 'Unpaid' OR status = "Overdue");
     `);
 
     connection.release();
@@ -261,8 +261,7 @@ router.get('/fetch-total-due-soa', async (req, res) => {
       const [rows] = await connection.execute(`
           SELECT SUM(total) AS total_due
           FROM forms
-          WHERE type = 'soa' AND status = 'unpaid'
-                AND DATE_FORMAT(upload_date, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m');
+          WHERE type = 'soa' AND (status = 'Unpaid');
       `);
 
       connection.release();
@@ -288,7 +287,7 @@ router.get('/fetch-total-overdue-soa', async (req, res) => {
       SELECT SUM(total) AS total_overdue
       FROM forms
       WHERE type = 'soa'
-            AND (status = 'Overdue' OR status = 'Unpaid');
+            AND (status = 'Overdue');
       `);
 
       connection.release();

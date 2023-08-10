@@ -98,11 +98,11 @@ function renderTable(data) {
             <td>${previewIcon} ${editIcon} ${deleteIcon} ${exportIcon}</td>
           </tr>`;
   });
-  totalCost = unpaidCost + overdueCost;
+  // totalCost = unpaidCost + overdueCost;
   // console.log("cost",totalCost);
-  document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
-  document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
-  document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
+  // document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
+  // document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
+  // document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
 }
 
 // Call getData() and renderTable() when the page loads
