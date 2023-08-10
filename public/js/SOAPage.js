@@ -187,7 +187,8 @@ async function init() {
 // // Add event listener for delete icon using event delegation
 table.addEventListener("click", function (event) {
   console.log("click");
-  if (event.target.classList.contains("ic_payment")) {
+  // if (event.target.classList.contains("ic_payment")) {
+    if (true) {
     console.log("click payment");
     // Retrieve the invoice id from the data attribute
     var soaId = event.target.getAttribute("id");

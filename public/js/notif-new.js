@@ -9,7 +9,7 @@ async function retrieveData_overdue() {
     const response = await fetch('/notification/fetch-overdue-data'); // Fetch data 
     
     data = await response.json();
-    console.log(typeof(data));
+    console.log(data);
     return data;
   } catch (error) {
     console.error('Error retrieving data from the server:', error);
@@ -98,6 +98,7 @@ async function retrieveData_3days() {
   async function updateoverdue(data){
     console.log("pay", data.invoiceid);
       data.forEach( async invoice => {
+        if (invoice.status=="Unpaid"){
         try {
           const response = await fetch(`../payment/update-status`, {
             method: 'PUT',
@@ -124,25 +125,25 @@ async function retrieveData_3days() {
             text: 'An error occurred while updating status. Please try again later.',
           });
         }
-          //console.log(data);
-          dropdownItems.push( "Invoice "+invoice.invoiceid+ " is overdue");
-          dataArray.push(invoice.id);
+      }
     });
   }
   async function initDropdown() {
     data = await retrieveData_overdue();
     add_overdue(data);
+
+    await updateoverdue(data);
     data_soa = await retrieveData_overdue_soa();
+    await updateoverdue(data_soa);
     data3 = await retrieveData_3days();
     add_3days(data);
     data2 = await retrieveData_2days();
     add_2days(data);
     data1 = await retrieveData_1day();
     add_1day(data);
-    await updateoverdue(data);
     
-    await updateoverdue(data_soa);
-    console.log("data_soa yay");
+    
+    
 
     const dropdownButton = document.querySelector('.dropdown-button');
     const dropdownContent = document.querySelector('.dropdown-content');

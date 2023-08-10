@@ -197,6 +197,7 @@ async function handleFormSubmission(event) {
     
 
     selectedValuesArray.forEach(async (invoiceId) => {
+      console.log("update", invoiceId);
       try {
         await acceptFileInput();
         const response = await fetch(`../payment/update-status`, {
