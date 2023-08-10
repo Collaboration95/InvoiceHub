@@ -261,7 +261,8 @@ router.get('/fetch-total-due-soa', async (req, res) => {
       const [rows] = await connection.execute(`
           SELECT SUM(total) AS total_due
           FROM forms
-          WHERE type = 'soa' AND (status = 'Unpaid');
+          WHERE type = 'soa' AND status = 'unpaid'
+                AND DATE_FORMAT(upload_date, '%Y-%m') = DATE_FORMAT(CURRENT_DATE, '%Y-%m');
       `);
 
       connection.release();

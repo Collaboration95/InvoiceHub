@@ -122,10 +122,11 @@ router.get('/get-all-invoices', async (req, res) => {
     }
 });
 
-router.get('/get-all-soa', async (req, res) => {
+router.get('/all-soa', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [rows] = await connection.query(`SELECT * FROM ${table_name.invoice} WHERE type='SOA'`);
+    const query = `SELECT * FROM InvoiceHub.forms WHERE type='soa';`
+    const [rows] = await connection.query(query);
     connection.release();
     res.json(rows);
   } catch (error) {
