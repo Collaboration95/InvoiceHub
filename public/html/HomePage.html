@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
     <script src="../js/temp.js" defer></script>
+    
     <!-- Chart-->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +19,6 @@
     <script src="../js/Homepage.js"></script>
     <script src="../js/notif-new.js"></script>
     
-
 </head>
 <body>
     <div class="sidebar">
@@ -46,6 +46,7 @@
                 </div>
             </div>
         </li>
+        <!-- Linking to pages from sidebar -->
         <div class="navigation">
             <li>
                 <a href="HomePage.html" class = "home">
@@ -140,7 +141,8 @@
                     </span>
                 </div>
             </div>
-            <!-- box for the uploading documents -->
+
+            <!-- box for uploading documents -->
             <div class="upload">
                 <h4> Upload Documents</h4>
                 <div class ="upload_invoice" onclick="Invoice()">
@@ -175,7 +177,7 @@
        
 
 
-            <!-- box for overdue since stat -->
+            <!-- Graph for Overdue Overview -->
             <div class="barchar1">
                 <h4> Overdue graph</h4>
                 <canvas id="myChart1" ></canvas>
@@ -183,28 +185,14 @@
             
         </div>
 
-    
-
-
-
-        
-        <!-- box for the stat summary -->
+        <!-- Graph for Expense Overview -->
 
         <div class="barchar2">
             <h4>Daily Statistics</h4>
             <canvas id="myChart" ></canvas>
         </div>
 
-
-        
-        
-
     </div>
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
-    <script src="chart_script.js"></script>
-    <script src="chart1.js"></script>
-    <script src="chart2.js"></script>  -->
 
 </body>
 </html>
