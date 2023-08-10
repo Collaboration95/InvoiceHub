@@ -50,24 +50,24 @@ function basicSetup(){
     inp_status.style.backgroundColor = statusColor;
 }
 
-function convertToMySQLDateFormat(dateString) {
-    // Split the date string by '/'
-    const dateComponents = dateString.split('/');
+// function convertToMySQLDateFormat(dateString) {
+//     // Split the date string by '/'
+//     const dateComponents = dateString.split('/');
   
-    // Extract day, month, and year components
-    const day = parseInt(dateComponents[0], 10);
-    const month = parseInt(dateComponents[1], 10);
-    const year = parseInt(dateComponents[2], 10);
+//     // Extract day, month, and year components
+//     const day = parseInt(dateComponents[0], 10);
+//     const month = parseInt(dateComponents[1], 10);
+//     const year = parseInt(dateComponents[2], 10);
   
-    // Create a new Date object with Singapore's time zone (Asia/Singapore)
-    const dateObject = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
+//     // Create a new Date object with Singapore's time zone (Asia/Singapore)
+//     const dateObject = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
   
-    // Format the date object into a string with 'YYYY-MM-DD' format
-    console.log("date in soa",dateObject.toISOString);
-    const mysqlDateFormat = dateObject.toISOString().slice(0, 10);
+//     // Format the date object into a string with 'YYYY-MM-DD' format
+//     console.log("date in soa",dateObject.toISOString);
+//     const mysqlDateFormat = dateObject.toISOString().slice(0, 10);
   
-    return mysqlDateFormat;
-  }  
+//     return mysqlDateFormat;
+//   }  
 
 
   document.getElementById("btn_edit_update_container").addEventListener("click", function () {

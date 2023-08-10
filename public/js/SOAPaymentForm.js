@@ -198,7 +198,7 @@ async function handleFormSubmission(event) {
       //Update the status of invoices to "PAID" in the data array
       selectedValuesArray.forEach(async (invoiceId) => {
         try {
-          const response = await fetch(`../payment/update-status`, {
+          const response = await fetch(`/payment/update-status`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',

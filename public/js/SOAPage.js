@@ -7,7 +7,7 @@ let data;
 // Function to fetch data from the server
 async function getData() {
     try {
-      const response = await fetch('/payment/all-soa');
+      const response = await fetch('/invoice/all-soa');
       const data = await response.json();
       console.log('Data from server:', data); // Add this log
       return data;
@@ -170,6 +170,7 @@ async function init() {
     console.log("soadata", soaData.table_data);
     await updatesoa(soaData);
     data = await getData();
+    console.log(data);
     renderTable(data);// Display the data in the table
     updateTotalDue();
     updateTotalOutstanding();
@@ -186,7 +187,8 @@ async function init() {
 // // Add event listener for delete icon using event delegation
 table.addEventListener("click", function (event) {
   console.log("click");
-  if (event.target.classList.contains("ic_payment")) {
+  // if (event.target.classList.contains("ic_payment")) {
+    if (true) {
     console.log("click payment");
     // Retrieve the invoice id from the data attribute
     var soaId = event.target.getAttribute("id");
@@ -426,6 +428,7 @@ function updateTotalOutstanding() {
   fetch("/homepage/fetch-total-outstanding-soa")
       .then(response => response.text())
       .then(data => {
+        console.log(data);
           document.getElementById("total_value").textContent = data;
       })
       .catch(error => {
@@ -437,6 +440,7 @@ function updateTotalDue() {
   fetch("/homepage/fetch-total-due-soa")
       .then(response => response.text())
       .then(data => {
+        console.log(data);
           document.getElementById("total_due_value").textContent = data;
       })
       .catch(error => {
@@ -449,6 +453,7 @@ function updateTotalOverdue() {
   fetch("/homepage/fetch-total-overdue-soa")
       .then(response => response.text())
       .then(data => {
+        console.log(data);
           document.getElementById("total_overdue_value").textContent = data;
       })
       .catch(error => {
