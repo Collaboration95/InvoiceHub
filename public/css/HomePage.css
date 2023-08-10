@@ -1,5 +1,4 @@
-
-
+/* Overall page*/
  :root{
   --extra-bright-color: #485f68;
 }
@@ -19,7 +18,7 @@
   margin-right: 10px;
 }
 
-
+/* Top portion of the page*/
 .content_top{
   gap: 30px;
   width: fit-content;
@@ -106,7 +105,7 @@
   color:var(--primary-color);
 }
 
-
+/* Graphs */
 .barchar1{
   gap: 30px;
   width: auto;
@@ -139,20 +138,5 @@
   text-align: left;
   color:var(--primary-color);
 }
-
-/*  
-.content{
-  margin-right: 50px;
-}
-
-
-.soa_upload_title{
-  white-space: nowrap;
-  padding-right: auto;
-} */
-/* Style the div as needed */
-
-
-/* Style the file input to be transparent and overlay the div */
 
 
