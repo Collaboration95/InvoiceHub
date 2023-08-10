@@ -55,18 +55,18 @@ function showTable(data) {
   // Loop through the data and create table rows
   data.forEach((supplier) => {
     //console.log(invoice.Invoice_id);
-    if (selectedValuesArray.includes(String(supplier.Name))) {
+    if (selectedValuesArray.includes(String(supplier.invoice_name))) {
       
       // company.textContent = supplier.company_name;
       const row = document.createElement('tr');
       row.innerHTML = ` 
-      <td>${supplier.Name}</td>
+      <td>${supplier.invoice_name}</td>
       <td>${supplier.Telephone}</td>
       <td>${supplier.Address}</td>
       <td>${supplier.Email}</td>
     `;
     selectedTable.appendChild(row);
-    document.getElementById("company_name").value = supplier.Name;
+    document.getElementById("company_name").value = supplier.invoice_name;
     document.getElementById("contact_number").value = supplier.Telephone;
     document.getElementById("Address").value = supplier.Address;
     document.getElementById("Email").value = supplier.Email;

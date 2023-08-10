@@ -146,24 +146,6 @@ router.get('/get-all-soa-invoice', async (req, res) => {
   }
 });
 
-router.delete('/delete-record', async (req, res) => {
-  const {invoiceid} = req.body;
-
-  try {
-    const connection = await pool.getConnection();
-    const query = `DELETE FROM ${table_name.invoice} WHERE invoiceid = ?`;
-    const [result] = await connection.query(query, [invoiceid]);
-
-    if (result.affectRows > 0) {
-      res.status (200).json({mesage: "deleted"});
-    } else {
-      res.status(404).json({error: "ERROR"});
-    }
-    connection.release();
-  } catch (error) {
-    console.error('ERROR', error);
-    res.status(500).json({error: "an error"});
-  }});
 
 router.get('/dummy', async (req, res) => {
   try {
@@ -315,12 +297,12 @@ router.post('/update_data', async (req, res) => {
 });
 
 router.post('/update_data_soa', async (req, res) => {
-  const {invoice_name, upload_date, total, invoiceid, path } = req.body;
+  const {invoice_name, upload_date, total, invoiceid, soa_invoice, path } = req.body;
 
   try {
     const connection = await pool.getConnection();
-    const query = `UPDATE ${table_name.invoice} SET invoice_name = ?, upload_date = ?, total = ?, invoiceid =? WHERE path = ?`;
-    const [result] = await connection.query(query, [invoice_name, upload_date, total, invoiceid, path]);
+    const query = `UPDATE ${table_name.invoice} SET invoice_name = ?, upload_date = ?, total = ?, invoiceid =?, soa_invoice = ? WHERE path = ?`;
+    const [result] = await connection.query(query, [invoice_name, upload_date, total, invoiceid, soa_invoice, path]);
 
     if (result.affectedRows > 0) {
       res.status(200).json({ message: "Updated successfully" });
@@ -351,6 +333,8 @@ router.delete('/invoiceid', async (req, res) => {
   } catch (error) {
     console.error('ERROR', error);
     res.status(500).json({error: "an error"});
-  }});
+  }
+  
+});
 
 

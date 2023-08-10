@@ -136,6 +136,7 @@ if (table) {
       });
     }
     getData().then(data => renderTable(data));
+    location.reload();
   }
 });
 }

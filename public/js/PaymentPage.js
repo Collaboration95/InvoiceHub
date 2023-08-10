@@ -38,7 +38,10 @@ function showTable(data) {
   // Loop through the data and create table rows
   data.forEach((invoice) => {
     console.log("invoice", invoice);
-    
+    // invoice.upload_date = new Date(invoice.upload_date);
+    // const options = { timeZone: 'Asia/Singapore' };
+    // invoice.upload_date = (invoice.upload_date).toLocaleDateString('en-SG', options);
+
     const row = document.createElement('tr');
     // var for saving the status' color column
     var statusColor = "";
@@ -164,9 +167,8 @@ function formatDate(dateString) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  return `${year}/${month}/${day}`;
 }
-
 
 // Function to get selected checkbox values (invoice IDs)
 function getSelectedCheckboxValues() {
@@ -259,8 +261,8 @@ document.getElementById("inp_search_blank").addEventListener("keyup", function()
         var currentYear = currentDate.getFullYear();
 
         // Filter the data based on default conditions
-        var date = val.upload_date;
-        var invoiceMonth = date.getMonth()+1;
+        var date = new Date(val.upload_date);
+        var invoiceMonth = date.getMonth();
         var invoiceYear = date.getFullYear();
 
         // Filter conditions:

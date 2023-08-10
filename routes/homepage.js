@@ -288,7 +288,7 @@ router.get('/fetch-total-overdue-soa', async (req, res) => {
       SELECT SUM(total) AS total_overdue
       FROM forms
       WHERE type = 'soa'
-            AND (status = 'Overdue' OR (status = 'Unpaid' AND DATEDIFF(CURRENT_DATE, upload_date) > 30));
+            AND (status = 'Overdue' OR status = 'Unpaid');
       `);
 
       connection.release();
