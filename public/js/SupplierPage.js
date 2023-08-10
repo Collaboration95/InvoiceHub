@@ -5,12 +5,6 @@ var selectedRows = []; // Array to track selected rows
 var table = document.getElementById("supplier_table");
 var filter = false;
 
-//newly added for testing , as there was error that document was not defined 
-// if (document){
-//   document.addEventListener('DOMContentLoaded', ()=> {
-//     retrieveData().then(data => showTable(data));
-//   });
-// }
 
 // Function to fetch data from the server to put into page 
 async function retrieveData() {
@@ -24,10 +18,10 @@ async function retrieveData() {
     throw error;
   }
 }
-//console.log(retrieveData.data);
+
+
 // Function to display the table
 function showTable(data) {
-  
   table.innerHTML = `
     <tr>
       <th>COMPANY NAME</th>
@@ -39,11 +33,9 @@ function showTable(data) {
   `;
   // Loop through the data and create table rows
   data.forEach((supplier) => {
-
     const row = document.createElement('tr');
     // var for saving the status' color column
-    
-    
+     
     row.innerHTML = ` 
       <td>${supplier.Name}</td>
       <td>${supplier.Telephone}</td>
@@ -53,15 +45,13 @@ function showTable(data) {
     `;
     table.appendChild(row);
   });
-}
+};
 
 // Function to initialize the page
 async function init() {
   try {
     data = await retrieveData(); // Retrieve data from the server
     showTable(data); // Display the data in the table
-
-
   } catch (error) {
     // Handle any errors that occur during data retrieval
     console.error('Error initializing page:', error);
@@ -78,7 +68,7 @@ function getSelectedCheckboxValues() {
     }
   });
   return selectedValues;
-}
+};
 
 // Next button
 document.getElementById("nextButton").addEventListener("click", function() {
@@ -105,31 +95,21 @@ document.addEventListener('DOMContentLoaded', init);
 
 // Add event listener to the search input and dropdown
 document.getElementById("inp_search_blank").addEventListener("keyup", function() {
-  var searchInput = this.value.toLowerCase();
+  var searchInput = this.value;
   var filterValue = document.getElementById("search_type_dropdown").value;
 
   // Convert all saved data into lower case for easy searching
   var searched = data.filter(function(val) {
-    //console.log(val.Invoice_id);
-    var id = String(val.Invoice_id);;
-    var company_name = val.company_name.toLowerCase();
-    //var date = formatDate(val.date_received);
-    // var amount = val.total_cost.toLowerCase();
-    // var status = val.status.toLowerCase();
+
+  var company_name = val.Name;
 
     // Check if input and searched input are the same
     if (
-      (filterValue === "id" && id.includes(searchInput)) ||
       (filterValue === "company_name" && company_name.includes(searchInput))
     ) {
-        return val;
-        
-  
+        return val; 
       }
-      // Save the searched result into a new object
-    
   });
-
   // Render the searched result
   showTable(searched);
 });
@@ -144,12 +124,11 @@ table.addEventListener("change", function(event) {
 
 function checkSelectedRows() {
   selectedRows = []; // Reset the selectedRows array
-
   var checkboxes = document.querySelectorAll('input[name="selectedRow"]');
   checkboxes.forEach(function(checkbox) {
     if (checkbox.checked) {
       selectedRows.push(checkbox.value);
-      console.log("checkbox",checkbox.value)
+      //console.log("checkbox",checkbox.value)
     }
   });
 

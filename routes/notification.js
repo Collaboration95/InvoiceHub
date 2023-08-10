@@ -11,7 +11,7 @@ router.get('/fetch-1-days-data', async (req, res) => {
     const dueInAWeekQuery = `
       SELECT *
       FROM ${table_name.invoice}
-      WHERE status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) = 29;
+      WHERE status = 'Unpaid' AND type = 'invoice' AND DATEDIFF(NOW(), upload_date) = 29;
     `; 
     const [dueInAWeekRows] = await connection.query(dueInAWeekQuery);
     connection.release();
@@ -29,7 +29,7 @@ router.get('/fetch-2-days-data', async (req, res) => {
     const dueInAWeekQuery = `
       SELECT *
       FROM ${table_name.invoice}
-      WHERE status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) = 28;
+      WHERE status = 'Unpaid' AND type = 'invoice' AND DATEDIFF(NOW(), upload_date) = 28;
     `; 
     const [dueInAWeekRows] = await connection.query(dueInAWeekQuery);
     connection.release();
@@ -48,7 +48,7 @@ router.get('/fetch-3-days-data', async (req, res) => {
     const dueIn3DaysQuery = `
       SELECT *
       FROM ${table_name.invoice}
-      WHERE status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) = 27;
+      WHERE status = 'Unpaid' AND type = 'invoice' AND DATEDIFF(NOW(), upload_date) = 27;
     `;
     const [dueIn3DaysRows] = await connection.query(dueIn3DaysQuery);
     connection.release();
@@ -68,7 +68,7 @@ router.get('/fetch-overdue-data', async (req, res) => {
     const overdueQuery = `
       SELECT *
       FROM ${table_name.invoice}
-      WHERE status = 'Unpaid' AND DATEDIFF(NOW(), upload_date) >= 30;
+      WHERE status = 'Unpaid' AND type = 'invoice' AND DATEDIFF(NOW(), upload_date) >= 30;
     `;
 
     const [overdueRows] = await connection.query(overdueQuery);

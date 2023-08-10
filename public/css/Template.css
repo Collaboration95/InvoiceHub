@@ -182,26 +182,27 @@ a {
     position: absolute;
     background-color: #f9f9f9;
     width: 230px;
-    height: 250px;
+    height: 260px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     overflow-y: auto;
     transition: 0.2s;
-    color: #033246;
+    color: #2D5261;
     right: -15px;
-    top: 60px;
-  } 
+    top: 50px;
+    text-align:center;
+    } 
 
   .dropdown-content::-webkit-scrollbar {
     width: 0px; /* Width of the scrollbar thumb */
   }
 
-  .dropdown-conte::-webkit-scrollbar-thumb {
+  .dropdown-content::-webkit-scrollbar-thumb {
     background-color: white;  /* Color of the thumb */
     border-radius: 0px; /* Rounded corners */
     }
 
-    .dropdown-conte::-webkit-scrollbar-track {
+    .dropdown-content::-webkit-scrollbar-track {
     background-color:white;
     border-radius: 0px; /* Color of the track */
     }
@@ -211,15 +212,14 @@ a {
     text-decoration: none;
     display: block;
     cursor: pointer;
+    color: #033246;
   }
 
   .dropdown-item:hover {
     background-color: #f1f1f1;
   }
 
-  .less-bold {
-    font-weight: 510; /* Adjust the value to control the boldness */
-  }
+
 
 
     

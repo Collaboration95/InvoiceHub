@@ -1,5 +1,3 @@
-// const fetchData = require('../routes/invoice.js')
-
 const mysql = require('mysql2/promise')
 
 // Function to perform fuzz testing on sort_des() and sort_asc()
@@ -9,27 +7,26 @@ async function performFuzzTest(iterations) {
       const fuzzedDataSortAsc = [];
   
       for (let i = 0; i < iterations; i++) {
-        // Generate fuzzed input data (if needed)
+        // Generate fuzzed input data
         const data = generateFuzzedData();
+        const choice = generateRandomeSelection();
   
         // Execute the sort_des() function
-        await sort_des(data);
+        await sort_des(data, choice);
   
         // Fuzzed input and output data can be stored in the fuzzedDataSortDes array
         fuzzedDataSortDes.push({
           iteration: i + 1,
-          input: data, // Add the fuzzed input data here
-          // You may add any relevant output data if needed
+          input: data, 
         });
   
         // Execute the sort_asc() function
-        await sort_asc(data);
+        await sort_asc(data, choice);
   
         // Fuzzed input and output data can be stored in the fuzzedDataSortAsc array
         fuzzedDataSortAsc.push({
           iteration: i + 1,
-          input: data, // Add the fuzzed input data here
-          // You may add any relevant output data if needed
+          input: data, 
         });
   
         // Add a delay (if needed) to simulate real-world usage patterns
@@ -82,25 +79,18 @@ function generateFuzzedData() {
   ];
   return fuzzedData;
 }  
+
+function generateRandomeSelection() {
+  idx = Math.floor(Math.random() * (4));
+  const status = ['id_choice', 'id_date', 'id_name', 'id_amount']
+  return status[idx];
+}
   
-  // Function to simulate the getData() function (for testing purposes)
-  async function getData() {
-    // Simulate an asynchronous fetch operation and return the fuzzedData
-    return new Promise(resolve => {
-      resolve(generateFuzzedData());
-    });
-  }
-  
-  // Function to simulate the renderTable() function (for testing purposes)
-  function renderTable(data) {
-    // Log the data to simulate rendering
-    console.log('Rendering table with data:', data);
-  }
-  
+
   // Function to simulate the sort_des() function (for testing purposes)
-  async function sort_des(data) {
+  async function sort_des(data, selectedValue) {
     return new Promise(resolve => {
-      const selectedValue = 'id_choice'; // Simulate the selected value
+      console.log(selectedValue, "will be sorted in descending order");
       if (selectedValue === 'id_choice') {
         data.sort(function (a, b) {
           return parseInt(a.invoiceid) - parseInt(b.invoiceid);
@@ -127,9 +117,9 @@ function generateFuzzedData() {
   }
   
   // Function to simulate the sort_asc() function (for testing purposes)
-  async function sort_asc(data) {
+  async function sort_asc(data, selectedValue) {
     return new Promise(resolve => {
-      const selectedValue = 'id_choice'; // Simulate the selected value
+      console.log(selectedValue, "will be sorted in ascending order");
       if (selectedValue === 'id_choice') {
         data.sort(function (a, b) {
           return parseInt(b.invoiceid) - parseInt(a.invoiceid);

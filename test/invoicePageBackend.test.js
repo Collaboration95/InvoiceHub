@@ -2,7 +2,6 @@
 
 const {getData, sort_des, sort_asc} = require('../public/js/InvoicePage');
 
-// GETDATA: mocking the original function to return an output for testing
 jest.mock('../public/js/InvoicePage', () => {
     return {
         getData: jest.fn(() => {

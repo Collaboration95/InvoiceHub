@@ -16,7 +16,7 @@ router.get('/all', async (req, res) => {
     const [rows] = await connection.query(query);
     connection.release(); 
     res.json(rows);
-    //console.log("rows:", rows);
+    // console.log("rows:", rows);
   } catch (error) {
     console.error('Error fetching invoices:', error);
     res.status(500).json({ error: 'An error occurred while fetching invoices' });
@@ -42,7 +42,6 @@ router.post('/form-data', async (req, res) => {
   // console.log(contact_number);
   // console.log(Address);
   // console.log(Email);
-
 try {
   const connection = await pool.getConnection();
   await connection.query(query, values);
