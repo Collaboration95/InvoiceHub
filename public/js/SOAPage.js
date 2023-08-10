@@ -225,7 +225,7 @@ table.addEventListener("click", function (event) {
     queryParams.append('invoices', invoices);
     console.log(invoices);
     var nextPageURL = "SOAEditPage.html?" + queryParams.toString();
-    // window.location.href = nextPageURL;
+    window.location.href = nextPageURL;
 
   }
 
