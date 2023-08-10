@@ -264,3 +264,7 @@ input[type="text"]{
     align-items: center;
 }
 
+.nextButton{
+    position: absolute; /* Adjust the top positioning as needed */
+    right: 20px;
+    }
