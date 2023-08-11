@@ -1,3 +1,5 @@
+/*Final checked by Ramita and Radhi (11/08) */
+
 /* changes for the side menu */
 .soa{
     background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
@@ -21,12 +23,7 @@
 
 /* styles for blanks on the edit page */
 
-/* .blanks_edit_page{
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-} */
+
 .blanks_edit_page input {
     width: 50%;
     padding: 10px;
@@ -38,14 +35,12 @@
   }
 .id_container,
 .comp_name_container,
-/* .phone_no_container, */
 .issue_date_container,
 .total_amount_container,
 .invoices_container,
 .status_container{
     display: flex;
     width: 60%;
-    /* background-color: var(--primary-color); */
     background-image: linear-gradient(to right, var(--primary-color)0%, var(--tertiary-color) 200%);
     color: white;
     align-items: center;
@@ -57,7 +52,6 @@
 
 .inp_id_title,
 .inp_comp_name_title,
-/* .inp_phone_no_title, */
 .inp_issue_date_title,
 .inp_total_amount_title,
 .inp_invoices_title,
