@@ -1,3 +1,6 @@
+// Retrieving data values such as Date, Total and Status from database
+// To plot expense bar graph
+
 const mysql = require('mysql2/promise');
 
 
