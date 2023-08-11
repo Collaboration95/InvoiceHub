@@ -1,4 +1,4 @@
-// PaymentForm.js
+//final checked by ramita and radhi (11/08)
 document.addEventListener('DOMContentLoaded', init);
 
 // Get the table element
@@ -92,9 +92,6 @@ function formatItems(items) {
     return "no item";
   }
   else{
-    // data = JSON.parse(items);
-    // const tableDataItems = data.table_data.map(item => item[0]).join('\n');
-    // return tableDataItems;
     return "item";
   }
 }

@@ -1,5 +1,4 @@
-// PaymentPage.js
-
+//Final checked by ramita and radhi (11/08)
 // Declare data variable outside the init() function
 let data;
 var selectedRows = []; // Array to track selected rows
@@ -38,10 +37,6 @@ function showTable(data) {
   // Loop through the data and create table rows
   data.forEach((invoice) => {
     console.log("invoice", invoice);
-    // invoice.upload_date = new Date(invoice.upload_date);
-    // const options = { timeZone: 'Asia/Singapore' };
-    // invoice.upload_date = (invoice.upload_date).toLocaleDateString('en-SG', options);
-
     const row = document.createElement('tr');
     // var for saving the status' color column
     var statusColor = "";
@@ -153,9 +148,6 @@ function calCost() {
   }
 
   // Display the total costs
-  // document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
-  //document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
-  // document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
   console.log(totalCost,unpaidCost,overdueCost)
   document.getElementById("total_value").textContent = totalCost.toFixed(2);
   document.getElementById("total_due_value").textContent = unpaidCost.toFixed(2);
@@ -229,9 +221,6 @@ document.getElementById("inp_search_blank").addEventListener("keyup", function()
     //console.log(val.Invoice_id);
     var id = String(val.invoiceid);;
     var name = val.invoice_name.toLowerCase();
-    //var date = formatDate(val.date_received);
-    // var amount = val.total_cost.toLowerCase();
-    // var status = val.status.toLowerCase();
 
     // Check if input and searched input are the same
     if (
@@ -339,8 +328,6 @@ function checkSelectedRows() {
     }
   });
   return selectedRows;
-
-  //nextButton.disabled = !isAnyCheckboxChecked();
 }
 
 // Add event listener to checkboxes

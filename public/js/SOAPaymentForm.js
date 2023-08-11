@@ -1,4 +1,4 @@
-// PaymentForm.js
+// Final checked by ramita and radhi (11/08)
 document.addEventListener('DOMContentLoaded', init);
 
 // Get the table element
@@ -41,9 +41,7 @@ function showTable(data) {
 
   // Loop through the data and create table rows
   data.forEach((invoice) => {
-    //console.log(selectedValuesArray, invoice.invoiceid);
     if (selectedValuesArray.includes(String(invoice.invoiceid))) {
-      //console.log(invoice.invoiceid);
       const row = document.createElement('tr');
       row.innerHTML = ` 
       <td>${invoice.invoiceid}</td>
@@ -96,9 +94,6 @@ function formatItems(items) {
       return "no item";
     }
     else{
-      // data = JSON.parse(items);
-      // const tableDataItems = data.table_data.map(item => item[0]).join('\n');
-      // return tableDataItems;
       return "item";
     }
   }

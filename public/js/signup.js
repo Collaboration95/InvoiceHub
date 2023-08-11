@@ -1,3 +1,4 @@
+//Final checked by Ramita and Radhi
 document.getElementById("signup-form").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the form from submitting normally
     // Get the form data

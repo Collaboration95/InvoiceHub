@@ -1,3 +1,4 @@
+//Final checked by ramita and radhi (11/08)
 document.addEventListener('DOMContentLoaded', init);
 
 // Get the table element
@@ -5,8 +6,6 @@ var selectedTable = document.getElementById("selected_table");
 // Retrieve the selected checkbox values from the URL query parameter
 var urlParams = new URLSearchParams(window.location.search);
 var selectedValues = urlParams.get("selectedValues");
-//console.log("read");
-//console.log(selectedValues);
 
 let data;
 
@@ -54,10 +53,7 @@ function showTable(data) {
 
   // Loop through the data and create table rows
   data.forEach((supplier) => {
-    //console.log(invoice.Invoice_id);
     if (selectedValuesArray.includes(String(supplier.invoice_name))) {
-      
-      // company.textContent = supplier.company_name;
       const row = document.createElement('tr');
       row.innerHTML = ` 
       <td>${supplier.invoice_name}</td>
@@ -70,11 +66,6 @@ function showTable(data) {
     document.getElementById("contact_number").value = supplier.Telephone;
     document.getElementById("Address").value = supplier.Address;
     document.getElementById("Email").value = supplier.Email;
-
-
-    // // Calculate the total amount for selected invoices
-    // var amount = parseFloat(invoice.total_cost);
-    // total_to_be_paid += amount;
     }
 
   });
@@ -94,8 +85,6 @@ async function handleFormSubmission(event) {
         const Address = document.getElementById("Address").value;
         const Email = document.getElementById("Email").value;
 
-             //company_name: String(selectedValuesArray),
-
         //creating the object formData below, containing the collected data
         const formData = {
           company_name : company_name,
@@ -111,7 +100,6 @@ async function handleFormSubmission(event) {
             headers: {
               'Content-Type': 'application/json',
             },
-            //yet to edit from here
             body: JSON.stringify({ company_name: company_name, contact_number: contact_number, Address: Address, Email:Email}),
           });
   
@@ -165,7 +153,6 @@ async function handleFormSubmission(event) {
           text: 'An error occurred while processing the payment. Please try again later.',
         });
       }
-      //window.location.href = 'PaymentPage.html?redirect=true';
     }
   }
 

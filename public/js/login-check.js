@@ -1,3 +1,4 @@
+//checked by ramita and radhi (11/08)
 var localData = JSON.parse(sessionStorage.getItem('localData'));
 if (!localData || localData.length === 0) {
   alert("Unauthorized Acess , Please Relogin.");

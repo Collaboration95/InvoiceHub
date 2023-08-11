@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', init);
 // Set the image URL to the img element
 const paymentImagePreview = document.getElementById('paymentImagePreview');
-    // Get the URL query parameters
+// Get the URL query parameters
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
