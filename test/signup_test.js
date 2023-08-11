@@ -1,3 +1,4 @@
+//final checked by ramita and radhi (11/08)
 const { Builder, By, Key, until } = require('selenium-webdriver');
 const assert = require('assert');
 
