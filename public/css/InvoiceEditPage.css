@@ -1,3 +1,5 @@
+/*Final checked by Ramita and Radhi (11/08) */
+
 /* changes for the side menu */
 .invoice{
     background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
@@ -30,7 +32,6 @@
 
 .id_container,
 .comp_name_container,
-/* .phone_no_container, */
 .issue_date_container,
 .total_amount_container,
 .status_container{
@@ -48,14 +49,12 @@
 
 .inp_id_title,
 .inp_comp_name_title,
-/* .inp_phone_no_title, */
 .inp_issue_date_title,
 .inp_total_amount_title,
 .inp_status_title{
     margin-right: 15px;
     width: 150px;
 }
-
 
 input[type="text"]{
     max-width: 300px;
