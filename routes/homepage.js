@@ -1,3 +1,6 @@
+// Retrieving data values such as Date, Total and Status from database
+// To plot overdue line graph
+
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
@@ -95,7 +98,8 @@ ORDER BY
   }
 });
 
-
+// Retrieving data values such as Date, Total and Status from database
+// To plot expense bar graph
 
 router.get('/fetch-expense-data', async (req, res) => {
   try {
@@ -156,6 +160,8 @@ router.get('/fetch-expense-data', async (req, res) => {
 });
 
 
+// Retrieving data values such as Date, Total and Status from database
+// To calculate Total Outstanding for Invoice
 
 router.get('/fetch-total-outstanding', async (req, res) => {
     try {
@@ -180,7 +186,8 @@ router.get('/fetch-total-outstanding', async (req, res) => {
   });
   
 
-
+// Retrieving data values such as Date, Total and Status from database
+// To calculate Total Due for Invoice
   router.get('/fetch-total-due', async (req, res) => {
     try {
         const connection = await pool.getConnection();
@@ -206,7 +213,8 @@ router.get('/fetch-total-outstanding', async (req, res) => {
 
 
 
-
+// Retrieving data values such as Date, Total and Status from database
+// To calculate Total Overdue for Invoice
   router.get('/fetch-total-overdue', async (req, res) => {
     try {
         const connection = await pool.getConnection();
@@ -230,6 +238,8 @@ router.get('/fetch-total-outstanding', async (req, res) => {
     }
 });
 
+// Retrieving data values such as Date, Total and Status from database
+// To calculate Total Outstanding for SOA
 router.get('/fetch-total-outstanding-soa', async (req, res) => {
   try {
     const connection = await pool.getConnection();
@@ -253,7 +263,8 @@ router.get('/fetch-total-outstanding-soa', async (req, res) => {
 });
 
 
-
+// Retrieving data values such as Date, Total and Status from database
+// To calculate Total Due for SOA
 router.get('/fetch-total-due-soa', async (req, res) => {
   try {
       const connection = await pool.getConnection();
@@ -279,7 +290,8 @@ router.get('/fetch-total-due-soa', async (req, res) => {
 
 
 
-
+// Retrieving data values such as Date, Total and Status from database
+// To calculate Total Overdue for SOA
 router.get('/fetch-total-overdue-soa', async (req, res) => {
   try {
       const connection = await pool.getConnection();
