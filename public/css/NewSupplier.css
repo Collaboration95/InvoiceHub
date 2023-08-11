@@ -1,10 +1,11 @@
+/*Final checked by Ramita and Radhi (11/08) */
+
 :root{
     --extra-bright-color: #485f68;
 }
 /* changes for the side menu */
 .supplier{
         background-image: linear-gradient(to left, #2D5261 99%, #D3D4CD 1%);
-        /* background-color: #2D5261; */
         width: 90%;
         padding: 10px;
 }
@@ -24,8 +25,6 @@
 .content_top{
     margin-top: 20px;
     display: flex;
-    /* flex-direction: column; */
-
     min-width: 350px;
     max-width: 800px;
 
@@ -67,7 +66,6 @@
 /* style for invoice navigation */
 
 .invoice_navigation{
-    /* width: 100%; */
 
     margin-top: 50px;
     display: flex;
@@ -134,42 +132,6 @@ input[type="text"]{
     border: none;
 }
 
-/* style for sorting */
-
-/* .box_sort{
-    display: flex;
-    align-items: center;
-
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-
-    color:#485f68;
-    border: 1px solid #485f68;
-    box-shadow: 4px 4px 10px rgba(45,82,97,0.2);
-    border-radius: 10px;
-}
-
-.ic_sort_des, .ic_sort_asc{
-    margin-left: 0px;
-}
-
-.ic_sort_des, .ic_sort_asc:hover{
-    cursor:pointer;
-}
-
-.sort_hint{
-    margin-right: 5px;
-}
-
-.sort_dropdown{
-    margin-left: 5px;
-    margin-right: 5px;
-
-    color:#033246;
-    font-size: 15px;
-    border: none;
-} */
 
 /* styles for the supplier table */
 
@@ -215,18 +177,18 @@ input[type="text"]{
 }
 
 .supplier_table td:nth-child(6) {
-    /* display: flex; */
+   
     justify-content: space-between;
 }
 
 .ic_edit{
     color: #033246;
-    /* order: 1; */
+    
 }
 
 .ic_delete{
     color:#033246;
-    /* order: 2; */
+    
 }
 
 .ic_delete:hover{
@@ -236,7 +198,7 @@ input[type="text"]{
 .ic_export{
     margin-left: 2px;
     color: #033246;
-    /* order: 3; */
+    
 }
 
 /* style for select and deselect buttons */
