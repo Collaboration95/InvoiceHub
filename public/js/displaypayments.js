@@ -1,3 +1,4 @@
+//Checked by Ramita and Radhi (11/08)
 document.addEventListener('DOMContentLoaded', init);
 // Set the image URL to the img element
 const paymentImagePreview = document.getElementById('paymentImagePreview');
