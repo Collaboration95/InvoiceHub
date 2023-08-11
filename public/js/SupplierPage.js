@@ -1,4 +1,4 @@
-
+//final checked by ramita and radhi (11/08)
 // Declare data variable outside the init() function
 let data;
 var selectedRows = []; // Array to track selected rows
@@ -128,7 +128,6 @@ function checkSelectedRows() {
   checkboxes.forEach(function(checkbox) {
     if (checkbox.checked) {
       selectedRows.push(checkbox.value);
-      //console.log("checkbox",checkbox.value)
     }
   });
 
