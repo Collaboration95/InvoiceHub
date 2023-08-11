@@ -1,3 +1,4 @@
+//Checked by Ramita and Radhi (11/08)
 basicSetup();
 
 function basicSetup(){
