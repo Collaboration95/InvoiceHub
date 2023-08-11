@@ -1,3 +1,5 @@
+/*Final checked by Ramita and Radhi (11/08) */
+
 /* CSS code for form styling */
 #signup-form {
   margin: 0 auto;
@@ -16,7 +18,6 @@
     margin: 0 auto;
     padding: 20px;
     border-radius: 5px;
-    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);  */
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2); 
     text-align: center;
     }
