@@ -1,3 +1,4 @@
+//Final checked by Ramita and Radhi (11/08)
 var table = document.getElementById("invoice_table");
 
 // Function to fetch data fsrom the server
@@ -23,9 +24,6 @@ async function getData() {
 
 // Function to render the table with data
 function renderTable(data) {
-  // var unpaidCost =0;
-  // var overdueCost=0;
-  // var totalCost = 0;
   // set up the title of each column
   table.innerHTML = `
     <tr>
@@ -63,7 +61,7 @@ function renderTable(data) {
           </svg>`;
 
     var exportIcon = `
-          <a href="#" onclick="exportToCSV(${invoice.invoiceid})">
+          <a href="#" onclick="exportToCSV('${invoice.invoiceid}')">
             <svg class="ic_export" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
               <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
@@ -98,11 +96,7 @@ function renderTable(data) {
             <td>${previewIcon} ${editIcon} ${deleteIcon} ${exportIcon}</td>
           </tr>`;
   });
-  // totalCost = unpaidCost + overdueCost;
-  // console.log("cost",totalCost);
-  // document.getElementById("total_outstanding_cost").textContent = "S$ " + totalCost.toFixed(2);
-  // document.getElementById("overdue_cost").textContent = "S$ " + overdueCost.toFixed(2);
-  // document.getElementById("due_cost").textContent = "S$ " + unpaidCost.toFixed(2);
+
 }
 
 // Call getData() and renderTable() when the page loads
@@ -306,10 +300,7 @@ function sort_asc() {
   });
 }
 
-// function openImage(value) {
-//   // window.open('http://127.0.0.1:8080/' + value)
-//   window.open('http://127.0.0.1:8080/img-db/'+value);
-// }
+
 //  handles non existant image errors
 function openImage(value) {
   const imageUrl = 'http://localhost:8000/img-db/' + value;
