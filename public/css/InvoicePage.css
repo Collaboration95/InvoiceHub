@@ -1,3 +1,5 @@
+/*Final checked by Ramita and Radhi (11/08) */
+
 /* changes for the side menu */
 .invoice{
     background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
@@ -12,7 +14,6 @@
     color:var(--tertiary-color);
     margin-right: 10px;
 }
-
 
 /* style for the top contents (summary) */
 
@@ -55,7 +56,7 @@
   .total_outstanding{
     width: auto;
     align-self: center;
-    /* padding-left: 10px; */
+    
   }
   
   .overdue{
