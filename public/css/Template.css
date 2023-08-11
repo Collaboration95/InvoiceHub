@@ -1,3 +1,5 @@
+/*Final checked by Ramita and Radhi (11/08) */
+
 :root{
     font-family: 'Ubuntu', sans-serif;
     --primary-color: #033246;
@@ -53,7 +55,7 @@ a {
 }
 
 .logo{
-    /* width: 30%; */
+
     height: 100%;
 }
 
