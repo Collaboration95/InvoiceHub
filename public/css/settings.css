@@ -1,3 +1,5 @@
+/*Final checked by Ramita and Radhi (11/08) */
+
 /* changes for the side menu */
 .setting{
     background-image: linear-gradient(to left, var(--secondary-color) 99%, var(--tertiary-color) 1%);
@@ -14,7 +16,6 @@
 }
 
 .content {
-    /* font-family: 'Lora', serif; */
     display:flex;
     flex-direction:column;
     background-color: white;
