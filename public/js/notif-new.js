@@ -1,7 +1,7 @@
+//checked by ramita and radhi (11/08)
 const dropdownItems = [];
 const testArray = [];
 const dataArray = [];
-//var box = document.getElementById("notif-box");
 
 
 async function retrieveData_overdue() {
@@ -65,7 +65,6 @@ async function retrieveData_3days() {
 
   function add_overdue(data){
     data.forEach((invoice) => {
-        //console.log(data);
         dropdownItems.push( "Invoice "+invoice.invoiceid+ " is overdue");
         dataArray.push(invoice.id);
   });
@@ -186,8 +185,6 @@ async function retrieveData_3days() {
 
   function formatText(text) {
   const formattedText = text
-
-    //.replace('overdue', '<strong>OVERDUE</strong>')
     .replace(/\d+/g, '<strong>$&</strong>')
     .replace('Invoice', '<strong>Invoice</strong>');
     return formattedText;
