@@ -1,3 +1,4 @@
+//final checked by ramita and radhi (11/08)
 let expenseChart = null;
 let overdueChart = null;
 
