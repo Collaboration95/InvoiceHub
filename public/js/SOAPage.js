@@ -1,3 +1,4 @@
+//final checked by ramita and radhi (11/08)
 var table = document.getElementById("soa_table");
  
 const invoice ={};
@@ -30,16 +31,12 @@ async function getData() {
   async function updatesoa(data){
     data.forEach(async soa =>{
       const extractedCodes = [];
-        // console.log("soatype",typeof soa.table_data);
       const firstWord = soa.table_data.replace(/[\[\]'"`]/g, '').split(",");
-      // console.log("firsyword",firstWord);
       for (let i = 0; i < firstWord.length; i++) {
         const currentItem = firstWord[i].trimLeft().split(" ");
         item = currentItem[0];
-        // console.log("current",String(item));
         extractedCodes.push(item);
     }
-    // console.log(extractedCodes, typeof extractedCodes.toString());
     extracted = extractedCodes.toString();
     console.log(extracted);
     if (soa.soa_invoice == null){
@@ -77,9 +74,6 @@ async function getData() {
 
 // Function to render the table with data
 function renderTable(data) {
-  // var unpaidCost =0;
-  // var overdueCost=0;
-  // var totalCost = 0;
   // set up the title of each column
   table.innerHTML = `
     <tr>
@@ -135,12 +129,10 @@ function renderTable(data) {
           statusColor = "#acacac";
         } else if (status === "OVERDUE") {
           console.log("not correct");
-          // overdueCost += parseFloat(soa.total);
           statusColor = "rgb(252, 183, 137)";
         } else if (status === "PAID") {
           statusColor = "rgb(136, 197, 136)";
         } else if (status === "UNPAID"){
-          // unpaidCost += parseFloat(soa.total);
         }
 
         invoice[soa.invoiceid]=soa.soa_invoice;
@@ -277,10 +269,6 @@ table.addEventListener("click", function(event) {
   }
 });
 
-// // get the elements for the cost
-// var total_outstanding_cost = document.getElementById("total_outstanding_cost");
-// var overdue_cost = document.getElementById("overdue_cost");
-// var due_cost = document.getElementById("due_cost");
 
 /* CODE FOR THE SEARCHING FUNCTION */
 
@@ -306,7 +294,6 @@ input.addEventListener("keyup", function() {
       val.upload_date = new Date(val.upload_date);
       const options = { timeZone: 'Asia/Singapore' };
       var upload_date = (val.upload_date).toLocaleDateString('en-SG', options);
-      // console.log("date", upload_date);
       var date = upload_date.toLowerCase();
       var amount = val.total.toLowerCase();
       var status = val.status.toLowerCase();
