@@ -1,3 +1,4 @@
+//final checked by ramita and radhi (11/08)
 function SOA(){
     document.getElementById(file);
     file.text="SOA"
@@ -157,8 +158,6 @@ function extractDetails(ocrResult) {
   function sanitizeDetails(details,input){
     console.log(details);
     const flatInput = input.flat();
-    // Bug fix later 
-    // const uniqueWordsList = Array.from(new Set(flatInput.join(' ').split(/\s+/).map(word => word.replace(/[^a-zA-Z]/g, ''))));
     const arrayToRemove = ["Kim Eng ", "BLK 103 YISHUN"];
     console.log(arrayToRemove);
     Object.keys(details).forEach(key => {
