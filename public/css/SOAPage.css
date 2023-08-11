@@ -1,3 +1,5 @@
+/*Final checked by Ramita and Radhi (11/08) */
+
 :root{
     --extra-bright-color: #485f68;
 }
@@ -81,8 +83,6 @@
 /* style for soa navigation */
 
 .soa_navigation{
-    /* width: 100%; */
-
     margin-top: 40px;
     display: flex;
     justify-content: space-between;
