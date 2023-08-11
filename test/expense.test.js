@@ -1,3 +1,5 @@
+// Final checked by Ramita and Radhi (11/08)
+
 const fetchData = require('../routes/expense');
 
 describe('fetchData function for Expense Graph', () => {
