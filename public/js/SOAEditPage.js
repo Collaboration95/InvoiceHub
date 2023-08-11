@@ -1,4 +1,4 @@
-
+//Final checked by Ramita and Radhi (11/08)
 document.addEventListener('DOMContentLoaded', basicSetup());
 
 function basicSetup(){
@@ -50,54 +50,15 @@ function basicSetup(){
     inp_status.style.backgroundColor = statusColor;
 }
 
-// function convertToMySQLDateFormat(dateString) {
-//     // Split the date string by '/'
-//     const dateComponents = dateString.split('/');
-  
-//     // Extract day, month, and year components
-//     const day = parseInt(dateComponents[0], 10);
-//     const month = parseInt(dateComponents[1], 10);
-//     const year = parseInt(dateComponents[2], 10);
-  
-//     // Create a new Date object with Singapore's time zone (Asia/Singapore)
-//     const dateObject = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
-  
-//     // Format the date object into a string with 'YYYY-MM-DD' format
-//     console.log("date in soa",dateObject.toISOString);
-//     const mysqlDateFormat = dateObject.toISOString().slice(0, 10);
-  
-//     return mysqlDateFormat;
-//   }  
-
 
   document.getElementById("btn_edit_update_container").addEventListener("click", function () {
     // Get the input elements
     const inp_comp_name = document.getElementById("inp_comp_name").value;
     const inp_issue_date = document.getElementById("inp_issue_date").value;
-    // const inp_issue_date_sql = convertToMySQLDateFormat(inp_issue_date);
     const inp_total_amount = document.getElementById("inp_total_amount").value; //need to show it has limit
     const invoiceId = document.getElementById('inp_id').value;
     const path = document.getElementById('path_hidden').value;
     const invoices = document.getElementById('inp_invoices').value;
-
-    // Validate date format (dd/mm/yyyy)
-    // const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
-    // // Split the date string by '/'
-    // const dateComponents = inp_issue_date.split('/');
-    // // Extract day, month, and year components
-    // const day = parseInt(dateComponents[0], 10);
-    // const month = parseInt(dateComponents[1], 10);
-    // if (!dateRegex.test(inp_issue_date)) {
-    //     document.getElementById("error_msg").textContent = "Invalid date format (dd/mm/yyyy)";
-    //     return;
-    // } else if (day > 31 || month > 12) {
-    //     document.getElementById("error_msg").textContent = "Invalid day or month in the date string";
-    //     return ;
-    // }
-    // else{
-    //     document.getElementById("error_msg").textContent = ""
-    // }
-
     // Validate amount as float
     const amountRegex = /^\d+(\.\d{1,2})?$/;
     if (!amountRegex.test(inp_total_amount)) {
@@ -107,7 +68,7 @@ function basicSetup(){
         document.getElementById("error_msg").textContent = ""
     }
   
-    // // You can use the input values for further processing, like updating data on the server, etc.
+    //You can use the input values for further processing, like updating data on the server, etc.
     fetch('/invoice/update_data_soa', {
         method: 'POST',
         headers: {
