@@ -1,3 +1,4 @@
+//Checked by ramita and radhi (11/08)
 document.getElementById("login-form").addEventListener("submit", function(event) {
   /**
   * Event listener attached to the login form submit event.
