@@ -7,16 +7,16 @@ const router = express.Router();
 router.get('/fetch-1-days-data', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    console.log('no issues here');
+    //console.log('no issues here');
     
-    const dueInAWeekQuery = `
-      SELECT *
+    const dueQuery = `
+      SELECT invoiceid, invoice_name, upload_date, status, total
       FROM ${table_name.invoice}
       WHERE status = 'Unpaid' AND type = 'invoice' AND DATEDIFF(NOW(), upload_date) = 29;
     `; 
-    const [dueInAWeekRows] = await connection.query(dueInAWeekQuery);
+    const [dueRows] = await connection.query(dueQuery);
     connection.release();
-    res.json(dueInAWeekRows);
+    res.json(dueRows);
   } catch (error) {
     console.error('Error fetching overdue data:', error);
     res.status(500).json({ error: 'An error occurred while fetching overdue data' });
@@ -25,16 +25,16 @@ router.get('/fetch-1-days-data', async (req, res) => {
 router.get('/fetch-2-days-data', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    console.log('no issues here');
+    //console.log('no issues here');
     
-    const dueInAWeekQuery = `
-      SELECT *
+    const dueQuery = `
+      SELECT invoiceid, invoice_name, upload_date, status, total
       FROM ${table_name.invoice}
       WHERE status = 'Unpaid' AND type = 'invoice' AND DATEDIFF(NOW(), upload_date) = 28;
     `; 
-    const [dueInAWeekRows] = await connection.query(dueInAWeekQuery);
+    const [dueRows] = await connection.query(dueQuery);
     connection.release();
-    res.json(dueInAWeekRows);
+    res.json(dueRows);
   } catch (error) {
     console.error('Error fetching overdue data:', error);
     res.status(500).json({ error: 'An error occurred while fetching overdue data' });
@@ -44,17 +44,17 @@ router.get('/fetch-2-days-data', async (req, res) => {
 router.get('/fetch-3-days-data', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    console.log('no issues here');
+    //console.log('no issues here');
        
-    const dueIn3DaysQuery = `
-      SELECT *
+    const dueQuery = `
+      SELECT invoiceid, invoice_name, upload_date, status, total
       FROM ${table_name.invoice}
       WHERE status = 'Unpaid' AND type = 'invoice' AND DATEDIFF(NOW(), upload_date) = 27;
     `;
-    const [dueIn3DaysRows] = await connection.query(dueIn3DaysQuery);
+    const [dueRows] = await connection.query(dueQuery);
     connection.release();
 
-    res.json(dueIn3DaysRows);
+    res.json(dueRows);
   } catch (error) {
     console.error('Error fetching overdue data:', error);
     res.status(500).json({ error: 'An error occurred while fetching overdue data' });
@@ -64,10 +64,10 @@ router.get('/fetch-3-days-data', async (req, res) => {
 router.get('/fetch-overdue-data', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    console.log('no issues here');
+    //console.log('no issues here');
 
     const overdueQuery = `
-      SELECT *
+      SELECT invoiceid, invoice_name, upload_date, status, total
       FROM ${table_name.invoice}
       WHERE (status = 'Unpaid' OR status = "Overdue") AND type = 'invoice' AND DATEDIFF(NOW(), upload_date) >= 30;
     `;
@@ -85,7 +85,7 @@ router.get('/fetch-overdue-data', async (req, res) => {
 router.get('/fetch-overdue-data-soa', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    console.log('no issues here');
+    //console.log('no issues here');
 
     const overdueQuery = `
       SELECT *
